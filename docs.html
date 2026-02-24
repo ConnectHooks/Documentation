@@ -15,11 +15,11 @@
     <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#1B3A6B"/><path d="M8 16c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="#60a5fa" stroke-width="2.5" stroke-linecap="round"/><path d="M24 16c0 4.4-3.6 8-8 8S8 20.4 8 16" stroke="#34d399" stroke-width="2.5" stroke-linecap="round"/><circle cx="16" cy="16" r="3" fill="#fff"/></svg>
     <span>ConnectHooks</span>
   </a>
-  <div class="topbar-search">🔍 &nbsp;Search docs…</div>
-  <nav class="topbar-links">
-    <span class="topbar-link active">v1.0</span>
-    <a href="https://appexchange.salesforce.com" target="_blank" class="topbar-link">AppExchange</a>
-  </nav>
+  <div class="topbar-center">🔍 &nbsp;Search documentation…</div>
+  <div class="topbar-right">
+    <span class="topbar-badge">v1.0</span>
+    <a href="https://appexchange.salesforce.com" target="_blank" class="topbar-link">AppExchange ↗</a>
+  </div>
 </header>
 
 <!-- LAYOUT -->
@@ -29,101 +29,96 @@
 <aside class="sidebar">
   <p style="font-size:0.75rem;color:#94a3b8;padding:0 1.25rem 0.5rem;">AppExchange Documentation</p>
 
-  <nav>
-    <div class="nav-item">
-      <a class="nav-link active" onclick="showSection('introduction')">
-        <span class="nav-icon">🏠</span> Introduction
-      </a>
-    </div>
+  <div class="sidebar-tag">Getting Started</div>
+  <div class="nav-item" id="ni-introduction">
+    <button class="nav-link active" onclick="showSection('introduction')">
+      <span class="nav-icon">🏠</span><span class="nav-label">Introduction</span>
+    </button>
+  </div>
 
-    <div class="nav-item">
-      <a class="nav-link" onclick="showSection('architecture')">
-        <span class="nav-icon">🏗️</span> System Architecture
-        <span class="nav-arrow">›</span>
-      </a>
-      <div class="sub-items">
-        <a class="sub-link" onclick="showSection('architecture');scrollTo('arch-overview')">Overview</a>
-        <a class="sub-link" onclick="showSection('architecture');scrollTo('arch-layer1')">Layer 1 – Config</a>
-        <a class="sub-link" onclick="showSection('architecture');scrollTo('arch-layer2')">Layer 2 – Runtime</a>
-        <a class="sub-link" onclick="showSection('architecture');scrollTo('arch-layer3')">Layer 3 – Support</a>
-      </div>
+  <div class="sidebar-tag">Core Concepts</div>
+  <div class="nav-item" id="ni-architecture">
+    <button class="nav-link" onclick="toggleNav('architecture')">
+      <span class="nav-icon">🏗️</span><span class="nav-label">System Architecture</span><span class="nav-arrow">›</span>
+    </button>
+    <div class="sub-items">
+      <a class="sub-link" onclick="showSection('architecture');jumpTo('arch-overview')">Overview</a>
+      <a class="sub-link" onclick="showSection('architecture');jumpTo('arch-layer1')">Layer 1 — Config</a>
+      <a class="sub-link" onclick="showSection('architecture');jumpTo('arch-layer2')">Layer 2 — Runtime</a>
+      <a class="sub-link" onclick="showSection('architecture');jumpTo('arch-layer3')">Layer 3 — Support</a>
     </div>
+  </div>
 
-    <div class="nav-item">
-      <a class="nav-link" onclick="showSection('features')">
-        <span class="nav-icon">⭐</span> Key Features
-        <span class="nav-arrow">›</span>
-      </a>
-      <div class="sub-items">
-        <a class="sub-link" onclick="showSection('features');scrollTo('feat-webhook')">Webhook Endpoint</a>
-        <a class="sub-link" onclick="showSection('features');scrollTo('feat-auth')">Authentication</a>
-        <a class="sub-link" onclick="showSection('features');scrollTo('feat-mapping')">Field Mapping</a>
-        <a class="sub-link" onclick="showSection('features');scrollTo('feat-records')">Record Creation</a>
-        <a class="sub-link" onclick="showSection('features');scrollTo('feat-files')">File Attachments</a>
-        <a class="sub-link" onclick="showSection('features');scrollTo('feat-handler')">Custom Handler</a>
-      </div>
+  <div class="nav-item" id="ni-features">
+    <button class="nav-link" onclick="toggleNav('features')">
+      <span class="nav-icon">⭐</span><span class="nav-label">Key Features</span><span class="nav-arrow">›</span>
+    </button>
+    <div class="sub-items">
+      <a class="sub-link" onclick="showSection('features');jumpTo('feat-webhook')">Webhook Endpoint</a>
+      <a class="sub-link" onclick="showSection('features');jumpTo('feat-auth')">Authentication</a>
+      <a class="sub-link" onclick="showSection('features');jumpTo('feat-mapping')">Field Mapping</a>
+      <a class="sub-link" onclick="showSection('features');jumpTo('feat-records')">Record Creation</a>
+      <a class="sub-link" onclick="showSection('features');jumpTo('feat-files')">File Attachments</a>
+      <a class="sub-link" onclick="showSection('features');jumpTo('feat-handler')">Custom Handler</a>
     </div>
+  </div>
 
-    <div class="nav-item">
-      <a class="nav-link" onclick="showSection('setup')">
-        <span class="nav-icon">⚙️</span> Installation &amp; Setup
-        <span class="nav-arrow">›</span>
-      </a>
-      <div class="sub-items">
-        <a class="sub-link" onclick="showSection('setup');scrollTo('setup-postinstall')">Post-Install Script</a>
-        <a class="sub-link" onclick="showSection('setup');scrollTo('setup-wizard')">Setup Wizard Steps</a>
-        <a class="sub-link" onclick="showSection('setup');scrollTo('setup-webhook')">Creating a Webhook</a>
-        <a class="sub-link" onclick="showSection('setup');scrollTo('setup-mapping')">Field Mapping UI</a>
-      </div>
+  <div class="sidebar-tag">Reference</div>
+  <div class="nav-item" id="ni-setup">
+    <button class="nav-link" onclick="toggleNav('setup')">
+      <span class="nav-icon">⚙️</span><span class="nav-label">Installation &amp; Setup</span><span class="nav-arrow">›</span>
+    </button>
+    <div class="sub-items">
+      <a class="sub-link" onclick="showSection('setup');jumpTo('setup-postinstall')">Post-Install Script</a>
+      <a class="sub-link" onclick="showSection('setup');jumpTo('setup-wizard')">Setup Wizard Steps</a>
+      <a class="sub-link" onclick="showSection('setup');jumpTo('setup-webhook')">Creating a Webhook</a>
+      <a class="sub-link" onclick="showSection('setup');jumpTo('setup-mapping')">Field Mapping UI</a>
     </div>
+  </div>
 
-    <div class="nav-item">
-      <a class="nav-link" onclick="showSection('runtime')">
-        <span class="nav-icon">🔄</span> Runtime Flow
-        <span class="nav-arrow">›</span>
-      </a>
-      <div class="sub-items">
-        <a class="sub-link" onclick="showSection('runtime');scrollTo('rt-step1')">1 – URL Parsing</a>
-        <a class="sub-link" onclick="showSection('runtime');scrollTo('rt-step2')">2 – Auth</a>
-        <a class="sub-link" onclick="showSection('runtime');scrollTo('rt-step3')">3 – Rate Limit</a>
-        <a class="sub-link" onclick="showSection('runtime');scrollTo('rt-step4')">4 – Schema Check</a>
-        <a class="sub-link" onclick="showSection('runtime');scrollTo('rt-step5')">5 – Mapping</a>
-        <a class="sub-link" onclick="showSection('runtime');scrollTo('rt-step6')">6 – Record DML</a>
-        <a class="sub-link" onclick="showSection('runtime');scrollTo('rt-step7')">7 – JSON Storage</a>
-      </div>
+  <div class="nav-item" id="ni-runtime">
+    <button class="nav-link" onclick="toggleNav('runtime')">
+      <span class="nav-icon">🔄</span><span class="nav-label">Runtime Flow</span><span class="nav-arrow">›</span>
+    </button>
+    <div class="sub-items">
+      <a class="sub-link" onclick="showSection('runtime');jumpTo('rt-step1')">1 — URL Parsing</a>
+      <a class="sub-link" onclick="showSection('runtime');jumpTo('rt-step2')">2 — Auth &amp; Secure Code</a>
+      <a class="sub-link" onclick="showSection('runtime');jumpTo('rt-step3')">3 — Rate Limit</a>
+      <a class="sub-link" onclick="showSection('runtime');jumpTo('rt-step4')">4 — API Key Auth</a>
+      <a class="sub-link" onclick="showSection('runtime');jumpTo('rt-step5')">5 — Schema Check</a>
+      <a class="sub-link" onclick="showSection('runtime');jumpTo('rt-step6')">6 — Mapping &amp; DML</a>
+      <a class="sub-link" onclick="showSection('runtime');jumpTo('rt-step7')">7 — Storage &amp; Files</a>
     </div>
+  </div>
 
-    <div class="nav-item">
-      <a class="nav-link" onclick="showSection('datamodel')">
-        <span class="nav-icon">🗄️</span> Core Data Model
-        <span class="nav-arrow">›</span>
-      </a>
-      <div class="sub-items">
-        <a class="sub-link" onclick="showSection('datamodel');scrollTo('dm-objects')">Custom Objects</a>
-        <a class="sub-link" onclick="showSection('datamodel');scrollTo('dm-settings')">Custom Settings</a>
-        <a class="sub-link" onclick="showSection('datamodel');scrollTo('dm-metadata')">Custom Metadata</a>
-      </div>
+  <div class="nav-item" id="ni-datamodel">
+    <button class="nav-link" onclick="toggleNav('datamodel')">
+      <span class="nav-icon">🗄️</span><span class="nav-label">Core Data Model</span><span class="nav-arrow">›</span>
+    </button>
+    <div class="sub-items">
+      <a class="sub-link" onclick="showSection('datamodel');jumpTo('dm-objects')">Custom Objects</a>
+      <a class="sub-link" onclick="showSection('datamodel');jumpTo('dm-settings')">Custom Settings</a>
+      <a class="sub-link" onclick="showSection('datamodel');jumpTo('dm-metadata')">Custom Metadata</a>
     </div>
+  </div>
 
-    <div class="nav-item">
-      <a class="nav-link" onclick="showSection('security')">
-        <span class="nav-icon">🔐</span> API &amp; Security
-        <span class="nav-arrow">›</span>
-      </a>
-      <div class="sub-items">
-        <a class="sub-link" onclick="showSection('security');scrollTo('sec-model')">Security Model</a>
-        <a class="sub-link" onclick="showSection('security');scrollTo('sec-perm')">Permission Sets</a>
-        <a class="sub-link" onclick="showSection('security');scrollTo('sec-api')">Apex Classes</a>
-        <a class="sub-link" onclick="showSection('security');scrollTo('sec-lwc')">LWC Components</a>
-      </div>
+  <div class="nav-item" id="ni-security">
+    <button class="nav-link" onclick="toggleNav('security')">
+      <span class="nav-icon">🔐</span><span class="nav-label">API &amp; Security</span><span class="nav-arrow">›</span>
+    </button>
+    <div class="sub-items">
+      <a class="sub-link" onclick="showSection('security');jumpTo('sec-model')">Security Model</a>
+      <a class="sub-link" onclick="showSection('security');jumpTo('sec-perm')">Permission Sets</a>
+      <a class="sub-link" onclick="showSection('security');jumpTo('sec-api')">Apex Classes</a>
+      <a class="sub-link" onclick="showSection('security');jumpTo('sec-lwc')">LWC Components</a>
     </div>
+  </div>
 
-    <div class="nav-item">
-      <a class="nav-link" onclick="showSection('troubleshoot')">
-        <span class="nav-icon">⚠️</span> Troubleshooting &amp; Logs
-      </a>
-    </div>
-  </nav>
+  <div class="nav-item" id="ni-troubleshoot">
+    <button class="nav-link" onclick="showSection('troubleshoot')">
+      <span class="nav-icon">⚠️</span><span class="nav-label">Troubleshooting &amp; Logs</span>
+    </button>
+  </div>
 </aside>
 
 <!-- MAIN CONTENT -->
@@ -251,13 +246,13 @@ Salesforce Public Site (Guest User)
   <div id="feat-auth"></div>
   <h2 class="section-title">🔐 Authentication — Dual-Factor</h2>
   <p>Every request must pass <strong>two independent authentication checks</strong>:</p>
-  <table class="doc-table">
+  <div class="table-wrap"><table class="doc-table">
     <thead><tr><th>Check</th><th>How</th><th>Value</th></tr></thead>
     <tbody>
       <tr><td>Secure URL Code</td><td>Embedded in URL path</td><td>48-char dash-separated random string</td></tr>
       <tr><td>API Key</td><td><code>x-api-key</code> header OR JSON body field</td><td>48-char alphanumeric token (stored encrypted)</td></tr>
     </tbody>
-  </table>
+  </table></div>
   <p>The API key is stored as an SHA-256 hash in <code>CH_Webhook__c.Enc_Api_Key__c</code>. Validation rehashes the incoming key and compares. The plain key is never stored.</p>
 
   <div id="feat-mapping"></div>
@@ -319,7 +314,7 @@ public class MyHandler implements xccch.ICHCustomHandler {
   <div id="setup-wizard"></div>
   <h2 class="section-title">🧙 7-Step Setup Wizard</h2>
   <p>The admin opens the <strong>connectHooksConfiguration LWC</strong> tab. Steps must be completed in order:</p>
-  <table class="doc-table">
+  <div class="table-wrap"><table class="doc-table">
     <thead><tr><th>#</th><th>Step Title</th><th>LWC</th><th>What Happens</th></tr></thead>
     <tbody>
       <tr><td>1</td><td>Create Public Site</td><td><code>stepCreatePublicSite</code></td><td>MANUAL — admin creates a Salesforce public site in Setup, then marks done. Updates <code>Step_Create_Public_Site__c = true</code>.</td></tr>
@@ -330,7 +325,7 @@ public class MyHandler implements xccch.ICHCustomHandler {
       <tr><td>6</td><td>Generate JSONPath API Key</td><td><code>stepJsonPathGenerateApiKey</code></td><td>HTTP callout to <code>https://apps.getxccelerance.com/connecthooks</code> — gets an API key for the JSONPath Generator feature. Saves to <code>JSONPath_Gen_Sys_API_Key__c</code>.</td></tr>
       <tr><td>7</td><td>Create Webhook</td><td><code>webhookModal / webhookEntry</code></td><td>Admin creates first webhook. Repeatable for every new integration.</td></tr>
     </tbody>
-  </table>
+  </table></div>
   <div class="alert alert-info"><span class="alert-icon">ℹ️</span><div>Steps 1–6 are one-time per org. Step 7 is repeated every time a new webhook integration is needed.</div></div>
 
   <div id="setup-webhook"></div>
@@ -506,7 +501,7 @@ String secureCode  = pathParts[1];   // e.g. a1b2c3d4-e5f6-...</code></pre>
   <div id="sec-model"></div>
   <h2 class="section-title">🛡️ Security Model</h2>
   <div class="alert alert-success"><span class="alert-icon">🔒</span><div><strong>Layered Security:</strong> Every request must independently pass 4 gates. Bypassing one does not grant access via another.</div></div>
-  <table class="doc-table">
+  <div class="table-wrap"><table class="doc-table">
     <thead><tr><th>Gate</th><th>Check</th><th>Fail Response</th></tr></thead>
     <tbody>
       <tr><td>1 — Secure URL Code</td><td>URL path token matches <code>CH_Webhook__c.Secure_URL_Code__c</code></td><td>401 Unauthorized</td></tr>
@@ -514,22 +509,22 @@ String secureCode  = pathParts[1];   // e.g. a1b2c3d4-e5f6-...</code></pre>
       <tr><td>3 — API Key</td><td>SHA-256(incoming) = <code>Enc_Api_Key__c</code></td><td>401 Unauthorized</td></tr>
       <tr><td>4 — Rate Limit</td><td>Request count ≤ limit within 24h window</td><td>429 Too Many Requests</td></tr>
     </tbody>
-  </table>
+  </table></div>
   <p>Additionally, the <code>WebhookLimitTrigger</code> enforces the creation limit at the database level — it cannot be bypassed via any interface, including Data Loader or direct API calls.</p>
 
   <div id="sec-perm"></div>
   <h2 class="section-title">👥 Permission Sets</h2>
-  <table class="doc-table">
+  <div class="table-wrap"><table class="doc-table">
     <thead><tr><th>Permission Set</th><th>Who Gets It</th><th>Access Granted</th></tr></thead>
     <tbody>
       <tr><td>ConnectHooks_Admin</td><td>Installing user (auto) + other admins (manual)</td><td>Full CRUD on all ConnectHooks objects. Access to all Apex classes and LWC. Required to use Config tab and Mapping UI.</td></tr>
       <tr><td>ConnectHooks_Public_Site_User_Permissions</td><td>Site guest user (Step 3 of wizard)</td><td>Read access to CH_Webhook__c, CH_Mapping_Object__c, CH_Mapping__c. Access to ConnectHooksSubmissionWebService. Minimum needed to process webhook requests.</td></tr>
     </tbody>
-  </table>
+  </table></div>
 
   <div id="sec-api"></div>
   <h2 class="section-title">💻 Apex Classes</h2>
-  <table class="doc-table">
+  <div class="table-wrap"><table class="doc-table">
     <thead><tr><th>Class</th><th>Sharing</th><th>Key Method(s)</th><th>Role</th></tr></thead>
     <tbody>
       <tr><td>ConnectHooksSubmissionWebService</td><td>with sharing</td><td>handleWebhookRequest()</td><td>Main REST entry point — processes all webhook requests</td></tr>
@@ -538,10 +533,10 @@ String secureCode  = pathParts[1];   // e.g. a1b2c3d4-e5f6-...</code></pre>
       <tr><td>ConnectHooksConfigUtil</td><td>with sharing</td><td>assignSitePSToPublicSiteUser(), createContentWorkspaceLibrary()</td><td>Setup wizard backend</td></tr>
       <tr><td>MappingController</td><td>with sharing</td><td>saveMappingData(), getMappingData()</td><td>Saves/loads field mappings from the Mapping UI</td></tr>
       <tr><td>ConnectHooksSOQL</td><td>without sharing</td><td>getWebhookByName(), getMappingsForWebhook()</td><td>Centralised SOQL — guest user can query via this class</td></tr>
-      <tr><td>FormResponseUtil</td><td>with sharing</td><td>createSecureURLCode(), createAPIKeyTokenString(), validateAPIKey(), convertFieldValue()</td><td>Utility — key gen, config reading, type conversion</td></tr>
+      <tr><td>FormResponseUtil</td><td>with sharing</td><td>createSecureURLCode(), validateAPIKey(), convertFieldValue()</td><td>Utility — key gen, config reading, type conversion</td></tr>
       <tr><td>JSONPathEvaluator</td><td>with sharing</td><td>evaluate(json, path)</td><td>Evaluates JSONPath expressions against payload</td></tr>
       <tr><td>JsonParserWithJsonPath</td><td>with sharing</td><td>parse(), traverse()</td><td>Low-level JSON parser powering the JSONPath engine</td></tr>
-      <tr><td>ObjectFieldController</td><td>with sharing</td><td>getSObjects(), getObjectFields(), getRequiredFields()</td><td>Provides object/field metadata to Mapping UI</td></tr>
+      <tr><td>ObjectFieldController</td><td>with sharing</td><td>getSObjects(), getObjectFields()</td><td>Provides object/field metadata to Mapping UI</td></tr>
       <tr><td>JSONPathAPIController</td><td>with sharing</td><td>evaluateJSONPath()</td><td>Live JSONPath preview in the Mapping UI</td></tr>
       <tr><td>ConnectHooksPackagePostInstallClass</td><td>with sharing</td><td>onInstall(context)</td><td>Post-install script — permission set + config setup</td></tr>
       <tr><td>WebhookLimitTriggerHandler</td><td>with sharing</td><td>handleBeforeInsert()</td><td>Enforces max webhook creation limit</td></tr>
@@ -549,11 +544,11 @@ String secureCode  = pathParts[1];   // e.g. a1b2c3d4-e5f6-...</code></pre>
       <tr><td>ICHCustomHandler</td><td>interface</td><td>execute(String jsonPayload)</td><td>Interface for custom handler classes</td></tr>
       <tr><td>ErrorMsg / ErrorMessageConfig</td><td>with sharing</td><td>—</td><td>Centralised error message constants</td></tr>
     </tbody>
-  </table>
+  </table></div>
 
   <div id="sec-lwc"></div>
   <h2 class="section-title">🖥️ LWC Components</h2>
-  <table class="doc-table">
+  <div class="table-wrap"><table class="doc-table">
     <thead><tr><th>Component</th><th>Tab / Location</th><th>Purpose</th></tr></thead>
     <tbody>
       <tr><td>connectHooksConfiguration</td><td>ConnectHooks Config Tab</td><td>Main config tab — hosts the 7-step wizard and webhook list</td></tr>
@@ -566,7 +561,8 @@ String secureCode  = pathParts[1];   // e.g. a1b2c3d4-e5f6-...</code></pre>
       <tr><td>webhookModal / webhookEntry</td><td>Wizard Step 7</td><td>Create webhook form</td></tr>
       <tr><td>mappingUi</td><td>Mapping tab</td><td>Visual drag-and-drop JSON → Salesforce field mapper</td></tr>
     </tbody>
-  </table>
+  </table></div>
+  <div class="doc-nav-footer"><div class="pn-container"></div></div>
 </section>
 
 <!-- ══════════ TROUBLESHOOTING ══════════ -->
@@ -587,7 +583,7 @@ String secureCode  = pathParts[1];   // e.g. a1b2c3d4-e5f6-...</code></pre>
   </div>
 
   <h2 class="section-title">❗ Common Errors &amp; Fixes</h2>
-  <table class="doc-table">
+  <div class="table-wrap"><table class="doc-table">
     <thead><tr><th>HTTP Status</th><th>Error</th><th>Fix</th></tr></thead>
     <tbody>
       <tr><td><span class="badge badge-red">401</span></td><td>Invalid Secure URL Code</td><td>Copy the full endpoint URL from the webhook card. The secure code segment must match exactly.</td></tr>
@@ -599,7 +595,7 @@ String secureCode  = pathParts[1];   // e.g. a1b2c3d4-e5f6-...</code></pre>
       <tr><td>—</td><td>Webhook creation blocked</td><td>Free edition limit (2 webhooks) reached. Delete an existing webhook first.</td></tr>
       <tr><td>—</td><td>Site guest user can't process</td><td>Run Step 3 of the setup wizard again to re-assign the <code>ConnectHooks_Public_Site_User_Permissions</code> permission set.</td></tr>
     </tbody>
-  </table>
+  </table></div>
 
   <h2 class="section-title">🔍 Debugging JSONPath Expressions</h2>
   <p>Use the live preview in the <strong>mappingUi LWC</strong> — paste a sample JSON payload and click <strong>Test</strong> next to any mapping row. The <code>JSONPathAPIController.evaluateJSONPath()</code> method runs the expression and shows the extracted value.</p>
@@ -625,44 +621,71 @@ System.debug(result); // → john@example.com</code></pre>
 <!-- FOOTER -->
 <footer class="doc-footer">
   <span>ConnectHooks · Namespace: <code>xccch</code> · Version 1.0 · Feb 2026</span>
-  <div class="prev-next" id="prev-next-btns"></div>
+  <span>Salesforce Managed Package · AppExchange Documentation</span>
 </footer>
 
 <script>
 const SECTIONS = ['introduction','architecture','features','setup','runtime','datamodel','security','troubleshoot'];
 const LABELS   = ['Introduction','System Architecture','Key Features','Installation & Setup','Runtime Flow','Core Data Model','API & Security','Troubleshooting & Logs'];
-
 let current = 'introduction';
 
 function showSection(id){
-  document.querySelectorAll('.doc-section').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.nav-link').forEach(a=>a.classList.remove('active'));
-  const sec = document.getElementById('sec-'+id);
+  // hide all sections
+  document.querySelectorAll('.doc-section').forEach(s => s.classList.remove('active'));
+  // show target
+  const sec = document.getElementById('sec-' + id);
   if(sec) sec.classList.add('active');
-  const links = document.querySelectorAll('.nav-link');
-  links.forEach(l=>{ if(l.getAttribute('onclick') && l.getAttribute('onclick').includes("'"+id+"'")) l.classList.add('active'); });
+  // clear all nav-link active states
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  // activate the right nav item
+  const ni = document.getElementById('ni-' + id);
+  if(ni){
+    const btn = ni.querySelector('.nav-link');
+    if(btn) btn.classList.add('active');
+    ni.classList.add('open');
+  }
   current = id;
-  updatePrevNext();
-  window.scrollTo({top:0,behavior:'smooth'});
+  renderPrevNext();
+  window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
-function scrollTo(id){
-  setTimeout(()=>{
-    const el = document.getElementById(id);
-    if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
-  },100);
+function toggleNav(id){
+  const ni = document.getElementById('ni-' + id);
+  if(!ni) return;
+  const isOpen = ni.classList.contains('open');
+  // close all
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('open'));
+  if(!isOpen){
+    ni.classList.add('open');
+    showSection(id);
+  } else {
+    showSection(id);
+  }
 }
 
-function updatePrevNext(){
+function jumpTo(anchorId){
+  setTimeout(() => {
+    const el = document.getElementById(anchorId);
+    if(el){
+      const top = el.getBoundingClientRect().top + window.scrollY - 72;
+      window.scrollTo({top, behavior:'smooth'});
+    }
+  }, 80);
+}
+
+function renderPrevNext(){
   const idx = SECTIONS.indexOf(current);
-  const container = document.getElementById('prev-next-btns');
-  let html = '';
-  if(idx > 0) html += `<button class="pn-btn" onclick="showSection('${SECTIONS[idx-1]}')">← ${LABELS[idx-1]}</button>`;
-  if(idx < SECTIONS.length-1) html += `<button class="pn-btn" onclick="showSection('${SECTIONS[idx+1]}')">${LABELS[idx+1]} →</button>`;
-  container.innerHTML = html;
+  document.querySelectorAll('.pn-container').forEach(c => {
+    let html = '';
+    if(idx > 0) html += `<button class="pn-btn" onclick="showSection('${SECTIONS[idx-1]}')">&#8592; ${LABELS[idx-1]}</button>`;
+    if(idx < SECTIONS.length-1) html += `<button class="pn-btn" onclick="showSection('${SECTIONS[idx+1]}')">${LABELS[idx+1]} &#8594;</button>`;
+    c.innerHTML = html;
+  });
 }
 
-updatePrevNext();
+// Init: open the introduction section
+document.getElementById('ni-introduction').querySelector('.nav-link').classList.add('active');
+renderPrevNext();
 </script>
 </body>
 </html>
