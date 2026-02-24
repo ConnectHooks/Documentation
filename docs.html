@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ConnectHooks — AppExchange Documentation</title>
+<meta name="description" content="Complete documentation for ConnectHooks Salesforce managed package.">
+<link rel="stylesheet" href="assets/css/docs.css">
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <a href="docs.html" class="topbar-logo">
+    <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#1B3A6B"/><path d="M8 16c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="#60a5fa" stroke-width="2.5" stroke-linecap="round"/><path d="M24 16c0 4.4-3.6 8-8 8S8 20.4 8 16" stroke="#34d399" stroke-width="2.5" stroke-linecap="round"/><circle cx="16" cy="16" r="3" fill="#fff"/></svg>
+    <span>ConnectHooks</span>
+  </a>
+  <div class="topbar-search">🔍 &nbsp;Search docs…</div>
+  <nav class="topbar-links">
+    <span class="topbar-link active">v1.0</span>
+    <a href="https://appexchange.salesforce.com" target="_blank" class="topbar-link">AppExchange</a>
+  </nav>
+</header>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <p style="font-size:0.75rem;color:#94a3b8;padding:0 1.25rem 0.5rem;">AppExchange Documentation</p>
+
+  <nav>
+    <div class="nav-item">
+      <a class="nav-link active" onclick="showSection('introduction')">
+        <span class="nav-icon">🏠</span> Introduction
+      </a>
+    </div>
+
+    <div class="nav-item">
+      <a class="nav-link" onclick="showSection('architecture')">
+        <span class="nav-icon">🏗️</span> System Architecture
+        <span class="nav-arrow">›</span>
+      </a>
+      <div class="sub-items">
+        <a class="sub-link" onclick="showSection('architecture');scrollTo('arch-overview')">Overview</a>
+        <a class="sub-link" onclick="showSection('architecture');scrollTo('arch-layer1')">Layer 1 – Config</a>
+        <a class="sub-link" onclick="showSection('architecture');scrollTo('arch-layer2')">Layer 2 – Runtime</a>
+        <a class="sub-link" onclick="showSection('architecture');scrollTo('arch-layer3')">Layer 3 – Support</a>
+      </div>
+    </div>
+
+    <div class="nav-item">
+      <a class="nav-link" onclick="showSection('features')">
+        <span class="nav-icon">⭐</span> Key Features
+        <span class="nav-arrow">›</span>
+      </a>
+      <div class="sub-items">
+        <a class="sub-link" onclick="showSection('features');scrollTo('feat-webhook')">Webhook Endpoint</a>
+        <a class="sub-link" onclick="showSection('features');scrollTo('feat-auth')">Authentication</a>
+        <a class="sub-link" onclick="showSection('features');scrollTo('feat-mapping')">Field Mapping</a>
+        <a class="sub-link" onclick="showSection('features');scrollTo('feat-records')">Record Creation</a>
+        <a class="sub-link" onclick="showSection('features');scrollTo('feat-files')">File Attachments</a>
+        <a class="sub-link" onclick="showSection('features');scrollTo('feat-handler')">Custom Handler</a>
+      </div>
+    </div>
+
+    <div class="nav-item">
+      <a class="nav-link" onclick="showSection('setup')">
+        <span class="nav-icon">⚙️</span> Installation &amp; Setup
+        <span class="nav-arrow">›</span>
+      </a>
+      <div class="sub-items">
+        <a class="sub-link" onclick="showSection('setup');scrollTo('setup-postinstall')">Post-Install Script</a>
+        <a class="sub-link" onclick="showSection('setup');scrollTo('setup-wizard')">Setup Wizard Steps</a>
+        <a class="sub-link" onclick="showSection('setup');scrollTo('setup-webhook')">Creating a Webhook</a>
+        <a class="sub-link" onclick="showSection('setup');scrollTo('setup-mapping')">Field Mapping UI</a>
+      </div>
+    </div>
+
+    <div class="nav-item">
+      <a class="nav-link" onclick="showSection('runtime')">
+        <span class="nav-icon">🔄</span> Runtime Flow
+        <span class="nav-arrow">›</span>
+      </a>
+      <div class="sub-items">
+        <a class="sub-link" onclick="showSection('runtime');scrollTo('rt-step1')">1 – URL Parsing</a>
+        <a class="sub-link" onclick="showSection('runtime');scrollTo('rt-step2')">2 – Auth</a>
+        <a class="sub-link" onclick="showSection('runtime');scrollTo('rt-step3')">3 – Rate Limit</a>
+        <a class="sub-link" onclick="showSection('runtime');scrollTo('rt-step4')">4 – Schema Check</a>
+        <a class="sub-link" onclick="showSection('runtime');scrollTo('rt-step5')">5 – Mapping</a>
+        <a class="sub-link" onclick="showSection('runtime');scrollTo('rt-step6')">6 – Record DML</a>
+        <a class="sub-link" onclick="showSection('runtime');scrollTo('rt-step7')">7 – JSON Storage</a>
+      </div>
+    </div>
+
+    <div class="nav-item">
+      <a class="nav-link" onclick="showSection('datamodel')">
+        <span class="nav-icon">🗄️</span> Core Data Model
+        <span class="nav-arrow">›</span>
+      </a>
+      <div class="sub-items">
+        <a class="sub-link" onclick="showSection('datamodel');scrollTo('dm-objects')">Custom Objects</a>
+        <a class="sub-link" onclick="showSection('datamodel');scrollTo('dm-settings')">Custom Settings</a>
+        <a class="sub-link" onclick="showSection('datamodel');scrollTo('dm-metadata')">Custom Metadata</a>
+      </div>
+    </div>
+
+    <div class="nav-item">
+      <a class="nav-link" onclick="showSection('security')">
+        <span class="nav-icon">🔐</span> API &amp; Security
+        <span class="nav-arrow">›</span>
+      </a>
+      <div class="sub-items">
+        <a class="sub-link" onclick="showSection('security');scrollTo('sec-model')">Security Model</a>
+        <a class="sub-link" onclick="showSection('security');scrollTo('sec-perm')">Permission Sets</a>
+        <a class="sub-link" onclick="showSection('security');scrollTo('sec-api')">Apex Classes</a>
+        <a class="sub-link" onclick="showSection('security');scrollTo('sec-lwc')">LWC Components</a>
+      </div>
+    </div>
+
+    <div class="nav-item">
+      <a class="nav-link" onclick="showSection('troubleshoot')">
+        <span class="nav-icon">⚠️</span> Troubleshooting &amp; Logs
+      </a>
+    </div>
+  </nav>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main class="main" id="main-content">
+
+<!-- ══════════ INTRODUCTION ══════════ -->
+<section class="doc-section active" id="sec-introduction">
+  <div class="page-header">
+    <div class="breadcrumb">ConnectHooks › <span>Introduction</span></div>
+    <h1>Welcome to ConnectHooks</h1>
+    <p>The Salesforce managed package that turns external webhook JSON into Salesforce records — automatically, securely, and without custom Apex code.</p>
+  </div>
+
+  <div class="alert alert-info"><span class="alert-icon">ℹ️</span><div><strong>What is ConnectHooks?</strong> A webhook receiver + field mapper + record creator, all inside Salesforce. Namespace: <code>xccch</code> · Version 1.0 · Feb 2026</div></div>
+
+  <h2 class="section-title">🎯 What Problem It Solves</h2>
+  <p>Every Salesforce org needs data from external systems — lead capture forms, payment gateways, event registrations, survey tools. Traditionally this requires custom Apex REST classes for every integration. ConnectHooks solves this with a <strong>zero-code, config-driven webhook platform</strong>.</p>
+  <p>An admin creates a webhook, draws lines between JSON fields and Salesforce fields in a visual UI, and from that point forward every form submission automatically becomes a Salesforce record.</p>
+
+  <div class="cards">
+    <div class="card"><div class="card-icon">📡</div><h3>Webhook Endpoint</h3><p>Secure public URL that accepts HTTP POST JSON from any system.</p></div>
+    <div class="card"><div class="card-icon">🔐</div><h3>Dual-Factor Auth</h3><p>Secure URL Code + API Key header — two independent checks per request.</p></div>
+    <div class="card"><div class="card-icon">🗺️</div><h3>Visual Mapper</h3><p>Drag-and-drop UI maps JSON paths to Salesforce fields. No code needed.</p></div>
+    <div class="card"><div class="card-icon">⚡</div><h3>Instant Records</h3><p>Creates SObject records, supports arrays, parent-child hierarchies.</p></div>
+    <div class="card"><div class="card-icon">🧩</div><h3>JSONPath Engine</h3><p>Full RFC 9535 JSONPath built in Apex — no external libraries required.</p></div>
+    <div class="card"><div class="card-icon">🔌</div><h3>Custom Handler</h3><p>Plug in your own Apex via <code>ICHCustomHandler</code> interface.</p></div>
+  </div>
+
+  <h2 class="section-title">📦 Package Summary</h2>
+  <div class="kv-grid">
+    <div class="kv-row"><div class="kv-key">Package Type</div><div class="kv-val">Salesforce Managed Package (ISV)</div></div>
+    <div class="kv-row"><div class="kv-key">Namespace</div><div class="kv-val"><code>xccch</code></div></div>
+    <div class="kv-row"><div class="kv-key">Version</div><div class="kv-val">1.0 · February 2026</div></div>
+    <div class="kv-row"><div class="kv-key">REST Endpoint</div><div class="kv-val"><code>/ConnectHooksSubmissionService/*</code></div></div>
+    <div class="kv-row"><div class="kv-key">Runs As</div><div class="kv-val">Salesforce Public Site Guest User</div></div>
+    <div class="kv-row"><div class="kv-key">Rate Limit</div><div class="kv-val">300 requests / 24 hours per webhook (default)</div></div>
+    <div class="kv-row"><div class="kv-key">Webhook Limit</div><div class="kv-val">2 max (Free Edition — enforced by trigger)</div></div>
+  </div>
+</section>
+
+<!-- ══════════ ARCHITECTURE ══════════ -->
+<section class="doc-section" id="sec-architecture">
+  <div class="page-header">
+    <div class="breadcrumb">ConnectHooks › <span>System Architecture</span></div>
+    <h1>System Architecture</h1>
+    <p>ConnectHooks is built on three distinct layers: Configuration, Runtime, and Support Services.</p>
+  </div>
+
+  <div id="arch-overview"></div>
+  <h2 class="section-title">🏗️ Three-Layer Design</h2>
+  <p>The package separates concerns into three layers so that admin configuration never breaks the runtime, and shared services stay reusable across both.</p>
+
+  <div id="arch-layer1"></div>
+  <div class="layer layer-1">
+    <div class="layer-label">Layer 1 — Admin-Time</div>
+    <h3>⚙️ Configuration Layer</h3>
+    <ul>
+      <li>Admin opens the <strong>ConnectHooks Config LWC</strong> tab and runs the 7-step setup wizard.</li>
+      <li>Wizard creates a public Salesforce Site, assigns permission sets, creates a File Library.</li>
+      <li>Admin creates Webhooks and uses the <strong>Mapping UI</strong> to define JSON → Salesforce field links.</li>
+      <li>All settings stored in <code>ConnectHooks_Config_Settings__c</code> custom settings and custom objects.</li>
+    </ul>
+  </div>
+
+  <div id="arch-layer2"></div>
+  <div class="layer layer-2">
+    <div class="layer-label">Layer 2 — Run-Time</div>
+    <h3>🔄 Runtime Layer</h3>
+    <ul>
+      <li>External system POSTs JSON to the public site endpoint URL.</li>
+      <li><code>ConnectHooksSubmissionWebService</code> receives it as the public site guest user.</li>
+      <li>9-step pipeline: authenticate → validate → map fields → create records → store JSON → queue files.</li>
+    </ul>
+  </div>
+
+  <div id="arch-layer3"></div>
+  <div class="layer layer-3">
+    <div class="layer-label">Layer 3 — Shared Services</div>
+    <h3>🛠️ Support Layer</h3>
+    <ul>
+      <li><code>ConnectHooksSOQL</code> — centralised SOQL (runs without sharing for guest access).</li>
+      <li><code>FormResponseUtil</code> — key generation, config reading, file creation, type conversion.</li>
+      <li><code>JSONPathEvaluator</code> + <code>JsonParserWithJsonPath</code> — full RFC 9535 JSONPath in Apex.</li>
+      <li><code>ErrorMsg</code> + <code>ErrorMessageConfig</code> — all error messages in one place.</li>
+      <li><code>WebhookLimitTrigger</code> — database trigger enforcing webhook creation limits.</li>
+    </ul>
+  </div>
+
+  <h2 class="section-title">🔗 Endpoint URL Format</h2>
+  <pre><code>{siteSecureURL}/services/apexrest/xccch/ConnectHooksSubmissionService/{webhookName}/{secureCode}</code></pre>
+
+  <h2 class="section-title">📊 Architecture Flow</h2>
+  <pre><code>External System (HTTP POST JSON)
+        │
+        ▼
+Salesforce Public Site (Guest User)
+  └── ConnectHooksSubmissionWebService
+        ① Parse URL → get webhookName + secureCode
+        ② Validate secureCode matches CH_Webhook__c record
+        ③ Load Webhook record (ConnectHooksSOQL)
+        ④ Validate API Key (FormResponseUtil.validateAPIKey)
+        ⑤ Check Rate Limit (RequestCount__c vs limit)
+        ⑥ Validate JSON Schema (if JSON_Schema__c exists)
+        ⑦ Execute Mapping OR Custom Handler
+        ⑧ Store raw JSON → Form_Submission__c
+        ⑨ Queue file downloads (FormAttachmentFilesHandlerQueueable)
+        │
+        ▼
+   JSON Response → { success, recordId, message }</code></pre>
+</section>
+
+<!-- ══════════ KEY FEATURES ══════════ -->
+<section class="doc-section" id="sec-features">
+  <div class="page-header">
+    <div class="breadcrumb">ConnectHooks › <span>Key Features</span></div>
+    <h1>Key Features</h1>
+    <p>Deep-dive into every capability that ConnectHooks ships with out of the box.</p>
+  </div>
+
+  <div id="feat-webhook"></div>
+  <h2 class="section-title">📡 Webhook Endpoint</h2>
+  <p>Each webhook gets a unique public HTTPS URL. The URL contains two security tokens embedded directly: the webhook name and a 48-character secure code. Any HTTP client can POST JSON to this URL.</p>
+  <div class="alert alert-info"><span class="alert-icon">ℹ️</span><div>The endpoint runs on a Salesforce Public Site so no Salesforce login is needed from the caller. All security is handled by ConnectHooks itself.</div></div>
+
+  <div id="feat-auth"></div>
+  <h2 class="section-title">🔐 Authentication — Dual-Factor</h2>
+  <p>Every request must pass <strong>two independent authentication checks</strong>:</p>
+  <table class="doc-table">
+    <thead><tr><th>Check</th><th>How</th><th>Value</th></tr></thead>
+    <tbody>
+      <tr><td>Secure URL Code</td><td>Embedded in URL path</td><td>48-char dash-separated random string</td></tr>
+      <tr><td>API Key</td><td><code>x-api-key</code> header OR JSON body field</td><td>48-char alphanumeric token (stored encrypted)</td></tr>
+    </tbody>
+  </table>
+  <p>The API key is stored as an SHA-256 hash in <code>CH_Webhook__c.Enc_Api_Key__c</code>. Validation rehashes the incoming key and compares. The plain key is never stored.</p>
+
+  <div id="feat-mapping"></div>
+  <h2 class="section-title">🗺️ Field Mapping with JSONPath</h2>
+  <p>Admins use the <strong>mappingUi LWC</strong> to visually connect JSON fields to Salesforce fields. Each mapping line stores a JSONPath expression (e.g. <code>$.orders[*].id</code>) in <code>CH_Mapping__c.JsonPath_Expression__c</code>.</p>
+  <p>At runtime, <code>JSONPathEvaluator</code> evaluates these expressions against the incoming JSON and extracts values. The JSONPath engine supports:</p>
+  <ul style="font-size:0.875rem;color:var(--text-muted);padding-left:1.5rem;margin-bottom:1rem;">
+    <li>Root <code>$.field</code> and nested <code>$.parent.child</code> access</li>
+    <li>Array indexing <code>$.items[0]</code> and wildcard <code>$.items[*]</code></li>
+    <li>Filter expressions <code>$.items[?(@.price > 10)]</code></li>
+    <li>Recursive descent <code>$..fieldName</code></li>
+  </ul>
+
+  <div id="feat-records"></div>
+  <h2 class="section-title">📝 Record Creation</h2>
+  <p><code>WebhookRuntimeService</code> reads the <code>CH_Mapping_Object__c</code> tree and creates SObject records dynamically using <code>Database.insert</code>. It handles:</p>
+  <div class="cards">
+    <div class="card"><div class="card-icon">📄</div><h3>Single Record</h3><p>One JSON object → one SObject record with mapped field values.</p></div>
+    <div class="card"><div class="card-icon">📚</div><h3>Array / Multiple Records</h3><p>A JSON array <code>[{...},{...}]</code> → multiple records in one request.</p></div>
+    <div class="card"><div class="card-icon">🌳</div><h3>Parent-Child Hierarchy</h3><p>Child mapping objects reference the parent's new record ID automatically.</p></div>
+  </div>
+
+  <div id="feat-files"></div>
+  <h2 class="section-title">📁 File Attachments</h2>
+  <p>If the JSON payload contains file URLs, <code>FormAttachmentFilesHandlerQueueable</code> downloads each file via HTTP callout and creates a <code>ContentVersion</code> record linked to the new Salesforce record. Files are stored in the <strong>ConnectForm Library</strong> (<code>ContentWorkspace</code>).</p>
+
+  <div id="feat-handler"></div>
+  <h2 class="section-title">🔌 Custom Handler API</h2>
+  <p>Developers can bypass the standard mapping engine by implementing the <code>ICHCustomHandler</code> interface and registering the class name on the webhook record (<code>CH_Webhook__c.Custom_Handler_Class__c</code>).</p>
+  <pre><code>// Implement this interface in your Apex class
+public class MyHandler implements xccch.ICHCustomHandler {
+    public void execute(String jsonPayload) {
+        // Parse the payload and do custom logic here
+        Map&lt;String,Object&gt; data = (Map&lt;String,Object&gt;)
+            JSON.deserializeUntyped(jsonPayload);
+        // Create/update records as needed
+    }
+}</code></pre>
+  <div class="alert alert-warn"><span class="alert-icon">⚠️</span><div>Authentication and rate limiting still run even when a custom handler is used. Only the mapping step is replaced.</div></div>
+</section>
+
+<!-- ══════════ SETUP ══════════ -->
+<section class="doc-section" id="sec-setup">
+  <div class="page-header">
+    <div class="breadcrumb">ConnectHooks › <span>Installation &amp; Setup</span></div>
+    <h1>Installation &amp; Setup</h1>
+    <p>Everything that happens when the package is installed and how the admin completes first-time configuration.</p>
+  </div>
+
+  <div id="setup-postinstall"></div>
+  <h2 class="section-title">📦 Post-Install Script</h2>
+  <p>Salesforce automatically calls <code>ConnectHooksPackagePostInstallClass.onInstall(context)</code> when the package is installed or upgraded. Two things happen:</p>
+  <ol class="steps">
+    <li class="step-item"><div class="step-body"><h4>assignPermissionSet(installingUserId)</h4><p>Queries the <code>ConnectHooks_Admin</code> permission set and creates a <code>PermissionSetAssignment</code> record so the installing user has full access immediately.</p></div></li>
+    <li class="step-item"><div class="step-body"><h4>createDefaultConfigSettings()</h4><p>Creates the org-level <code>ConnectHooks_Config_Settings__c</code> custom setting and sets the default AI backend URL (<code>https://apps.getxccelerance.com/connecthooks</code>) if the field is blank.</p></div></li>
+  </ol>
+  <div class="alert alert-success"><span class="alert-icon">✅</span><div>Both operations run with <code>SYSTEM_MODE</code>. Errors are caught and logged — they do not block the install.</div></div>
+
+  <div id="setup-wizard"></div>
+  <h2 class="section-title">🧙 7-Step Setup Wizard</h2>
+  <p>The admin opens the <strong>connectHooksConfiguration LWC</strong> tab. Steps must be completed in order:</p>
+  <table class="doc-table">
+    <thead><tr><th>#</th><th>Step Title</th><th>LWC</th><th>What Happens</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Create Public Site</td><td><code>stepCreatePublicSite</code></td><td>MANUAL — admin creates a Salesforce public site in Setup, then marks done. Updates <code>Step_Create_Public_Site__c = true</code>.</td></tr>
+      <tr><td>2</td><td>Select Public Site</td><td><code>stepSetPublicSiteUsedInApp</code></td><td>Dropdown of available sites. Saves chosen site to <code>Public_Site_Used__c</code>. Field is locked after selection.</td></tr>
+      <tr><td>3</td><td>Assign Site User Permissions</td><td><code>stepAssignPsToSiteUser</code></td><td>Button calls <code>ConnectHooksConfigUtil.assignSitePSToPublicSiteUser()</code> → assigns <code>ConnectHooks_Public_Site_User_Permissions</code> to the guest user.</td></tr>
+      <tr><td>4</td><td>Create Files Library</td><td><code>stepCreateFilesLibrary</code></td><td>Creates <code>ContentWorkspace</code> named "ConnectForm Library". Adds guest user as Author member.</td></tr>
+      <tr><td>5</td><td>Enable JSON Storage</td><td><code>stepEnableJsonFilesStorage</code></td><td>Toggle. When ON, saves raw JSON as <code>Form_Submission__c</code> and ContentVersion. Saved to <code>Disable_Storage_Of_Form_Submission_JSON__c</code> (inverted flag).</td></tr>
+      <tr><td>6</td><td>Generate JSONPath API Key</td><td><code>stepJsonPathGenerateApiKey</code></td><td>HTTP callout to <code>https://apps.getxccelerance.com/connecthooks</code> — gets an API key for the JSONPath Generator feature. Saves to <code>JSONPath_Gen_Sys_API_Key__c</code>.</td></tr>
+      <tr><td>7</td><td>Create Webhook</td><td><code>webhookModal / webhookEntry</code></td><td>Admin creates first webhook. Repeatable for every new integration.</td></tr>
+    </tbody>
+  </table>
+  <div class="alert alert-info"><span class="alert-icon">ℹ️</span><div>Steps 1–6 are one-time per org. Step 7 is repeated every time a new webhook integration is needed.</div></div>
+
+  <div id="setup-webhook"></div>
+  <h2 class="section-title">🔗 Creating a Webhook</h2>
+  <p>When admin clicks <strong>New Webhook</strong>, <code>ConnectHooksConfigurationController.createWebhook(webhookData)</code> runs these steps:</p>
+  <ol class="steps">
+    <li class="step-item"><div class="step-body"><h4>Name Validation</h4><p>If blank or contains spaces → error (<code>ErrorMsg.webhookNameNoSpaces</code>).</p></div></li>
+    <li class="step-item"><div class="step-body"><h4>Duplicate Check</h4><p>Queries <code>CH_Webhook__c</code> by name. If found → error.</p></div></li>
+    <li class="step-item"><div class="step-body"><h4>Generate Secure URL Code</h4><p>Calls <code>FormResponseUtil.createSecureURLCode()</code> — 48-char random lowercase/number string with dashes.</p></div></li>
+    <li class="step-item"><div class="step-body"><h4>Generate API Key</h4><p>Calls <code>FormResponseUtil.createAPIKeyTokenString()</code> — 48-char random alphanumeric (upper + lower + digits).</p></div></li>
+    <li class="step-item"><div class="step-body"><h4>Insert Record</h4><p>Inserts <code>CH_Webhook__c</code> with <code>Webook_Name__c</code>, <code>Secure_URL_Code__c</code>, <code>Enc_Api_Key__c</code>, <code>is_Active__c = true</code>.</p></div></li>
+    <li class="step-item"><div class="step-body"><h4>Trigger Fires</h4><p><code>WebhookLimitTrigger</code> → checks if user exceeded <code>CH_Config_Meta_Store__mdt.Free_Edition.Webhook_Creation_Limit__c</code>. If exceeded → <code>addError()</code> blocks insert.</p></div></li>
+  </ol>
+
+  <div id="setup-mapping"></div>
+  <h2 class="section-title">🗺️ Setting Up Field Mappings</h2>
+  <p>Admin opens the <strong>mappingUi LWC</strong>. When Save is clicked, <code>MappingController.saveMappingData()</code> runs:</p>
+  <ol class="steps">
+    <li class="step-item"><div class="step-body"><h4>Schema Save</h4><p>If JSON schema uploaded → upserts <code>JSON_Schema__c</code> linked to the webhook.</p></div></li>
+    <li class="step-item"><div class="step-body"><h4>Hierarchy Flatten</h4><p><code>flattenHierarchyWithIds()</code> walks the object tree and builds parent→child maps.</p></div></li>
+    <li class="step-item"><div class="step-body"><h4>Upsert Mapping Objects</h4><p>Creates/updates <code>CH_Mapping_Object__c</code> records with target Salesforce object API name and parent references.</p></div></li>
+    <li class="step-item"><div class="step-body"><h4>Delete Orphans</h4><p>Old <code>CH_Mapping_Object__c</code> records not in the new save are deleted along with their <code>CH_Mapping__c</code> children.</p></div></li>
+    <li class="step-item"><div class="step-body"><h4>Insert Field Mappings</h4><p>Inserts <code>CH_Mapping__c</code> records with <code>Fields__c</code> (SF field API name) and <code>JsonPath_Expression__c</code>.</p></div></li>
+  </ol>
+</section>
+
+<!-- ══════════ RUNTIME FLOW ══════════ -->
+<section class="doc-section" id="sec-runtime">
+  <div class="page-header">
+    <div class="breadcrumb">ConnectHooks › <span>Runtime Flow</span></div>
+    <h1>Runtime Flow</h1>
+    <p>The 9-step pipeline that runs inside <code>ConnectHooksSubmissionWebService.handleWebhookRequest()</code> on every incoming webhook call.</p>
+  </div>
+
+  <div class="alert alert-info"><span class="alert-icon">ℹ️</span><div>The class is declared <code>@RestResource(urlMapping="/ConnectHooksSubmissionService/*")</code> — runs as the public site guest user.</div></div>
+
+  <div id="rt-step1"></div>
+  <h2 class="section-title">Step 1 — Extract Webhook Identity</h2>
+  <p>Parses the request URI to extract <code>webhookName</code> and <code>secureCode</code>:</p>
+  <pre><code>String urlPath = req.requestURI.substringAfter('/ConnectHooksSubmissionService/');
+List&lt;String&gt; pathParts = urlPath.split('/');
+String webhookName = pathParts[0];   // e.g. MyForm
+String secureCode  = pathParts[1];   // e.g. a1b2c3d4-e5f6-...</code></pre>
+
+  <div id="rt-step2"></div>
+  <h2 class="section-title">Step 2 — Validate Secure URL Code &amp; Load Webhook</h2>
+  <p>Calls <code>ConnectHooksSOQL.getWebhookByName(webhookName)</code>. If not found or <code>is_Active__c = false</code> → returns 404. Compares URL's secureCode with <code>CH_Webhook__c.Secure_URL_Code__c</code>. Mismatch → 401.</p>
+
+  <div id="rt-step3"></div>
+  <h2 class="section-title">Step 3 — Rate Limit Check</h2>
+  <p>Reads <code>RequestCount__c</code> and <code>RequestCountResetTime__c</code> from the webhook record. If current count ≥ limit AND within the rolling 24-hour window → returns 429 Too Many Requests and increments the counter.</p>
+
+  <div id="rt-step4"></div>
+  <h2 class="section-title">Step 4 — API Key Authentication</h2>
+  <p>Reads the API key from the <code>x-api-key</code> header. If absent, checks the JSON body for an <code>api_key</code> field. Calls <code>FormResponseUtil.validateAPIKey(storedHash, incomingKey)</code> which SHA-256 hashes the incoming key and compares. Mismatch → 401.</p>
+
+  <div id="rt-step5"></div>
+  <h2 class="section-title">Step 5 — JSON Schema Validation</h2>
+  <p>If a <code>JSON_Schema__c</code> record is linked to the webhook, validates that all required fields listed in the schema are present in the incoming JSON. Missing fields → 400 with field list.</p>
+
+  <div id="rt-step6"></div>
+  <h2 class="section-title">Step 6 — Field Mapping &amp; Record Creation</h2>
+  <p>If <code>CH_Webhook__c.Custom_Handler_Class__c</code> is set → instantiates and calls the custom handler. Otherwise calls <code>WebhookRuntimeService.processWebhookData()</code>:</p>
+  <ol class="steps">
+    <li class="step-item"><div class="step-body"><h4>Load Mapping Tree</h4><p>Queries <code>CH_Mapping_Object__c</code> with child <code>CH_Mapping__c</code> records for this webhook.</p></div></li>
+    <li class="step-item"><div class="step-body"><h4>Evaluate JSONPath</h4><p><code>JSONPathEvaluator.evaluate(jsonPayload, expression)</code> extracts values for every mapped field.</p></div></li>
+    <li class="step-item"><div class="step-body"><h4>Type Conversion</h4><p><code>FormResponseUtil.convertFieldValue()</code> casts String values to the target field's Schema type (Date, Decimal, Boolean, etc).</p></div></li>
+    <li class="step-item"><div class="step-body"><h4>DML Insert</h4><p>Calls <code>Database.insert(records, AccessLevel.USER_MODE)</code> — respects FLS and sharing.</p></div></li>
+    <li class="step-item"><div class="step-body"><h4>Wire Child Records</h4><p>Child mapping objects get their lookup field set to the parent record's new ID.</p></div></li>
+  </ol>
+
+  <div id="rt-step7"></div>
+  <h2 class="section-title">Steps 7–9 — Storage &amp; Attachments</h2>
+  <p><strong>Step 7 (JSON Storage):</strong> If <code>Disable_Storage_Of_Form_Submission_JSON__c = false</code>, creates a <code>Form_Submission__c</code> record with the raw JSON payload and a <code>ContentVersion</code> file in the ConnectForm Library.</p>
+  <p><strong>Step 8 (File Queue):</strong> If file URLs found in payload, enqueues <code>FormAttachmentFilesHandlerQueueable</code> to download files asynchronously.</p>
+  <p><strong>Step 9 (Response):</strong> Returns JSON <code>{ "success": true, "recordId": "...", "message": "..." }</code>.</p>
+</section>
+
+<!-- ══════════ DATA MODEL ══════════ -->
+<section class="doc-section" id="sec-datamodel">
+  <div class="page-header">
+    <div class="breadcrumb">ConnectHooks › <span>Core Data Model</span></div>
+    <h1>Core Data Model</h1>
+    <p>All custom objects, custom settings, and custom metadata used by ConnectHooks.</p>
+  </div>
+
+  <div id="dm-objects"></div>
+  <h2 class="section-title">📦 Custom Objects</h2>
+
+  <h3 class="sub-section-title">CH_Webhook__c — Webhook Registry</h3>
+  <table class="doc-table">
+    <thead><tr><th>Field</th><th>Type</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td>Webook_Name__c</td><td>Text(80)</td><td>Unique name. No spaces. Used in the endpoint URL.</td></tr>
+      <tr><td>Secure_URL_Code__c</td><td>Text(255)</td><td>48-char dash-separated code embedded in endpoint URL.</td></tr>
+      <tr><td>Enc_Api_Key__c</td><td>Text(255)</td><td>SHA-256 hash of the API key. Plain key is never stored.</td></tr>
+      <tr><td>is_Active__c</td><td>Checkbox</td><td>If false, all requests rejected with 404.</td></tr>
+      <tr><td>RequestCount__c</td><td>Number</td><td>Rolling request counter for rate limiting.</td></tr>
+      <tr><td>RequestCountResetTime__c</td><td>DateTime</td><td>When the current rate limit window started.</td></tr>
+      <tr><td>Custom_Handler_Class__c</td><td>Text(255)</td><td>Apex class name implementing ICHCustomHandler (optional).</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="sub-section-title">CH_Mapping_Object__c — Target Object Config</h3>
+  <table class="doc-table">
+    <thead><tr><th>Field</th><th>Type</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td>Custom_Object__c</td><td>Text(255)</td><td>API name of target Salesforce object (e.g. Lead, Contact__c).</td></tr>
+      <tr><td>Webhook__c</td><td>Lookup(CH_Webhook__c)</td><td>Parent webhook this mapping belongs to.</td></tr>
+      <tr><td>Parent_Mapping_Object__c</td><td>Lookup(self)</td><td>Points to parent object for hierarchical record creation.</td></tr>
+      <tr><td>Parent_Lookup_Field__c</td><td>Text(255)</td><td>API name of the lookup field that links child to parent.</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="sub-section-title">CH_Mapping__c — Field-Level Mappings</h3>
+  <table class="doc-table">
+    <thead><tr><th>Field</th><th>Type</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td>Mapping_Object__c</td><td>Lookup(CH_Mapping_Object__c)</td><td>Which object config this field mapping belongs to.</td></tr>
+      <tr><td>Fields__c</td><td>Text(255)</td><td>Salesforce field API name (e.g. LastName, Email).</td></tr>
+      <tr><td>JsonPath_Expression__c</td><td>Text(500)</td><td>JSONPath expression to extract value (e.g. $.contact.email).</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="sub-section-title">Form_Submission__c — Raw Payload Log</h3>
+  <table class="doc-table">
+    <thead><tr><th>Field</th><th>Type</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td>Webhook__c</td><td>Lookup(CH_Webhook__c)</td><td>Which webhook received this request.</td></tr>
+      <tr><td>Raw_JSON__c</td><td>Long Text Area</td><td>The complete incoming JSON payload.</td></tr>
+      <tr><td>Status__c</td><td>Text</td><td>success / error</td></tr>
+      <tr><td>Error_Message__c</td><td>Long Text Area</td><td>Error details if processing failed.</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="sub-section-title">JSON_Schema__c — Validation Schema</h3>
+  <p>Stores a JSON schema string linked to a webhook. Used by the runtime to validate required fields in incoming payloads before processing begins.</p>
+
+  <div id="dm-settings"></div>
+  <h2 class="section-title">⚙️ Custom Settings</h2>
+  <h3 class="sub-section-title">ConnectHooks_Config_Settings__c (Hierarchy)</h3>
+  <table class="doc-table">
+    <thead><tr><th>Field</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td>Public_Site_Used__c</td><td>Name of the selected public Salesforce Site.</td></tr>
+      <tr><td>Secure_URL_Code__c</td><td>Site-level secure code (deprecated; per-webhook now).</td></tr>
+      <tr><td>Site_URL__c</td><td>Base URL of the public site.</td></tr>
+      <tr><td>Step_Create_Public_Site__c</td><td>Checkbox — Step 1 of wizard done.</td></tr>
+      <tr><td>Disable_Storage_Of_Form_Submission_JSON__c</td><td>When true, raw JSON is NOT saved (inverted flag).</td></tr>
+      <tr><td>JSONPath_Gen_Sys_API_Key__c</td><td>API key for the external JSONPath Generator service.</td></tr>
+      <tr><td>AI_BackEnd_EndPoint_Url__c</td><td>Backend URL (default: https://apps.getxccelerance.com/connecthooks).</td></tr>
+    </tbody>
+  </table>
+
+  <div id="dm-metadata"></div>
+  <h2 class="section-title">🏷️ Custom Metadata</h2>
+  <h3 class="sub-section-title">CH_Config_Meta_Store__mdt</h3>
+  <p>Stores edition-specific limits. The <code>Free_Edition</code> record defines:</p>
+  <div class="kv-grid">
+    <div class="kv-row"><div class="kv-key">Webhook_Creation_Limit__c</div><div class="kv-val">Maximum webhooks allowed (Free: 2)</div></div>
+    <div class="kv-row"><div class="kv-key">Request_Rate_Limit__c</div><div class="kv-val">Max requests per 24 hours per webhook (default: 300)</div></div>
+  </div>
+</section>
+
+<!-- ══════════ SECURITY ══════════ -->
+<section class="doc-section" id="sec-security">
+  <div class="page-header">
+    <div class="breadcrumb">ConnectHooks › <span>API &amp; Security</span></div>
+    <h1>API &amp; Security</h1>
+    <p>Security model, permission sets, Apex classes overview, and LWC components.</p>
+  </div>
+
+  <div id="sec-model"></div>
+  <h2 class="section-title">🛡️ Security Model</h2>
+  <div class="alert alert-success"><span class="alert-icon">🔒</span><div><strong>Layered Security:</strong> Every request must independently pass 4 gates. Bypassing one does not grant access via another.</div></div>
+  <table class="doc-table">
+    <thead><tr><th>Gate</th><th>Check</th><th>Fail Response</th></tr></thead>
+    <tbody>
+      <tr><td>1 — Secure URL Code</td><td>URL path token matches <code>CH_Webhook__c.Secure_URL_Code__c</code></td><td>401 Unauthorized</td></tr>
+      <tr><td>2 — Webhook Active</td><td><code>is_Active__c = true</code></td><td>404 Not Found</td></tr>
+      <tr><td>3 — API Key</td><td>SHA-256(incoming) = <code>Enc_Api_Key__c</code></td><td>401 Unauthorized</td></tr>
+      <tr><td>4 — Rate Limit</td><td>Request count ≤ limit within 24h window</td><td>429 Too Many Requests</td></tr>
+    </tbody>
+  </table>
+  <p>Additionally, the <code>WebhookLimitTrigger</code> enforces the creation limit at the database level — it cannot be bypassed via any interface, including Data Loader or direct API calls.</p>
+
+  <div id="sec-perm"></div>
+  <h2 class="section-title">👥 Permission Sets</h2>
+  <table class="doc-table">
+    <thead><tr><th>Permission Set</th><th>Who Gets It</th><th>Access Granted</th></tr></thead>
+    <tbody>
+      <tr><td>ConnectHooks_Admin</td><td>Installing user (auto) + other admins (manual)</td><td>Full CRUD on all ConnectHooks objects. Access to all Apex classes and LWC. Required to use Config tab and Mapping UI.</td></tr>
+      <tr><td>ConnectHooks_Public_Site_User_Permissions</td><td>Site guest user (Step 3 of wizard)</td><td>Read access to CH_Webhook__c, CH_Mapping_Object__c, CH_Mapping__c. Access to ConnectHooksSubmissionWebService. Minimum needed to process webhook requests.</td></tr>
+    </tbody>
+  </table>
+
+  <div id="sec-api"></div>
+  <h2 class="section-title">💻 Apex Classes</h2>
+  <table class="doc-table">
+    <thead><tr><th>Class</th><th>Sharing</th><th>Key Method(s)</th><th>Role</th></tr></thead>
+    <tbody>
+      <tr><td>ConnectHooksSubmissionWebService</td><td>with sharing</td><td>handleWebhookRequest()</td><td>Main REST entry point — processes all webhook requests</td></tr>
+      <tr><td>WebhookRuntimeService</td><td>with sharing</td><td>processWebhookData()</td><td>Field mapping, type conversion, record DML</td></tr>
+      <tr><td>ConnectHooksConfigurationController</td><td>with sharing</td><td>createWebhook(), generateAndSaveJsonPathApiKey()</td><td>Admin LWC controller for webhook management</td></tr>
+      <tr><td>ConnectHooksConfigUtil</td><td>with sharing</td><td>assignSitePSToPublicSiteUser(), createContentWorkspaceLibrary()</td><td>Setup wizard backend</td></tr>
+      <tr><td>MappingController</td><td>with sharing</td><td>saveMappingData(), getMappingData()</td><td>Saves/loads field mappings from the Mapping UI</td></tr>
+      <tr><td>ConnectHooksSOQL</td><td>without sharing</td><td>getWebhookByName(), getMappingsForWebhook()</td><td>Centralised SOQL — guest user can query via this class</td></tr>
+      <tr><td>FormResponseUtil</td><td>with sharing</td><td>createSecureURLCode(), createAPIKeyTokenString(), validateAPIKey(), convertFieldValue()</td><td>Utility — key gen, config reading, type conversion</td></tr>
+      <tr><td>JSONPathEvaluator</td><td>with sharing</td><td>evaluate(json, path)</td><td>Evaluates JSONPath expressions against payload</td></tr>
+      <tr><td>JsonParserWithJsonPath</td><td>with sharing</td><td>parse(), traverse()</td><td>Low-level JSON parser powering the JSONPath engine</td></tr>
+      <tr><td>ObjectFieldController</td><td>with sharing</td><td>getSObjects(), getObjectFields(), getRequiredFields()</td><td>Provides object/field metadata to Mapping UI</td></tr>
+      <tr><td>JSONPathAPIController</td><td>with sharing</td><td>evaluateJSONPath()</td><td>Live JSONPath preview in the Mapping UI</td></tr>
+      <tr><td>ConnectHooksPackagePostInstallClass</td><td>with sharing</td><td>onInstall(context)</td><td>Post-install script — permission set + config setup</td></tr>
+      <tr><td>WebhookLimitTriggerHandler</td><td>with sharing</td><td>handleBeforeInsert()</td><td>Enforces max webhook creation limit</td></tr>
+      <tr><td>FormAttachmentFilesHandlerQueueable</td><td>with sharing</td><td>execute(QueueableContext)</td><td>Async file download and ContentVersion creation</td></tr>
+      <tr><td>ICHCustomHandler</td><td>interface</td><td>execute(String jsonPayload)</td><td>Interface for custom handler classes</td></tr>
+      <tr><td>ErrorMsg / ErrorMessageConfig</td><td>with sharing</td><td>—</td><td>Centralised error message constants</td></tr>
+    </tbody>
+  </table>
+
+  <div id="sec-lwc"></div>
+  <h2 class="section-title">🖥️ LWC Components</h2>
+  <table class="doc-table">
+    <thead><tr><th>Component</th><th>Tab / Location</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td>connectHooksConfiguration</td><td>ConnectHooks Config Tab</td><td>Main config tab — hosts the 7-step wizard and webhook list</td></tr>
+      <tr><td>stepCreatePublicSite</td><td>Wizard Step 1</td><td>Instructions for creating a Salesforce public site</td></tr>
+      <tr><td>stepSetPublicSiteUsedInApp</td><td>Wizard Step 2</td><td>Dropdown to select which site to use</td></tr>
+      <tr><td>stepAssignPsToSiteUser</td><td>Wizard Step 3</td><td>Button to assign guest user permission set</td></tr>
+      <tr><td>stepCreateFilesLibrary</td><td>Wizard Step 4</td><td>Button to create the ConnectForm Library</td></tr>
+      <tr><td>stepEnableJsonFilesStorage</td><td>Wizard Step 5</td><td>Toggle for raw JSON storage</td></tr>
+      <tr><td>stepJsonPathGenerateApiKey</td><td>Wizard Step 6</td><td>Button to register org and get JSONPath API key</td></tr>
+      <tr><td>webhookModal / webhookEntry</td><td>Wizard Step 7</td><td>Create webhook form</td></tr>
+      <tr><td>mappingUi</td><td>Mapping tab</td><td>Visual drag-and-drop JSON → Salesforce field mapper</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ══════════ TROUBLESHOOTING ══════════ -->
+<section class="doc-section" id="sec-troubleshoot">
+  <div class="page-header">
+    <div class="breadcrumb">ConnectHooks › <span>Troubleshooting &amp; Logs</span></div>
+    <h1>Troubleshooting &amp; Logs</h1>
+    <p>Common issues and how to diagnose them using ConnectHooks' built-in logging.</p>
+  </div>
+
+  <h2 class="section-title">📋 Reading Form_Submission__c Logs</h2>
+  <p>Every webhook request (successful or failed) creates a <code>Form_Submission__c</code> record (if JSON storage is enabled). Check these fields:</p>
+  <div class="kv-grid">
+    <div class="kv-row"><div class="kv-key">Status__c</div><div class="kv-val"><span class="badge badge-green">success</span> or <span class="badge badge-red">error</span></div></div>
+    <div class="kv-row"><div class="kv-key">Raw_JSON__c</div><div class="kv-val">The exact JSON payload received — use this to verify the payload structure.</div></div>
+    <div class="kv-row"><div class="kv-key">Error_Message__c</div><div class="kv-val">Detailed error if Status = error. Includes which field or check failed.</div></div>
+    <div class="kv-row"><div class="kv-key">Webhook__c</div><div class="kv-val">Which webhook received this request.</div></div>
+  </div>
+
+  <h2 class="section-title">❗ Common Errors &amp; Fixes</h2>
+  <table class="doc-table">
+    <thead><tr><th>HTTP Status</th><th>Error</th><th>Fix</th></tr></thead>
+    <tbody>
+      <tr><td><span class="badge badge-red">401</span></td><td>Invalid Secure URL Code</td><td>Copy the full endpoint URL from the webhook card. The secure code segment must match exactly.</td></tr>
+      <tr><td><span class="badge badge-red">401</span></td><td>Invalid API Key</td><td>Send the API key in the <code>x-api-key</code> header. Check for trailing spaces or encoding issues.</td></tr>
+      <tr><td><span class="badge badge-orange">404</span></td><td>Webhook not found / inactive</td><td>Verify the webhook name in the URL. Check <code>is_Active__c = true</code> on CH_Webhook__c.</td></tr>
+      <tr><td><span class="badge badge-orange">429</span></td><td>Rate limit exceeded</td><td>Wait for the 24-hour window to reset, or contact admin to raise the limit in <code>CH_Config_Meta_Store__mdt</code>.</td></tr>
+      <tr><td><span class="badge badge-red">400</span></td><td>JSON schema validation failed</td><td>Check <code>Error_Message__c</code> for the missing required fields. Update the payload or remove/update the JSON schema.</td></tr>
+      <tr><td><span class="badge badge-red">400</span></td><td>Field mapping / DML error</td><td>Verify JSONPath expressions in <code>CH_Mapping__c.JsonPath_Expression__c</code> match the payload structure. Check field-level permissions.</td></tr>
+      <tr><td>—</td><td>Webhook creation blocked</td><td>Free edition limit (2 webhooks) reached. Delete an existing webhook first.</td></tr>
+      <tr><td>—</td><td>Site guest user can't process</td><td>Run Step 3 of the setup wizard again to re-assign the <code>ConnectHooks_Public_Site_User_Permissions</code> permission set.</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="section-title">🔍 Debugging JSONPath Expressions</h2>
+  <p>Use the live preview in the <strong>mappingUi LWC</strong> — paste a sample JSON payload and click <strong>Test</strong> next to any mapping row. The <code>JSONPathAPIController.evaluateJSONPath()</code> method runs the expression and shows the extracted value.</p>
+  <p>You can also test manually using the developer console. Example:</p>
+  <pre><code>// In Salesforce Developer Console (Anonymous Apex)
+String json = '{"name":"John","email":"john@example.com"}';
+String path = '$.email';
+Object result = xccch.JSONPathEvaluator.evaluate(json, path);
+System.debug(result); // → john@example.com</code></pre>
+
+  <h2 class="section-title">💡 Design Principles</h2>
+  <div class="cards">
+    <div class="card"><div class="card-icon">1️⃣</div><h3>Single Entry Point</h3><p><code>ConnectHooksSubmissionWebService</code> is the only way in. All auth, validation, mapping, and DML happen in sequence in one <code>handleWebhookRequest()</code> call — easy to debug and audit.</p></div>
+    <div class="card"><div class="card-icon">2️⃣</div><h3>Mapping As Data</h3><p>Field mapping rules live in <code>CH_Mapping__c</code> records. Changing a mapping never requires a code deployment — the admin edits records in the UI.</p></div>
+    <div class="card"><div class="card-icon">3️⃣</div><h3>JSONPath In Apex</h3><p>The full JSONPath engine is built in Apex — no npm packages. Required because managed packages cannot include external JS. Supports RFC 9535 including wildcards, filters, and recursive descent.</p></div>
+    <div class="card"><div class="card-icon">4️⃣</div><h3>Layered Security</h3><p>Every request must pass 4 independent security checks. No single bypass grants access. Plus a database trigger enforces creation limits at the lowest possible level.</p></div>
+  </div>
+</section>
+
+</main>
+</div>
+
+<!-- FOOTER -->
+<footer class="doc-footer">
+  <span>ConnectHooks · Namespace: <code>xccch</code> · Version 1.0 · Feb 2026</span>
+  <div class="prev-next" id="prev-next-btns"></div>
+</footer>
+
+<script>
+const SECTIONS = ['introduction','architecture','features','setup','runtime','datamodel','security','troubleshoot'];
+const LABELS   = ['Introduction','System Architecture','Key Features','Installation & Setup','Runtime Flow','Core Data Model','API & Security','Troubleshooting & Logs'];
+
+let current = 'introduction';
+
+function showSection(id){
+  document.querySelectorAll('.doc-section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(a=>a.classList.remove('active'));
+  const sec = document.getElementById('sec-'+id);
+  if(sec) sec.classList.add('active');
+  const links = document.querySelectorAll('.nav-link');
+  links.forEach(l=>{ if(l.getAttribute('onclick') && l.getAttribute('onclick').includes("'"+id+"'")) l.classList.add('active'); });
+  current = id;
+  updatePrevNext();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function scrollTo(id){
+  setTimeout(()=>{
+    const el = document.getElementById(id);
+    if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+  },100);
+}
+
+function updatePrevNext(){
+  const idx = SECTIONS.indexOf(current);
+  const container = document.getElementById('prev-next-btns');
+  let html = '';
+  if(idx > 0) html += `<button class="pn-btn" onclick="showSection('${SECTIONS[idx-1]}')">← ${LABELS[idx-1]}</button>`;
+  if(idx < SECTIONS.length-1) html += `<button class="pn-btn" onclick="showSection('${SECTIONS[idx+1]}')">${LABELS[idx+1]} →</button>`;
+  container.innerHTML = html;
+}
+
+updatePrevNext();
+</script>
+</body>
+</html>
