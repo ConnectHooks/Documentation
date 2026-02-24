@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Overview — ConnectHooks Documentation</title>
+  <meta name="description" content="Overview of ConnectHooks — what it is, its core capabilities, and the three-layer high-level architecture.">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+<!-- ── Navigation ── -->
+<nav class="nav">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon">⚡</div>
+    ConnectHooks
+  </a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link" id="nav-home">🏠 Home</a>
+    <a href="overview.html" class="nav-link active" id="nav-overview">📋 Overview</a>
+    <a href="setup-flow.html" class="nav-link" id="nav-setup">⚙️ Setup Flow</a>
+    <a href="runtime-flow.html" class="nav-link" id="nav-runtime">🔄 Runtime Flow</a>
+    <a href="data-model.html" class="nav-link" id="nav-data">🗄️ Data Model</a>
+    <a href="apex-classes.html" class="nav-link" id="nav-apex">💻 Apex & LWC</a>
+    <a href="security.html" class="nav-link" id="nav-security">🔐 Security</a>
+  </div>
+</nav>
+
+<div class="page-wrapper">
+  <div class="container">
+
+    <!-- ── Hero ── -->
+    <div class="page-hero">
+      <div class="hero-badge">📋 Section 1 & 2 · Overview</div>
+      <h1>ConnectHooks Overview</h1>
+      <p>What ConnectHooks is, what it can do, and how its three-layer architecture fits together.</p>
+    </div>
+
+    <!-- ── 1. What Is ConnectHooks ── -->
+    <section class="section" id="what-is">
+      <h2 class="section-title">What Is ConnectHooks?</h2>
+
+      <div class="card" style="border-left: 3px solid var(--primary); margin-bottom: 1.5rem;">
+        <p style="font-size:1rem; color:var(--text); line-height:1.8;">
+          ConnectHooks is a <strong>Salesforce managed package</strong> (namespace <code style="font-family:monospace; background:rgba(255,255,255,0.08); padding:0.1rem 0.4rem; border-radius:4px; color:#7dd3fc;">xccch</code>) that gives external systems — forms, apps, or any HTTP client — a <strong>secure URL to POST JSON data into Salesforce</strong>. When the URL receives a payload, ConnectHooks maps the JSON fields to Salesforce object fields and creates records automatically. <em>No custom code is needed from the admin.</em>
+        </p>
+      </div>
+
+      <div class="info-box">
+        ℹ️ <strong>Think of ConnectHooks as:</strong> a webhook receiver + field mapper + record creator, all inside Salesforce.
+      </div>
+
+      <h3 class="subsection-title">Core Capabilities</h3>
+      <p style="color:var(--text-muted); margin-bottom:1rem;">The package ships with everything needed for a complete webhook integration platform:</p>
+
+      <table class="doc-table">
+        <thead>
+          <tr>
+            <th>Capability</th>
+            <th>What It Does</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Webhook Endpoint</td>
+            <td>Receives HTTP POST requests from any external system</td>
+          </tr>
+          <tr>
+            <td>API Key Authentication</td>
+            <td>Validates <code>x-api-key</code> header or body field before processing</td>
+          </tr>
+          <tr>
+            <td>Secure URL Code</td>
+            <td>48-char code embedded in the URL as a second authentication factor</td>
+          </tr>
+          <tr>
+            <td>Rate Limiting</td>
+            <td>Limits requests per webhook (default: 300 per 24 hours). Only 2 Webhook Creates allowed.</td>
+          </tr>
+          <tr>
+            <td>JSON Schema Check</td>
+            <td>Validates required fields in incoming JSON before mapping</td>
+          </tr>
+          <tr>
+            <td>Field Mapping</td>
+            <td>Maps JSON fields to Salesforce object fields using JSONPath expressions</td>
+          </tr>
+          <tr>
+            <td>Record Creation</td>
+            <td>Dynamically creates SObject records from mapped values</td>
+          </tr>
+          <tr>
+            <td>Array Support</td>
+            <td>Creates multiple records from JSON arrays in one request</td>
+          </tr>
+          <tr>
+            <td>Parent-Child Wiring</td>
+            <td>Automatically links child records to parent records</td>
+          </tr>
+          <tr>
+            <td>Custom Handler</td>
+            <td>Lets developers plug in their own Apex class for custom logic</td>
+          </tr>
+          <tr>
+            <td>JSON Storage</td>
+            <td>Saves raw JSON payload as a <code>Form_Submission__c</code> log record</td>
+          </tr>
+          <tr>
+            <td>File Attachments</td>
+            <td>Downloads and attaches files from the payload as Salesforce Files</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ── 2. High-Level Architecture ── -->
+    <section class="section" id="architecture">
+      <h2 class="section-title">High-Level Architecture</h2>
+      <p style="color:var(--text-muted); margin-bottom:1.5rem;">The package is split into three layers that work together. Each layer has a distinct role:</p>
+
+      <!-- Layer 1 -->
+      <div class="layer-card layer-config">
+        <div class="layer-label">Layer 1</div>
+        <div class="layer-title">⚙️ Configuration — Admin does this once</div>
+        <ul class="layer-items">
+          <li>Admin opens the <strong>ConnectHooks Config LWC</strong> tab and runs the setup wizard.</li>
+          <li>Wizard creates a <strong>public Salesforce Site</strong>, assigns permission sets, and creates a File Library.</li>
+          <li>Admin creates <strong>Webhooks</strong> and uses the <strong>Mapping UI</strong> to define how JSON maps to Salesforce fields.</li>
+          <li>All settings stored in <code>ConnectHooks_Config_Settings__c</code> custom settings and custom objects.</li>
+        </ul>
+      </div>
+
+      <!-- Layer 2 -->
+      <div class="layer-card layer-runtime">
+        <div class="layer-label">Layer 2</div>
+        <div class="layer-title">🔄 Runtime — Happens on every webhook call</div>
+        <ul class="layer-items">
+          <li>External system sends a <strong>POST request</strong> to the public site endpoint URL.</li>
+          <li><code>ConnectHooksSubmissionWebService</code> receives the request as a guest user on the public site.</li>
+          <li>The service <strong>authenticates, validates, processes mappings, creates records</strong>, and returns a JSON response.</li>
+        </ul>
+      </div>
+
+      <!-- Layer 3 -->
+      <div class="layer-card layer-support">
+        <div class="layer-label">Layer 3</div>
+        <div class="layer-title">🛠️ Support Services — Used by both layers</div>
+        <ul class="layer-items">
+          <li><code>ConnectHooksSOQL</code> — all SOQL queries centralised here (runs without sharing for guest access).</li>
+          <li><code>FormResponseUtil</code> — shared utilities: key generation, config settings, file creation, type conversion.</li>
+          <li><code>JSONPathEvaluator</code> + <code>JsonParserWithJsonPath</code> — custom JSONPath engine built in Apex.</li>
+          <li><code>ErrorMsg</code> + <code>ErrorMessageConfig</code> — all error messages defined in one place.</li>
+          <li><code>WebhookLimitTrigger</code> — database-level trigger that enforces webhook creation limits.</li>
+        </ul>
+      </div>
+
+      <!-- Architecture Diagram -->
+      <div class="card" style="margin-top:1.5rem; font-family: 'JetBrains Mono', monospace;">
+        <div class="subsection-title" style="margin-top:0;">Architecture Flow Diagram</div>
+        <div style="overflow-x:auto;">
+          <pre style="color:var(--accent); font-size:0.8rem; line-height:1.8;">
+┌─────────────────────────────────────────────────────────────────┐
+│                   EXTERNAL SYSTEMS                              │
+│          Forms / Apps / Services (HTTP POST JSON)               │
+└─────────────────────────────┬───────────────────────────────────┘
+                              │  HTTPS POST
+                              ▼
+┌─────────────────────────────────────────────────────────────────┐
+│              SALESFORCE PUBLIC SITE (Guest User)                │
+│                                                                 │
+│  ┌──────────────────────────────────────────────────────────┐   │
+│  │        ConnectHooksSubmissionWebService                  │   │
+│  │  ① Extract Webhook Identity from URL                     │   │
+│  │  ② Validate Secure URL Code                              │   │
+│  │  ③ Load Webhook Record (SOQL)                            │   │
+│  │  ④ Authenticate API Key                                  │   │
+│  │  ⑤ Check Rate Limit                                      │   │
+│  │  ⑥ Validate JSON Schema                                  │   │
+│  │  ⑦ Execute Field Mapping / Custom Handler                │   │
+│  │  ⑧ Store Raw JSON Payload                                │   │
+│  │  ⑨ Queue File Attachments                                │   │
+│  └──────────────────────────────────────────────────────────┘   │
+│                                                                 │
+│  SUPPORT SERVICES:                                              │
+│  ConnectHooksSOQL │ FormResponseUtil │ JSONPathEvaluator        │
+└─────────────────────────────────────────────────────────────────┘
+                              │  JSON Response
+                              ▼
+                      External System</pre>
+        </div>
+      </div>
+
+      <!-- Endpoint URL Format -->
+      <div class="info-box" style="margin-top:1.5rem;">
+        <strong>🔗 Endpoint URL Format:</strong><br>
+        <code style="font-family:monospace; font-size:0.9rem;">
+          {siteSecureURL}/services/apexrest/xccch/ConnectHooksSubmissionService/{webhookName}/{secureCode}
+        </code>
+      </div>
+
+      <h3 class="subsection-title">Package Metadata Summary</h3>
+      <div class="kv-list">
+        <div class="kv-row">
+          <div class="kv-key">Package Type</div>
+          <div class="kv-val">Salesforce Managed Package (ISV)</div>
+        </div>
+        <div class="kv-row">
+          <div class="kv-key">Namespace</div>
+          <div class="kv-val"><code>xccch</code></div>
+        </div>
+        <div class="kv-row">
+          <div class="kv-key">Version</div>
+          <div class="kv-val">1.0 · February 2026</div>
+        </div>
+        <div class="kv-row">
+          <div class="kv-key">REST URL Mapping</div>
+          <div class="kv-val"><code>/ConnectHooksSubmissionService/*</code></div>
+        </div>
+        <div class="kv-row">
+          <div class="kv-key">Runs As</div>
+          <div class="kv-val">Salesforce Public Site Guest User</div>
+        </div>
+        <div class="kv-row">
+          <div class="kv-key">Auth Method</div>
+          <div class="kv-val">Secure URL Code + x-api-key header (dual-factor)</div>
+        </div>
+        <div class="kv-row">
+          <div class="kv-key">Rate Limit (default)</div>
+          <div class="kv-val">300 requests / 24-hour window per webhook</div>
+        </div>
+        <div class="kv-row">
+          <div class="kv-key">Webhook Limit</div>
+          <div class="kv-val">2 webhooks maximum (Free Edition, enforced by trigger)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Navigation Footer -->
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:3rem; padding-top:1.5rem; border-top:1px solid var(--border);">
+      <a href="index.html" style="color:var(--text-muted); font-size:0.875rem;">← Home</a>
+      <a href="setup-flow.html" class="btn btn-primary" style="display:inline-flex; align-items:center; gap:0.4rem; padding:0.65rem 1.5rem; background:linear-gradient(135deg,var(--primary),var(--ch-blue-mid)); color:#fff; border-radius:var(--radius-sm); font-size:0.875rem; font-weight:600;">Setup Flow →</a>
+    </div>
+
+  </div><!-- /container -->
+</div><!-- /page-wrapper -->
+
+<footer class="footer">
+  ConnectHooks · Namespace <strong>xccch</strong> · Version 1.0 · Section: Overview
+</footer>
+
+</body>
+</html>
