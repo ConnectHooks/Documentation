@@ -1,70 +1,697 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>ConnectHooks — AppExchange Documentation</title>
-<meta name="description" content="Complete documentation for ConnectHooks Salesforce managed package.">
-<link rel="stylesheet" href="assets/css/docs.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>ConnectHooks Documentation</title>
+  <meta name="description" content="Complete documentation for ConnectHooks Salesforce application.">
+  <link rel="stylesheet" href="assets/css/docs.css">
+  <style>
+    /* ── Quick Start Styles ── */
+    .qs-progress-bar {
+      height: 4px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 4px;
+      margin-bottom: 1.25rem;
+      overflow: hidden;
+    }
+
+    .qs-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #3b82f6, #10b981);
+      border-radius: 4px;
+      transition: width 0.4s ease;
+    }
+
+    .qs-tab-bar {
+      display: flex;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 0.45rem;
+    }
+
+    .qs-tab {
+      flex: 1;
+      min-width: 100px;
+      padding: 0.55rem 0.75rem;
+      border: none;
+      border-radius: 7px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: transparent;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .qs-tab:hover {
+      background: rgba(59, 130, 246, 0.1);
+      color: var(--text);
+    }
+
+    .qs-tab.active {
+      background: linear-gradient(135deg, #1e3a6b, #256bb5);
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(37, 107, 181, 0.35);
+    }
+
+    .qs-panel {
+      animation: fadeInUp 0.3s ease;
+    }
+
+    .doc-section {
+      display: block;
+      margin-bottom: 5rem;
+      padding-top: 2rem;
+    }
+
+    .doc-section:first-child {
+      padding-top: 0;
+    }
+
+
+    .qs-panel.active {
+      display: block;
+    }
+
+    .qs-panel-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.2rem 1.4rem;
+      border-radius: 12px;
+      margin-bottom: 1.4rem;
+    }
+
+    .qs-section-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.4rem;
+      border-radius: 12px;
+      margin: 2rem 0 1.2rem;
+    }
+
+    .qs-panel-icon {
+      font-size: 2rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .qs-panel-title {
+      font-weight: 800;
+      font-size: 1.05rem;
+      color: #fff;
+    }
+
+    .qs-panel-sub {
+      font-size: 0.78rem;
+      color: rgba(255, 255, 255, 0.7);
+      margin-top: 2px;
+    }
+
+    .qs-step-counter {
+      margin-left: auto;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.3rem 0.75rem;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 999px;
+      color: rgba(255, 255, 255, 0.8);
+      white-space: nowrap;
+    }
+
+    .qs-color-blue {
+      background: linear-gradient(135deg, #1e3a6b 0%, #1d4ed8 100%);
+    }
+
+    .qs-color-purple {
+      background: linear-gradient(135deg, #3b0764 0%, #7c3aed 100%);
+    }
+
+    .qs-color-teal {
+      background: linear-gradient(135deg, #0f4c5c 0%, #0891b2 100%);
+    }
+
+    .qs-color-indigo {
+      background: linear-gradient(135deg, #1e1b4b 0%, #4338ca 100%);
+    }
+
+    .qs-color-orange {
+      background: linear-gradient(135deg, #431407 0%, #ea580c 100%);
+    }
+
+    .qs-color-green {
+      background: linear-gradient(135deg, #052e16 0%, #059669 100%);
+    }
+
+    .qs-step {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 10px;
+      padding: 1.2rem 1.4rem;
+      transition: all 0.2s;
+    }
+
+    .qs-step:hover {
+      border-color: rgba(59, 130, 246, 0.3);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .qs-step-final {
+      border-color: rgba(16, 185, 129, 0.3);
+      background: rgba(16, 185, 129, 0.05);
+    }
+
+    .qs-step-badge {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1B3A6B, #3b82f6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.78rem;
+      color: #fff;
+      margin-top: 2px;
+    }
+
+    .qs-step-body {
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .qs-step-body h4 {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+
+    .qs-step-body p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin-bottom: 0.4rem;
+    }
+
+    .qs-checklist {
+      list-style: none;
+      padding: 0;
+      margin: 0.6rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .qs-filter-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0.6rem;
+      margin: 0.85rem 0 0.5rem;
+    }
+
+    .qs-filter-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .qs-filter-code {
+      background: #0d1117;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      padding: 0.55rem 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: #60a5fa;
+      white-space: nowrap;
+      overflow-x: auto;
+    }
+
+    .qs-filter-body {
+      padding: 0.55rem 0.75rem;
+    }
+
+    .qs-filter-badge {
+      display: inline-block;
+      font-size: 0.62rem;
+      font-weight: 600;
+      padding: 0.1rem 0.45rem;
+      border-radius: 99px;
+      margin-bottom: 0.3rem;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .qs-fb-blue { background: rgba(96,165,250,0.12); color: #60a5fa; }
+    .qs-fb-purple { background: rgba(167,139,250,0.12); color: #c4b5fd; }
+    .qs-fb-teal { background: rgba(45,212,191,0.12); color: #5eead4; }
+    .qs-fb-green { background: rgba(52,211,153,0.12); color: #34d399; }
+    .qs-fb-orange { background: rgba(251,146,60,0.12); color: #fb923c; }
+    .qs-fb-red { background: rgba(248,113,113,0.12); color: #f87171; }
+
+    .qs-filter-body p {
+      margin: 0;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .qs-config-steps {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.65rem;
+      margin: 0.85rem 0 0.5rem;
+    }
+
+    .qs-config-step {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 0.8rem 0.95rem;
+    }
+
+    .qs-config-num {
+      flex-shrink: 0;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: rgba(96,165,250,0.15);
+      border: 1px solid rgba(96,165,250,0.3);
+      color: #60a5fa;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qs-config-text h5 {
+      margin: 0 0 0.2rem;
+      font-size: 0.83rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .qs-config-text p {
+      margin: 0;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .qs-checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.55rem;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+    }
+
+    .qs-check {
+      flex-shrink: 0;
+      font-weight: 700;
+      color: #60a5fa;
+      min-width: 1.2rem;
+    }
+
+    .qs-tip {
+      margin-top: 0.75rem;
+      padding: 0.55rem 0.85rem;
+      border-radius: 7px;
+      font-size: 0.8rem;
+      line-height: 1.5;
+    }
+
+    .qs-tip-green {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      color: #34d399;
+    }
+
+    .qs-tip-blue {
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.25);
+      color: #93c5fd;
+    }
+
+    .qs-tip-orange {
+      background: rgba(251, 146, 60, 0.1);
+      border: 1px solid rgba(251, 146, 60, 0.25);
+      color: #fdba74;
+    }
+
+    .qs-tip-red {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      color: #fca5a5;
+    }
+
+    .qs-tip-warn {
+      background: rgba(234, 179, 8, 0.1);
+      border: 1px solid rgba(234, 179, 8, 0.35);
+      color: #ca8a04;
+      font-weight: 500;
+    }
+
+    .qs-kv-row {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      overflow: hidden;
+      margin: 0.5rem 0;
+      font-size: 0.83rem;
+    }
+
+    .qs-kv-key {
+      background: #1e293b;
+      padding: 0.5rem 0.9rem;
+      font-weight: 700;
+      color: #94a3b8;
+      border-right: 1px solid #334155;
+    }
+
+    .qs-kv-val {
+      background: #0f172a;
+      padding: 0.5rem 0.9rem;
+      color: #60a5fa;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .qs-nav-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .qs-btn-next {
+      background: linear-gradient(135deg, #1B3A6B, #256bb5);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.6rem 1.2rem;
+      font-size: 0.83rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .qs-btn-next:hover {
+      transform: translateX(2px);
+      box-shadow: 0 4px 14px rgba(37, 107, 181, 0.4);
+    }
+
+    .qs-btn-prev {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      padding: 0.6rem 1.1rem;
+      font-size: 0.83rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .qs-btn-prev:hover {
+      border-color: rgba(255, 255, 255, 0.25);
+      color: var(--text);
+    }
+
+    .qs-success-banner {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.1));
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 10px;
+      padding: 1.1rem 1.4rem;
+      margin-top: 1rem;
+    }
+
+    /* ── Lifecycle Flow ── */
+    .ch-flow-wrap {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+      align-items: stretch;
+      gap: 0;
+      margin-bottom: 1.5rem;
+    }
+
+    .ch-flow-card {
+      border-radius: 12px;
+      padding: 1.4rem 1.3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      position: relative;
+      transition: transform 0.2s, box-shadow 0.2s;
+      min-height: 220px;
+    }
+
+    .ch-flow-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.4);
+    }
+
+    .ch-flow-icon {
+      font-size: 2rem;
+      line-height: 1;
+      margin-bottom: 0.15rem;
+    }
+
+    .ch-flow-phase-label {
+      font-size: 0.67rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .ch-phase-blue .ch-flow-phase-label {
+      color: #93c5fd;
+    }
+
+    .ch-phase-purple .ch-flow-phase-label {
+      color: #c4b5fd;
+    }
+
+    .ch-phase-teal .ch-flow-phase-label {
+      color: #67e8f9;
+    }
+
+    .ch-phase-green .ch-flow-phase-label {
+      color: #6ee7b7;
+    }
+
+    .ch-flow-title {
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.35;
+    }
+
+    .ch-flow-desc {
+      font-size: 0.79rem;
+      color: rgba(255, 255, 255, 0.78);
+      line-height: 1.65;
+      flex: 1;
+    }
+
+    .ch-flow-badge {
+      display: inline-block;
+      align-self: flex-start;
+      background: rgba(255, 255, 255, 0.14);
+      color: rgba(255, 255, 255, 0.95);
+      font-size: 0.67rem;
+      font-weight: 700;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-top: auto;
+    }
+
+    .ch-badge-green {
+      background: rgba(16, 185, 129, 0.28);
+      color: #34d399;
+    }
+
+    .ch-phase-blue {
+      background: linear-gradient(145deg, #1B3A6B 0%, #1d4ed8 100%);
+      border: 1px solid rgba(96, 165, 250, 0.3);
+    }
+
+    .ch-phase-purple {
+      background: linear-gradient(145deg, #3b0764 0%, #6d28d9 100%);
+      border: 1px solid rgba(167, 139, 250, 0.3);
+    }
+
+    .ch-phase-teal {
+      background: linear-gradient(145deg, #0f4c5c 0%, #0891b2 100%);
+      border: 1px solid rgba(34, 211, 238, 0.3);
+    }
+
+    .ch-phase-green {
+      background: linear-gradient(145deg, #052e16 0%, #059669 100%);
+      border: 1px solid rgba(52, 211, 153, 0.3);
+    }
+
+    /* Arrow — centred & bold */
+    .ch-flow-arrow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      padding: 0 6px;
+      align-self: stretch;
+    }
+
+    .ch-arrow-body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    .ch-arrow-line {
+      width: 2px;
+      height: 40px;
+      background: linear-gradient(to bottom, rgba(96, 165, 250, 0.1), rgba(96, 165, 250, 0.7), rgba(96, 165, 250, 0.1));
+      border-radius: 2px;
+    }
+
+    .ch-arrow-head {
+      width: 0;
+      height: 0;
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-top: 10px solid #60a5fa;
+      filter: drop-shadow(0 0 4px rgba(96, 165, 250, 0.6));
+    }
+
+    @media(max-width:860px) {
+      .ch-flow-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .ch-flow-arrow {
+        flex-direction: row;
+        padding: 6px 0 6px 1rem;
+        align-self: auto;
+      }
+
+      .ch-arrow-body {
+        flex-direction: row;
+      }
+
+      .ch-arrow-line {
+        width: 40px;
+        height: 2px;
+      }
+
+      .ch-arrow-head {
+        border-top: 7px solid transparent;
+        border-bottom: 7px solid transparent;
+        border-left: 10px solid #60a5fa;
+        border-right: none;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- TOP BAR -->
-<header class="topbar">
-  <a href="docs.html" class="topbar-logo">
-    <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#1B3A6B"/><path d="M8 16c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="#60a5fa" stroke-width="2.5" stroke-linecap="round"/><path d="M24 16c0 4.4-3.6 8-8 8S8 20.4 8 16" stroke="#34d399" stroke-width="2.5" stroke-linecap="round"/><circle cx="16" cy="16" r="3" fill="#fff"/></svg>
-    <span>ConnectHooks</span>
-  </a>
-  <div class="topbar-center">🔍 &nbsp;Search documentation…</div>
-  <div class="topbar-right">
-    <span class="topbar-badge">v1.0</span>
-    <a href="https://appexchange.salesforce.com" target="_blank" class="topbar-link">AppExchange ↗</a>
-  </div>
-</header>
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <a href="docs.html" class="topbar-logo">
+      <img src="assets/images/ConnectHooksLogoWhite.png" alt="ConnectHooks"
+        style="height:36px;width:auto;display:block;" />
+      <span>ConnectHooks</span>
+    </a>
 
-<!-- LAYOUT -->
-<div class="layout">
 
-<!-- SIDEBAR -->
-<aside class="sidebar">
-  <p style="font-size:0.75rem;color:#94a3b8;padding:0 1.25rem 0.5rem;">AppExchange Documentation</p>
-
-  <div class="sidebar-tag">Getting Started</div>
-  <div class="nav-item" id="ni-introduction">
-    <button class="nav-link active" onclick="showSection('introduction')">
-      <span class="nav-icon">🏠</span><span class="nav-label">Introduction</span>
-    </button>
-  </div>
-
-  <div class="sidebar-tag">Core Concepts</div>
-  <div class="nav-item" id="ni-architecture">
-    <button class="nav-link" onclick="toggleNav('architecture')">
-      <span class="nav-icon">🏗️</span><span class="nav-label">System Architecture</span><span class="nav-arrow">›</span>
-    </button>
-    <div class="sub-items">
-      <a class="sub-link" onclick="showSection('architecture');jumpTo('arch-overview')">Overview</a>
-      <a class="sub-link" onclick="showSection('architecture');jumpTo('arch-layer1')">Layer 1 — Config</a>
-      <a class="sub-link" onclick="showSection('architecture');jumpTo('arch-layer2')">Layer 2 — Runtime</a>
-      <a class="sub-link" onclick="showSection('architecture');jumpTo('arch-layer3')">Layer 3 — Support</a>
+    <div class="topbar-right">
+      <span class="topbar-badge">v1.0</span>
+      <a href="https://appexchange.salesforce.com" target="_blank" class="topbar-link disabled" tabindex="-1" aria-disabled="true" onclick="return false;">AppExchange ↗</a>
     </div>
-  </div>
+  </header>
 
-  <div class="nav-item" id="ni-features">
-    <button class="nav-link" onclick="toggleNav('features')">
-      <span class="nav-icon">⭐</span><span class="nav-label">Key Features</span><span class="nav-arrow">›</span>
-    </button>
-    <div class="sub-items">
-      <a class="sub-link" onclick="showSection('features');jumpTo('feat-webhook')">Webhook Endpoint</a>
-      <a class="sub-link" onclick="showSection('features');jumpTo('feat-auth')">Authentication</a>
-      <a class="sub-link" onclick="showSection('features');jumpTo('feat-mapping')">Field Mapping</a>
-      <a class="sub-link" onclick="showSection('features');jumpTo('feat-records')">Record Creation</a>
-      <a class="sub-link" onclick="showSection('features');jumpTo('feat-files')">File Attachments</a>
-      <a class="sub-link" onclick="showSection('features');jumpTo('feat-handler')">Custom Handler</a>
-    </div>
-  </div>
+  <!-- LAYOUT -->
+  <div class="layout">
 
-  <div class="sidebar-tag">Reference</div>
-  <div class="nav-item" id="ni-setup">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <p style="font-size:0.75rem;color:#94a3b8;padding:0 1.25rem 0.5rem;">ConnectHooks Documentation</p>
+
+      <div class="sidebar-tag">Getting Started</div>
+      <div class="nav-item" id="ni-introduction">
+        <button class="nav-link active" onclick="showSection('introduction')">
+          <span class="nav-icon"><img src="assets/images/Introduction.png" alt="Introduction"
+              style="width:20px;height:20px;object-fit:contain;vertical-align:middle;" /></span><span
+            class="nav-label">Introduction</span>
+        </button>
+      </div>
+
+      <div class="nav-item" id="ni-quickstart">
+        <button class="nav-link" onclick="toggleNav('quickstart')">
+          <span class="nav-icon"><img src="assets/images/QuickStart.png" alt="Quick Start"
+              style="width:20px;height:20px;object-fit:contain;vertical-align:middle;" /></span><span
+            class="nav-label">Quick Start</span><span class="nav-arrow">›</span>
+        </button>
+        <div class="sub-items">
+          <a class="sub-link" onclick="showSection('quickstart');jumpTo('qs-install')">Install</a>
+          <a class="sub-link" onclick="showSection('quickstart');jumpTo('qs-configure')">Configure</a>
+          <a class="sub-link" onclick="showSection('quickstart');jumpTo('qs-webhook')"> Webhook</a>
+          <a class="sub-link" onclick="showSection('quickstart');jumpTo('qs-mappings')">Mappings</a>
+          <a class="sub-link" onclick="showSection('quickstart');jumpTo('qs-test')">Test</a>
+          <a class="sub-link" onclick="showSection('quickstart');jumpTo('qs-verify')">Verify</a>
+        </div>
+      </div>
+
+      <div class="sidebar-tag">Core Concepts</div>
+
+      <div class="nav-item" id="ni-features">
+        <button class="nav-link" onclick="toggleNav('features')">
+          <span class="nav-icon"><img src="assets/images/Key-Features.png" alt="Key Features"
+              style="width:20px;height:20px;object-fit:contain;vertical-align:middle;" /></span><span
+            class="nav-label">Key Features</span><span class="nav-arrow">›</span>
+        </button>
+        <div class="sub-items">
+          <a class="sub-link" onclick="showSection('features');jumpTo('feat-webhook')">Webhook Endpoint</a>
+          <a class="sub-link" onclick="showSection('features');jumpTo('feat-auth')">Authentication</a>
+          <a class="sub-link" onclick="showSection('features');jumpTo('feat-mapping')">Field Mapping</a>
+          <a class="sub-link" onclick="showSection('features');jumpTo('feat-ai-filter')">AI Filter in Mapping</a>
+          <a class="sub-link" onclick="showSection('features');jumpTo('feat-validations')">Mapping Validations</a>
+          <a class="sub-link" onclick="showSection('features');jumpTo('feat-records')">Record Creation</a>
+          <a class="sub-link" onclick="showSection('features');jumpTo('feat-storage')">Form Submission Storage</a>
+          <a class="sub-link" onclick="showSection('features');jumpTo('feat-handler')">Custom Handler</a>
+        </div>
+      </div>
+
+      <div class="sidebar-tag">Reference</div>
+
+      <!-- <div class="nav-item" id="ni-setup">
     <button class="nav-link" onclick="toggleNav('setup')">
       <span class="nav-icon">⚙️</span><span class="nav-label">Installation &amp; Setup</span><span class="nav-arrow">›</span>
     </button>
@@ -74,215 +701,1028 @@
       <a class="sub-link" onclick="showSection('setup');jumpTo('setup-webhook')">Creating a Webhook</a>
       <a class="sub-link" onclick="showSection('setup');jumpTo('setup-mapping')">Field Mapping UI</a>
     </div>
-  </div>
+  </div>-->
 
-  <div class="nav-item" id="ni-runtime">
-    <button class="nav-link" onclick="toggleNav('runtime')">
-      <span class="nav-icon">🔄</span><span class="nav-label">Runtime Flow</span><span class="nav-arrow">›</span>
-    </button>
-    <div class="sub-items">
-      <a class="sub-link" onclick="showSection('runtime');jumpTo('rt-step1')">1 — URL Parsing</a>
-      <a class="sub-link" onclick="showSection('runtime');jumpTo('rt-step2')">2 — Auth &amp; Secure Code</a>
-      <a class="sub-link" onclick="showSection('runtime');jumpTo('rt-step3')">3 — Rate Limit</a>
-      <a class="sub-link" onclick="showSection('runtime');jumpTo('rt-step4')">4 — API Key Auth</a>
-      <a class="sub-link" onclick="showSection('runtime');jumpTo('rt-step5')">5 — Schema Check</a>
-      <a class="sub-link" onclick="showSection('runtime');jumpTo('rt-step6')">6 — Mapping &amp; DML</a>
-      <a class="sub-link" onclick="showSection('runtime');jumpTo('rt-step7')">7 — Storage &amp; Files</a>
-    </div>
-  </div>
 
-  <div class="nav-item" id="ni-datamodel">
-    <button class="nav-link" onclick="toggleNav('datamodel')">
-      <span class="nav-icon">🗄️</span><span class="nav-label">Core Data Model</span><span class="nav-arrow">›</span>
-    </button>
-    <div class="sub-items">
-      <a class="sub-link" onclick="showSection('datamodel');jumpTo('dm-objects')">Custom Objects</a>
-      <a class="sub-link" onclick="showSection('datamodel');jumpTo('dm-settings')">Custom Settings</a>
-      <a class="sub-link" onclick="showSection('datamodel');jumpTo('dm-metadata')">Custom Metadata</a>
-    </div>
-  </div>
+      <div class="nav-item" id="ni-datamodel">
+        <button class="nav-link" onclick="toggleNav('datamodel')">
+          <span class="nav-icon"><img src="assets/images/Core-Modal.png" alt="Core Data Model"
+              style="width:20px;height:20px;object-fit:contain;vertical-align:middle;" /></span><span
+            class="nav-label">Core Data Model</span><span class="nav-arrow">›</span>
+        </button>
+        <div class="sub-items">
+          <a class="sub-link" onclick="showSection('datamodel');jumpTo('dm-objects')">Custom Objects</a>
+          <a class="sub-link" onclick="showSection('datamodel');jumpTo('dm-settings')">Custom Settings</a>
+        </div>
+      </div>
 
-  <div class="nav-item" id="ni-security">
-    <button class="nav-link" onclick="toggleNav('security')">
-      <span class="nav-icon">🔐</span><span class="nav-label">API &amp; Security</span><span class="nav-arrow">›</span>
-    </button>
-    <div class="sub-items">
-      <a class="sub-link" onclick="showSection('security');jumpTo('sec-model')">Security Model</a>
-      <a class="sub-link" onclick="showSection('security');jumpTo('sec-perm')">Permission Sets</a>
-      <a class="sub-link" onclick="showSection('security');jumpTo('sec-api')">Apex Classes</a>
-      <a class="sub-link" onclick="showSection('security');jumpTo('sec-lwc')">LWC Components</a>
-    </div>
-  </div>
+      <div class="nav-item" id="ni-security">
+        <button class="nav-link" onclick="toggleNav('security')">
+          <span class="nav-icon">🔐</span><span class="nav-label">API &amp; Security</span><span
+            class="nav-arrow">›</span>
+        </button>
+        <div class="sub-items">
+          <a class="sub-link" onclick="showSection('security');jumpTo('sec-model')">Security Model</a>
+          <a class="sub-link" onclick="showSection('security');jumpTo('sec-perm')">Permission Sets</a>
+        </div>
+      </div>
 
-  <div class="nav-item" id="ni-troubleshoot">
-    <button class="nav-link" onclick="showSection('troubleshoot')">
-      <span class="nav-icon">⚠️</span><span class="nav-label">Troubleshooting &amp; Logs</span>
-    </button>
-  </div>
-</aside>
+      <div class="nav-item" id="ni-troubleshoot">
+        <button class="nav-link" onclick="showSection('troubleshoot')">
+          <span class="nav-icon"><img src="assets/images/warning.png" alt="Troubleshooting"
+              style="width:20px;height:20px;object-fit:contain;vertical-align:middle;" /></span><span
+            class="nav-label">Troubleshooting &amp; Logs</span>
+        </button>
+      </div>
 
-<!-- MAIN CONTENT -->
-<main class="main" id="main-content">
+      <!-- ── Support Button ── -->
+      <div class="sidebar-support">
+        <button class="sidebar-support-btn"
+          onclick="window.open('https://mail.google.com/mail/?view=cm&fs=1&to=connecthooks.support@xccelerance.com&su=ConnectHooks%20Support%20Request&body=Hi%20ConnectHooks%20Team%2C%0A%0AI%20need%20help%20with%3A%0A%3Cgive%20your%20query%3E%0A%0AThank%20you','_blank')"
+          title="Click to open Gmail and contact support">
+          <span class="sidebar-support-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="4" width="20" height="16" rx="3" />
+              <path d="M2 7l10 7 10-7" />
+            </svg>
+          </span>
+          <span class="sidebar-support-text">
+            <span class="sidebar-support-label">Contact Support</span>
+            <span class="sidebar-support-email">connecthooks.support@xccelerance.com</span>
+          </span>
+        </button>
+      </div>
 
-<!-- ══════════ INTRODUCTION ══════════ -->
-<section class="doc-section active" id="sec-introduction">
-  <div class="page-header">
-    <div class="breadcrumb">ConnectHooks › <span>Introduction</span></div>
-    <h1>Welcome to ConnectHooks</h1>
-    <p>The Salesforce managed package that turns external webhook JSON into Salesforce records — automatically, securely, and without custom Apex code.</p>
-  </div>
+    </aside>
 
-  <div class="alert alert-info"><span class="alert-icon">ℹ️</span><div><strong>What is ConnectHooks?</strong> A webhook receiver + field mapper + record creator, all inside Salesforce. Namespace: <code>xccch</code> · Version 1.0 · Feb 2026</div></div>
 
-  <h2 class="section-title">🎯 What Problem It Solves</h2>
-  <p>Every Salesforce org needs data from external systems — lead capture forms, payment gateways, event registrations, survey tools. Traditionally this requires custom Apex REST classes for every integration. ConnectHooks solves this with a <strong>zero-code, config-driven webhook platform</strong>.</p>
-  <p>An admin creates a webhook, draws lines between JSON fields and Salesforce fields in a visual UI, and from that point forward every form submission automatically becomes a Salesforce record.</p>
+    <!-- MAIN CONTENT -->
+    <main class="main" id="main-content">
 
-  <div class="cards">
-    <div class="card"><div class="card-icon">📡</div><h3>Webhook Endpoint</h3><p>Secure public URL that accepts HTTP POST JSON from any system.</p></div>
-    <div class="card"><div class="card-icon">🔐</div><h3>Dual-Factor Auth</h3><p>Secure URL Code + API Key header — two independent checks per request.</p></div>
-    <div class="card"><div class="card-icon">🗺️</div><h3>Visual Mapper</h3><p>Drag-and-drop UI maps JSON paths to Salesforce fields. No code needed.</p></div>
-    <div class="card"><div class="card-icon">⚡</div><h3>Instant Records</h3><p>Creates SObject records, supports arrays, parent-child hierarchies.</p></div>
-    <div class="card"><div class="card-icon">🧩</div><h3>JSONPath Engine</h3><p>Full RFC 9535 JSONPath built in Apex — no external libraries required.</p></div>
-    <div class="card"><div class="card-icon">🔌</div><h3>Custom Handler</h3><p>Plug in your own Apex via <code>ICHCustomHandler</code> interface.</p></div>
-  </div>
+      <!-- ══════════ INTRODUCTION ══════════ -->
+      <section class="doc-section active" id="sec-introduction">
+        <div class="page-header">
+          <div class="breadcrumb">ConnectHooks › <span>Introduction</span></div>
+          <h1>Welcome to ConnectHooks</h1>
+          <p>The Salesforce Application that turns external webhook JSON into Salesforce records — automatically,
+            securely, and without custom Apex code.</p>
+        </div>
+        <h2 class="section-title">What Problem It Solves</h2>
+        <p>Every Salesforce org needs data from external systems — lead capture forms, payment gateways, event
+          registrations, survey tools. Traditionally this requires custom Apex REST classes for every integration.
+          ConnectHooks solves this with a <strong>zero-code, config-driven webhook platform</strong>.</p>
+        <p>An admin creates a webhook, draws lines between JSON fields and Salesforce fields in a visual UI, and from
+          that point forward every form submission automatically becomes a Salesforce record.</p>
 
-  <h2 class="section-title">📦 Package Summary</h2>
-  <div class="kv-grid">
-    <div class="kv-row"><div class="kv-key">Package Type</div><div class="kv-val">Salesforce Managed Package (ISV)</div></div>
-    <div class="kv-row"><div class="kv-key">Namespace</div><div class="kv-val"><code>xccch</code></div></div>
-    <div class="kv-row"><div class="kv-key">Version</div><div class="kv-val">1.0 · February 2026</div></div>
-    <div class="kv-row"><div class="kv-key">REST Endpoint</div><div class="kv-val"><code>/ConnectHooksSubmissionService/*</code></div></div>
-    <div class="kv-row"><div class="kv-key">Runs As</div><div class="kv-val">Salesforce Public Site Guest User</div></div>
-    <div class="kv-row"><div class="kv-key">Rate Limit</div><div class="kv-val">300 requests / 24 hours per webhook (default)</div></div>
-    <div class="kv-row"><div class="kv-key">Webhook Limit</div><div class="kv-val">2 max (Free Edition — enforced by trigger)</div></div>
-  </div>
-</section>
+        <div class="cards">
+          <div class="card">
+            <div class="card-icon">📡</div>
+            <h3>Webhook Endpoint</h3>
+            <p>Secure public URL that accepts HTTP POST JSON from any system.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">🔐</div>
+            <h3>Dual-Factor Auth</h3>
+            <p>Secure URL Code + API Key header — two independent checks per request.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">🗺️</div>
+            <h3>Visual Mapper</h3>
+            <p>Drag-and-drop UI maps JSON paths to Salesforce fields. No code needed.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">⚡</div>
+            <h3>Instant Records</h3>
+            <p>Creates SObject records, supports arrays, parent-child hierarchies.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">🧩</div>
+            <h3>JSONPath Engine</h3>
+            <p>Full RFC 9535 JSONPath built in Apex — no external libraries required.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">🔌</div>
+            <h3>Custom Handler</h3>
+            <p>Plug in your own Apex via <code>ICHCustomHandler</code> interface.</p>
+          </div>
+        </div>
 
-<!-- ══════════ ARCHITECTURE ══════════ -->
-<section class="doc-section" id="sec-architecture">
-  <div class="page-header">
-    <div class="breadcrumb">ConnectHooks › <span>System Architecture</span></div>
-    <h1>System Architecture</h1>
-    <p>ConnectHooks is built on three distinct layers: Configuration, Runtime, and Support Services.</p>
-  </div>
+        <!-- ═══ WORKING FLOW SECTION ═══ -->
+        <h2 class="section-title" style="margin-top:2.2rem;">Working Flow of ConnectHooks</h2>
+        <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:1.25rem;">
+          ConnectHooks operates in two distinct phases — a one-time <strong>Configuration Time</strong> setup by an
+          admin,
+          and the fully automated <strong>Runtime</strong> that fires every time an external system sends data.
+          Together they form a complete, zero-code webhook integration pipeline inside Salesforce.
+        </p>
 
-  <div id="arch-overview"></div>
-  <h2 class="section-title">🏗️ Three-Layer Design</h2>
-  <p>The package separates concerns into three layers so that admin configuration never breaks the runtime, and shared services stay reusable across both.</p>
+        <!-- Custom Flow Diagram Image -->
+        <div
+          style="border:1px solid #e2e8f0;border-radius:10px;overflow:hidden;margin-bottom:1.75rem;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,0.07);">
+          <div style="padding:1rem 1.25rem;">
+            <img src="assets/images/ConnectHooks Flow Diagram.png"
+              alt="ConnectHooks Flow Diagram — External System sends Webhook POST to Experience Cloud Site, which passes JSON to ConnectHooks for processing, which creates Salesforce Records automatically."
+              style="width:100%;display:block;border-radius:6px;" />
+          </div>
+        </div>
 
-  <div id="arch-layer1"></div>
-  <div class="layer layer-1">
-    <div class="layer-label">Layer 1 — Admin-Time</div>
-    <h3>⚙️ Configuration Layer</h3>
-    <ul>
-      <li>Admin opens the <strong>ConnectHooks Config LWC</strong> tab and runs the 7-step setup wizard.</li>
-      <li>Wizard creates a public Salesforce Site, assigns permission sets, creates a File Library.</li>
-      <li>Admin creates Webhooks and uses the <strong>Mapping UI</strong> to define JSON → Salesforce field links.</li>
-      <li>All settings stored in <code>ConnectHooks_Config_Settings__c</code> custom settings and custom objects.</li>
-    </ul>
-  </div>
+        <!-- ── ConnectHooks Lifecycle Flow ── -->
+        <h2 class="section-title" style="margin-top:2rem;">ConnectHooks Lifecycle</h2>
+        <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:1.5rem;line-height:1.65;">
+          From installation to live automation — here is the complete lifecycle of a ConnectHooks integration in four
+          sequential phases.
+        </p>
 
-  <div id="arch-layer2"></div>
-  <div class="layer layer-2">
-    <div class="layer-label">Layer 2 — Run-Time</div>
-    <h3>🔄 Runtime Layer</h3>
-    <ul>
-      <li>External system POSTs JSON to the public site endpoint URL.</li>
-      <li><code>ConnectHooksSubmissionWebService</code> receives it as the public site guest user.</li>
-      <li>9-step pipeline: authenticate → validate → map fields → create records → store JSON → queue files.</li>
-    </ul>
-  </div>
+        <div class="ch-flow-wrap">
 
-  <div id="arch-layer3"></div>
-  <div class="layer layer-3">
-    <div class="layer-label">Layer 3 — Shared Services</div>
-    <h3>🛠️ Support Layer</h3>
-    <ul>
-      <li><code>ConnectHooksSOQL</code> — centralised SOQL (runs without sharing for guest access).</li>
-      <li><code>FormResponseUtil</code> — key generation, config reading, file creation, type conversion.</li>
-      <li><code>JSONPathEvaluator</code> + <code>JsonParserWithJsonPath</code> — full RFC 9535 JSONPath in Apex.</li>
-      <li><code>ErrorMsg</code> + <code>ErrorMessageConfig</code> — all error messages in one place.</li>
-      <li><code>WebhookLimitTrigger</code> — database trigger enforcing webhook creation limits.</li>
-    </ul>
-  </div>
+          <!-- Step 1 -->
+          <div class="ch-flow-card ch-phase-blue">
+            <div class="ch-flow-icon">📦</div>
+            <div class="ch-flow-phase-label">Step 1</div>
+            <div class="ch-flow-title">Post-Install Configuration</div>
+            <div class="ch-flow-desc">Install the ConnectHooks application. The system auto-creates permission sets,
+              custom settings, and links a Public Salesforce Site so external requests can reach the org.</div>
+            <div class="ch-flow-badge">One-Time Setup</div>
+          </div>
 
-  <h2 class="section-title">🔗 Endpoint URL Format</h2>
-  <pre><code>{siteSecureURL}/services/apexrest/xccch/ConnectHooksSubmissionService/{webhookName}/{secureCode}</code></pre>
+          <div class="ch-flow-arrow">
+            <div class="ch-arrow-line"></div>
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M4 9h10M10 5l4 4-4 4" stroke="#60a5fa" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </div>
 
-  <h2 class="section-title">📊 Architecture Flow</h2>
-  <pre><code>External System (HTTP POST JSON)
-        │
-        ▼
-Salesforce Public Site (Guest User)
-  └── ConnectHooksSubmissionWebService
-        ① Parse URL → get webhookName + secureCode
-        ② Validate secureCode matches CH_Webhook__c record
-        ③ Load Webhook record (ConnectHooksSOQL)
-        ④ Validate API Key (FormResponseUtil.validateAPIKey)
-        ⑤ Check Rate Limit (RequestCount__c vs limit)
-        ⑥ Validate JSON Schema (if JSON_Schema__c exists)
-        ⑦ Execute Mapping OR Custom Handler
-        ⑧ Store raw JSON → Form_Submission__c
-        ⑨ Queue file downloads (FormAttachmentFilesHandlerQueueable)
-        │
-        ▼
-   JSON Response → { success, recordId, message }</code></pre>
-</section>
+          <!-- Step 2 -->
+          <div class="ch-flow-card ch-phase-purple">
+            <div class="ch-flow-icon"><img src="assets/images/webhook-icon.png" alt="Create Webhook"
+                style="width:36px;height:36px;object-fit:contain;" /></div>
+            <div class="ch-flow-phase-label">Step 2</div>
+            <div class="ch-flow-title">Create Webhook</div>
+            <div class="ch-flow-desc">Create a named webhook inside ConnectHooks. The system generates a secure endpoint
+              URL, a Secure Code, and an API Key used for dual-factor authentication.</div>
+            <div class="ch-flow-badge">Admin Action</div>
+          </div>
 
-<!-- ══════════ KEY FEATURES ══════════ -->
-<section class="doc-section" id="sec-features">
-  <div class="page-header">
-    <div class="breadcrumb">ConnectHooks › <span>Key Features</span></div>
-    <h1>Key Features</h1>
-    <p>Deep-dive into every capability that ConnectHooks ships with out of the box.</p>
-  </div>
+          <div class="ch-flow-arrow">
+            <div class="ch-arrow-line"></div>
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M4 9h10M10 5l4 4-4 4" stroke="#60a5fa" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </div>
 
-  <div id="feat-webhook"></div>
-  <h2 class="section-title">📡 Webhook Endpoint</h2>
-  <p>Each webhook gets a unique public HTTPS URL. The URL contains two security tokens embedded directly: the webhook name and a 48-character secure code. Any HTTP client can POST JSON to this URL.</p>
-  <div class="alert alert-info"><span class="alert-icon">ℹ️</span><div>The endpoint runs on a Salesforce Public Site so no Salesforce login is needed from the caller. All security is handled by ConnectHooks itself.</div></div>
+          <!-- Step 3 -->
+          <div class="ch-flow-card ch-phase-teal">
+            <div class="ch-flow-icon">🌐</div>
+            <div class="ch-flow-phase-label">Step 3</div>
+            <div class="ch-flow-title">Receive Webhook — Any External System</div>
+            <div class="ch-flow-desc">Any external tool — a form, a CRM, a mobile app, or a payment gateway — sends an
+              HTTP POST request to the ConnectHooks endpoint. ConnectHooks validates and processes it automatically.
+            </div>
+            <div class="ch-flow-badge">Trigger External System</div>
+          </div>
 
-  <div id="feat-auth"></div>
-  <h2 class="section-title">🔐 Authentication — Dual-Factor</h2>
-  <p>Every request must pass <strong>two independent authentication checks</strong>:</p>
-  <div class="table-wrap"><table class="doc-table">
-    <thead><tr><th>Check</th><th>How</th><th>Value</th></tr></thead>
-    <tbody>
-      <tr><td>Secure URL Code</td><td>Embedded in URL path</td><td>48-char dash-separated random string</td></tr>
-      <tr><td>API Key</td><td><code>x-api-key</code> header OR JSON body field</td><td>48-char alphanumeric token (stored encrypted)</td></tr>
-    </tbody>
-  </table></div>
-  <p>The API key is stored as an SHA-256 hash in <code>CH_Webhook__c.Enc_Api_Key__c</code>. Validation rehashes the incoming key and compares. The plain key is never stored.</p>
+          <div class="ch-flow-arrow">
+            <div class="ch-arrow-line"></div>
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M4 9h10M10 5l4 4-4 4" stroke="#60a5fa" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </div>
 
-  <div id="feat-mapping"></div>
-  <h2 class="section-title">🗺️ Field Mapping with JSONPath</h2>
-  <p>Admins use the <strong>mappingUi LWC</strong> to visually connect JSON fields to Salesforce fields. Each mapping line stores a JSONPath expression (e.g. <code>$.orders[*].id</code>) in <code>CH_Mapping__c.JsonPath_Expression__c</code>.</p>
-  <p>At runtime, <code>JSONPathEvaluator</code> evaluates these expressions against the incoming JSON and extracts values. The JSONPath engine supports:</p>
-  <ul style="font-size:0.875rem;color:var(--text-muted);padding-left:1.5rem;margin-bottom:1rem;">
-    <li>Root <code>$.field</code> and nested <code>$.parent.child</code> access</li>
-    <li>Array indexing <code>$.items[0]</code> and wildcard <code>$.items[*]</code></li>
-    <li>Filter expressions <code>$.items[?(@.price > 10)]</code></li>
-    <li>Recursive descent <code>$..fieldName</code></li>
-  </ul>
+          <!-- Step 4 -->
+          <div class="ch-flow-card ch-phase-green">
+            <div class="ch-flow-icon">⚡</div>
+            <div class="ch-flow-phase-label">Step 4</div>
+            <div class="ch-flow-title">Create &amp; Update Salesforce Records</div>
+            <div class="ch-flow-desc">ConnectHooks extracts JSON values using the stored field mappings, applies the
+              JSONPath engine, and automatically Auto Create/Update Salesforce records based on the incoming data — no
+              Apex code, no manual clicks required.</div>
+            <div class="ch-flow-badge ch-badge-green">Zero Code</div>
+          </div>
 
-  <div id="feat-records"></div>
-  <h2 class="section-title">📝 Record Creation</h2>
-  <p><code>WebhookRuntimeService</code> reads the <code>CH_Mapping_Object__c</code> tree and creates SObject records dynamically using <code>Database.insert</code>. It handles:</p>
-  <div class="cards">
-    <div class="card"><div class="card-icon">📄</div><h3>Single Record</h3><p>One JSON object → one SObject record with mapped field values.</p></div>
-    <div class="card"><div class="card-icon">📚</div><h3>Array / Multiple Records</h3><p>A JSON array <code>[{...},{...}]</code> → multiple records in one request.</p></div>
-    <div class="card"><div class="card-icon">🌳</div><h3>Parent-Child Hierarchy</h3><p>Child mapping objects reference the parent's new record ID automatically.</p></div>
-  </div>
+        </div>
 
-  <div id="feat-files"></div>
-  <h2 class="section-title">📁 File Attachments</h2>
-  <p>If the JSON payload contains file URLs, <code>FormAttachmentFilesHandlerQueueable</code> downloads each file via HTTP callout and creates a <code>ContentVersion</code> record linked to the new Salesforce record. Files are stored in the <strong>ConnectForm Library</strong> (<code>ContentWorkspace</code>).</p>
+        <!-- Bottom note -->
+        <div
+          style="display:flex;align-items:center;gap:0.75rem;background:rgba(16,185,129,0.07);border:1px solid rgba(16,185,129,0.2);border-radius:8px;padding:0.8rem 1.1rem;margin-top:0.25rem;">
+          <span style="font-size:1.2rem;">♾️</span>
+          <p style="margin:0;font-size:0.83rem;color:var(--text-muted);line-height:1.6;">
+            <strong style="color:#34d399;">Phases 3 &amp; 4 repeat infinitely</strong> — Create multiple webhooks and
+            receive unlimited inbound webhook submissions from external systems, automatically processing each request
+            and creating or updating Salesforce records, without any manual intervention.
+          </p>
+        </div>
 
-  <div id="feat-handler"></div>
-  <h2 class="section-title">🔌 Custom Handler API</h2>
-  <p>Developers can bypass the standard mapping engine by implementing the <code>ICHCustomHandler</code> interface and registering the class name on the webhook record (<code>CH_Webhook__c.Custom_Handler_Class__c</code>).</p>
-  <pre><code>// Implement this interface in your Apex class
+      </section>
+
+
+
+      <!-- ══════════ QUICK START ══════════ -->
+      <section class="doc-section" id="sec-quickstart">
+        <div class="page-header">
+          <div class="breadcrumb">ConnectHooks › <span>Quick Start</span></div>
+          <h1>Quick Start Guide</h1>
+          <p>Follow these 22 steps to go from zero to a fully live webhook integration — no code, no Apex, fully
+            automated.</p>
+        </div>
+
+        <!-- ── Section 1: Install ── -->
+        <div class="qs-section-header qs-color-blue" id="qs-install">
+          <span class="qs-panel-icon"></span>
+          <div>
+            <div class="qs-panel-title">Install the Application</div>
+            <div class="qs-panel-sub">Tab 1 — One-time installation into your Salesforce org &nbsp;·&nbsp; Steps 1–2
+            </div>
+          </div>
+        </div>
+
+        <div class="qs-step">
+          <div class="qs-step-badge">1</div>
+          <div class="qs-step-body">
+            <h4>Install ConnectHooks from AppExchange</h4>
+            <p>Go to <strong>Salesforce AppExchange</strong> and install the ConnectHooks application into your
+              Salesforce org. During installation, the system automatically sets up all required permissions, custom
+              settings, and assigns the <code>ConnectHooks_Admin</code> permission set to the installing user. Once
+              installation is complete, you are ready to begin.</p>
+            <div class="qs-tip qs-tip-green">✅ The <code>ConnectHooks_Admin</code> permission set is auto-assigned — no
+              manual action needed.</div>
+          </div>
+        </div>
+
+        <div class="qs-step">
+          <div class="qs-step-badge">2</div>
+          <div class="qs-step-body">
+            <h4>Create a Public Salesforce Site</h4>
+            <p>Before using ConnectHooks, you must create a <strong>Public Salesforce Site</strong>. This is necessary
+              because external systems (like Postman, forms, or any app) need a publicly accessible URL to send data to
+              your Salesforce org.</p>
+            <p style="margin-top:0.75rem;">Follow these steps inside Salesforce:</p>
+            <ol style="margin:0.6rem 0 0.75rem 1.25rem;font-size:0.875rem;color:var(--text-muted);line-height:2;">
+              <li>Click the <strong>⚙️ Gear icon</strong> (Setup) in the top-right corner of Salesforce.</li>
+              <li>In the <strong>Quick Find</strong> box on the left, type <code>Sites</code> and select <strong>Sites</strong> from the results.</li>
+              <li>Click the <strong>New</strong> button to create a new site.</li>
+              <li>Enter a <strong>Site Name</strong> — use something memorable (e.g. <code>ConnectHooksSite</code>).</li>
+              <li>Check the <strong>Active</strong> checkbox to make the site live immediately.</li>
+              <li>In the <strong>Active Site Home Page</strong> field, select <strong>UnderConstruction</strong>.</li>
+              <li>Click <strong>Save</strong>. Your site is now ready — the site URL will be used as the webhook endpoint base.</li>
+            </ol>
+            <div class="qs-tip qs-tip-warn">⚠️ We recommend always creating a <strong>new dedicated Salesforce Site</strong> for ConnectHooks — do not reuse an existing site. Use a memorable name, as it becomes part of your permanent webhook endpoint URL.</div>
+          </div>
+        </div>
+
+
+        <!-- ── Section 2: Configure ── -->
+        <div class="qs-section-header qs-color-purple" id="qs-configure">
+          <!--<span class="qs-panel-icon">⚙️</span>-->
+          <div>
+            <div class="qs-panel-title">Configure ConnectHooks</div>
+            <div class="qs-panel-sub">Tab 2 — CH Config wizard &nbsp;·&nbsp; Steps 3–5</div>
+          </div>
+        </div>
+
+        <div class="qs-step">
+          <div class="qs-step-badge">3</div>
+          <div class="qs-step-body">
+            <h4>Open the ConnectHooks App</h4>
+            <p>Open the <strong>App Launcher</strong> in Salesforce and search for <strong>ConnectHooks</strong>. Click
+              to open it. This is your main workspace where all configuration, mappings, and webhooks are managed.</p>
+          </div>
+        </div>
+
+        <div class="qs-step">
+          <div class="qs-step-badge">4</div>
+          <div class="qs-step-body">
+            <h4>Go to the CH Config Tab</h4>
+            <p>Inside the ConnectHooks app, click the <strong>CH Config</strong> tab. This is the setup wizard that
+              guides you through initial configuration. You'll see a numbered checklist — complete each step in order.
+            </p>
+          </div>
+        </div>
+
+        <div class="qs-step">
+          <div class="qs-step-badge">5</div>
+          <div class="qs-step-body">
+            <h4>Complete All 6 Configuration Steps</h4>
+            <p>The CH Config wizard walks you through these steps:</p>
+            <div class="qs-config-steps">
+              <div class="qs-config-step">
+                <div class="qs-config-num">1</div>
+                <div class="qs-config-text">
+                  <h5>Create a Public Site</h5>
+                  <p>Manually create a new Salesforce Public Site from Setup. This is the base URL for all your webhooks.</p>
+                </div>
+              </div>
+              <div class="qs-config-step">
+                <div class="qs-config-num">2</div>
+                <div class="qs-config-text">
+                  <h5>Set the Public Site in the App</h5>
+                  <p>Select and link the site you created to ConnectHooks so it knows which URL to use for webhooks.</p>
+                </div>
+              </div>
+              <div class="qs-config-step">
+                <div class="qs-config-num">3</div>
+                <div class="qs-config-text">
+                  <h5>Assign Permissions to the Site User</h5>
+                  <p>Grant the site Guest User the required permissions to receive and process incoming requests.</p>
+                </div>
+              </div>
+              <div class="qs-config-step">
+                <div class="qs-config-num">4</div>
+                <div class="qs-config-text">
+                  <h5>Create the Files Library</h5>
+                  <p>Sets up the <strong>ConnectForm Library</strong> in Salesforce Files to store raw JSON payloads as attachments.</p>
+                </div>
+              </div>
+              <div class="qs-config-step">
+                <div class="qs-config-num">5</div>
+                <div class="qs-config-text">
+                  <h5>Enable JSON File Storage</h5>
+                  <p>Toggle on to save a copy of every incoming JSON payload into a Form Submission record and the Files library.</p>
+                </div>
+              </div>
+              <div class="qs-config-step">
+                <div class="qs-config-num">6</div>
+                <div class="qs-config-text">
+                  <h5>Generate the API Key</h5>
+                  <p>Generates the JSONPath Generator API Key used internally by ConnectHooks for AI-assisted field mapping.</p>
+                </div>
+              </div>
+            </div>
+            <div class="qs-tip qs-tip-green">✅ Once all 6 steps show as complete, ConnectHooks is <strong>fully
+                configured</strong> and ready to accept webhooks.</div>
+          </div>
+        </div>
+
+        <!-- ── Section 3: Webhook ── -->
+        <div class="qs-section-header qs-color-teal" id="qs-webhook">
+          <!--<span class="qs-panel-icon"><img src="assets/images/webhook-icon.png" alt="Webhook" style="width:28px;height:28px;object-fit:contain;vertical-align:middle;"/></span>-->
+          <div>
+            <div class="qs-panel-title">Create Your Webhook</div>
+            <div class="qs-panel-sub">Tab 3 — Generate your secure endpoint URL + API Key &nbsp;·&nbsp; Steps 6–7</div>
+          </div>
+        </div>
+
+        <div class="qs-step">
+          <div class="qs-step-badge">6</div>
+          <div class="qs-step-body">
+            <h4>Click "Create Webhook"</h4>
+            <p style="margin-bottom:0.85rem; font-size:0.875rem; line-height:1.5;">
+              A <strong>webhook</strong> is an automated messaging system that sends real-time data from one application to another exactly when an event happens. In <strong>ConnectHooks</strong>, it acts as a "catcher" that instantly receives this outside data and automatically uses your mappings to create or update records in Salesforce.
+            </p>
+            <p>Inside the ConnectHooks app, click the <strong>Create Webhook</strong> button. A dialog will appear asking you to provide:</p>
+            <ul class="qs-checklist">
+              <li><span class="qs-check">→</span><strong>Webhook Name</strong> — unique, no spaces (e.g.,
+                <code>LeadCapture</code> or <code>ContactForm</code>)</li>
+              <li><span class="qs-check">→</span><strong>Active Status</strong> — toggle ON so the webhook starts
+                accepting requests immediately</li>
+              <li><span class="qs-check">→</span><strong>Enable JSON Storage</strong> — optionally store a copy of every
+                incoming JSON payload in Salesforce Files</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="qs-step">
+          <div class="qs-step-badge">7</div>
+          <div class="qs-step-body">
+            <h4>Save and Copy Your Webhook Details</h4>
+            <p>After saving, ConnectHooks automatically generates two security credentials:</p>
+            <ul class="qs-checklist">
+              <li><span class="qs-check">🔑</span><strong>Secure URL Code</strong> — a 48-char token embedded in your
+                endpoint URL</li>
+              <li><span class="qs-check">🔑</span><strong>API Key</strong> — the secret key your external system must
+                send with every request</li>
+            </ul>
+            <p style="margin-top:0.85rem;font-size:0.83rem;color:var(--text-muted);">Your endpoint URL will look like:
+            </p>
+            <div class="code-block" style="overflow-x:auto;word-break:break-all;overflow-wrap:break-word;">https://&lt;your-site&gt;.force.com/services/apexrest/xccch/ConnectHooksSubmissionService/&lt;WebhookName&gt;/&lt;SecureCode&gt;</div>
+            <div class="qs-tip qs-tip-orange" style="overflow-wrap:break-word;">📋 Save both the endpoint URL and the API Key now — you'll need them in
+              Steps 15–16.</div>
+          </div>
+        </div>
+
+        <!-- ── Section 4: Mappings ── -->
+        <div class="qs-section-header qs-color-indigo" id="qs-mappings">
+          <!-- <span class="qs-panel-icon">🗂️</span>-->
+          <div>
+            <div class="qs-panel-title">Set Up Field Mappings</div>
+            <div class="qs-panel-sub">Tab 4 — CH Mapping UI — drag JSON fields onto Salesforce fields &nbsp;·&nbsp;
+              Steps 8–14</div>
+          </div>
+        </div>
+
+        <div class="qs-step">
+          <div class="qs-step-badge">8</div>
+          <div class="qs-step-body">
+            <h4>Go to the CH Mapping UI Tab</h4>
+            <p>Click on the <strong>CH Mapping UI</strong> tab inside ConnectHooks. This is where you tell ConnectHooks how
+              to read incoming JSON and where to store each value in Salesforce.</p>
+          </div>
+        </div>
+        <div class="qs-step">
+          <div class="qs-step-badge">9</div>
+          <div class="qs-step-body">
+            <h4>Open Your Webhook</h4>
+            <p>From the list of webhooks, select the webhook you just created. This opens the mapping workspace for that
+              webhook specifically.</p>
+          </div>
+        </div>
+        <div class="qs-step">
+          <div class="qs-step-badge">10</div>
+          <div class="qs-step-body">
+            <h4>Upload or Drag & drop Your JSON Payload</h4>
+            <p>Upload or paste a <strong>sample JSON payload</strong> that your external system will send. ConnectHooks
+              reads it and displays all available fields on the left panel — your reference map for incoming data.</p>
+          </div>
+        </div>
+        <div class="qs-step">
+          <div class="qs-step-badge">11</div>
+          <div class="qs-step-body">
+            <h4>Apply JSONPath Filters (If Needed)</h4>
+            <p>If your JSON contains arrays, apply <strong>JSONPath filters</strong> to tell
+              ConnectHooks exactly which part to extract — for example to loop each item in an array and create a
+              separate record for each.</p>
+            <div class="qs-filter-grid">
+              <div class="qs-filter-card">
+                <div class="qs-filter-code">$.orders[*]</div>
+                <div class="qs-filter-body">
+                  <span class="qs-filter-badge qs-fb-blue">Wildcard</span>
+                  <p>Loop through <strong>all items</strong> in the <code>orders</code> array — one record created per item.</p>
+                </div>
+              </div>
+              <div class="qs-filter-card">
+                <div class="qs-filter-code">$.orders[?(@.amount &gt; 1000)]</div>
+                <div class="qs-filter-body">
+                  <span class="qs-filter-badge qs-fb-purple">Number Filter</span>
+                  <p>Only process orders where <strong>amount &gt; 1000</strong> — all other rows skipped.</p>
+                </div>
+              </div>
+              <div class="qs-filter-card">
+                <div class="qs-filter-code">$.orders[?(@.paid == true)]</div>
+                <div class="qs-filter-body">
+                  <span class="qs-filter-badge qs-fb-green">Boolean Filter</span>
+                  <p>Only process orders where <strong>paid is true</strong> — unpaid orders are skipped.</p>
+                </div>
+              </div>
+              <div class="qs-filter-card">
+                <div class="qs-filter-code">$.groups[*].orders[*]</div>
+                <div class="qs-filter-body">
+                  <span class="qs-filter-badge qs-fb-teal">Nested Arrays</span>
+                  <p>Traverse <strong>nested arrays</strong> — loops every order inside every group.</p>
+                </div>
+              </div>
+              <div class="qs-filter-card">
+                <div class="qs-filter-code">$.items[?(@.status == "active")]</div>
+                <div class="qs-filter-body">
+                  <span class="qs-filter-badge qs-fb-orange">String Match</span>
+                  <p>Only items where <strong>status equals &ldquo;active&rdquo;</strong> are processed.</p>
+                </div>
+              </div>
+              <div class="qs-filter-card">
+                <div class="qs-filter-code">$.orders[?(@.qty &gt;= 5 &amp;&amp; @.paid == true)]</div>
+                <div class="qs-filter-body">
+                  <span class="qs-filter-badge qs-fb-red">Multi-Condition</span>
+                  <p>Orders where <strong>quantity ≥ 5 AND paid is true</strong> — both must match.</p>
+                </div>
+              </div>
+            </div>
+            <div class="qs-tip qs-tip-blue" style="margin-top:0.75rem;">💡 You can write these manually in the mapping UI, or type a plain-English description and click <strong>Get JSONPath</strong> to let AI generate the expression for you.</div>
+          </div>
+        </div>
+
+        <div class="qs-step">
+          <div class="qs-step-badge">12</div>
+          <div class="qs-step-body">
+            <h4>Select Your Target Salesforce Object</h4>
+            <p>On the right side, use the <strong>Add Object</strong> button to select the Salesforce Object where records should be created — any standard object (<code>Lead</code>, <code>Contact</code>, <code>Account</code>) or any custom object in your org.</p>
+
+            <div class="cards" style="margin-top:0.85rem;gap:0.6rem;">
+              <div class="card" style="padding:0.85rem 1rem;">
+                <div class="card-icon" style="font-size:1.1rem;">➕</div>
+                <h3 style="font-size:0.85rem;">Add Object</h3>
+                <p style="font-size:0.78rem;">Click <strong>Add Object</strong> to pick a Salesforce object. It appears in the right panel and its <strong>required fields are auto-populated</strong> so you don't have to add them manually.</p>
+              </div>
+              <div class="card" style="padding:0.85rem 1rem;">
+                <div class="card-icon" style="font-size:1.1rem;">🔗</div>
+                <h3 style="font-size:0.85rem;">Add Child Object</h3>
+                <p style="font-size:0.78rem;">Need a related record? Click <strong>Add Child Object</strong> on any parent object to attach a child object. ConnectHooks automatically links it to the parent's new record ID.</p>
+              </div>
+              <div class="card" style="padding:0.85rem 1rem;">
+                <div class="card-icon" style="font-size:1.1rem;">📋</div>
+                <h3 style="font-size:0.85rem;">Add Fields</h3>
+                <p style="font-size:0.78rem;">Click <strong>Add Fields</strong> on any object — parent or child — to include additional Salesforce fields. You can add as many fields as needed for each object independently.</p>
+              </div>
+            </div>
+
+            <!-- <div class="kv-grid" style="margin-top:0.85rem;">
+              <div class="kv-row"><div class="kv-key">Add Object</div><div class="kv-val">Adds a Salesforce object to the mapping panel. Required fields are auto-filled automatically.</div></div>
+              <div class="kv-row"><div class="kv-key">Add Child Object</div><div class="kv-val">Attaches a child object under an existing parent. Child records are auto-linked to the parent's ID after creation.</div></div>
+              <div class="kv-row"><div class="kv-key">Add Fields</div><div class="kv-val">Available on every object (parent &amp; child). Add one or multiple Salesforce fields individually as needed.</div></div>
+            </div> -->
+          </div>
+        </div>
+
+        <div class="qs-step">
+          <div class="qs-step-badge">13</div>
+          <div class="qs-step-body">
+            <h4>Drag JSON Fields → Drop on Salesforce Fields</h4>
+            <p>Connect your incoming data to Salesforce by simply dragging and dropping:</p>
+            <ul class="qs-checklist">
+              <li><span class="qs-check">1</span>Drag a JSON element (e.g., <code>name</code> or <code>email</code>) from the <strong>left panel</strong>.</li>
+              <li><span class="qs-check">2</span>Drop it directly into the matching Salesforce field box (e.g., <code>Account Name</code> or <code>Email</code>) on the <strong>right panel</strong>.</li>
+            </ul>
+            <p style="margin-top:0.75rem; font-size:0.85rem; color:var(--text-muted);">
+              <strong>After a successful drop:</strong> The field section will automatically display the generated <strong>JSONPath</strong> (like <code>$.data.email</code>) next to the Salesforce field, confirming the link is active.
+            </p>
+          </div>
+        </div>
+
+        <div class="qs-step">
+          <div class="qs-step-badge">14</div>
+          <div class="qs-step-body">
+            <h4>Save Your Mappings</h4>
+            <p>Once all fields are mapped, click <strong>Save</strong>. ConnectHooks stores the mappings and evaluates
+              them automatically every time a new request arrives.</p>
+            <div class="qs-tip qs-tip-green">✅ Mappings are saved in <code>CH_Mapping__c</code> records and evaluated at
+              runtime using the built-in JSONPath engine.</div>
+          </div>
+        </div>
+
+        <!-- ── Section 5: Test ── -->
+        <div class="qs-section-header qs-color-orange" id="qs-test">
+          <!-- <span class="qs-panel-icon">🧪</span>-->
+          <div>
+            <div class="qs-panel-title">Test With Postman</div>
+            <div class="qs-panel-sub">Tab 5 — Send your first real webhook request &nbsp;·&nbsp; Steps 15–19</div>
+          </div>
+        </div>
+
+        <div class="qs-step">
+          <div class="qs-step-badge">15</div>
+          <div class="qs-step-body">
+            <h4>Open Postman — Create a New POST Request</h4>
+            <p>Open <strong>Postman</strong> (or any API tool like Insomnia or curl). Create a new request and set the
+              method to <code>POST</code>.</p>
+          </div>
+        </div>
+        <div class="qs-step">
+          <div class="qs-step-badge">16</div>
+          <div class="qs-step-body">
+            <h4>Add Your Webhook Endpoint URL</h4>
+            <p>In the URL field, paste the <strong>Webhook Endpoint URL</strong> you saved in Step 7.</p>
+          </div>
+        </div>
+        <div class="qs-step">
+          <div class="qs-step-badge">17</div>
+          <div class="qs-step-body">
+            <h4>Add the API Key Header</h4>
+            <p>Go to the <strong>Headers</strong> tab in Postman and add the following:</p>
+            <div
+              style="display:grid;grid-template-columns:auto 1fr;border:1px solid #334155;border-radius:6px;overflow:hidden;margin:0.65rem 0;font-size:0.83rem;">
+              <div
+                style="background:#1e293b;padding:0.5rem 0.9rem;font-weight:700;color:#94a3b8;border-right:1px solid #334155;">
+                Key</div>
+              <div
+                style="background:#0f172a;padding:0.5rem 0.9rem;color:#60a5fa;font-family:'JetBrains Mono',monospace;">
+                x-api-key</div>
+              <div
+                style="background:#1e293b;padding:0.5rem 0.9rem;font-weight:700;color:#94a3b8;border-right:1px solid #334155;">
+                Value</div>
+              <div
+                style="background:#0f172a;padding:0.5rem 0.9rem;color:#34d399;font-family:'JetBrains Mono',monospace;">
+                your-webhook-api-key</div>
+            </div>
+            <div class="qs-tip qs-tip-red">🔐 Without this header, every request will be rejected with
+              <code>401 Unauthorized</code>.</div>
+          </div>
+        </div>
+        <div class="qs-step">
+          <div class="qs-step-badge">18</div>
+          <div class="qs-step-body">
+            <h4>Add JSON Payload in Body</h4>
+            <p>Go to the <strong>Body</strong> tab → select <strong>raw</strong> → set format to <strong>JSON</strong>.
+              Paste the same JSON payload you uploaded during the mapping step. This is the actual data ConnectHooks
+              will process.</p>
+          </div>
+        </div>
+        <div class="qs-step">
+          <div class="qs-step-badge">19</div>
+          <div class="qs-step-body">
+            <h4>Send the Request</h4>
+            <p>Click <strong>Send</strong>. A successful response looks like this:</p>
+            <div class="code-block">{
+              "success": true,
+              "message": "Records created successfully",
+              "recordIds": ["001xx000003GYk2AAG"]
+              }</div>
+            <div class="qs-tip qs-tip-green">⚡ This confirms ConnectHooks validated auth, processed the JSON mappings,
+              and created Salesforce records automatically.</div>
+          </div>
+        </div>
+
+        <!-- ── Section 6: Verify ── -->
+        <div class="qs-section-header qs-color-green" id="qs-verify">
+          <!-- <span class="qs-panel-icon">✅</span>-->
+          <div>
+            <div class="qs-panel-title">Verify Records in Salesforce</div>
+            <div class="qs-panel-sub">Tab 6 — Confirm your live integration is working end-to-end &nbsp;·&nbsp; Steps
+              20–22</div>
+          </div>
+        </div>
+
+        <div class="qs-step">
+          <div class="qs-step-badge">20</div>
+          <div class="qs-step-body">
+            <h4>Return to Salesforce</h4>
+            <p>Go back to Salesforce and navigate to the object tab that matches the Salesforce Object you selected in
+              your mappings (e.g., the <strong>Leads</strong>, <strong>Contacts</strong>, or custom object tab).</p>
+          </div>
+        </div>
+        <div class="qs-step">
+          <div class="qs-step-badge">21</div>
+          <div class="qs-step-body">
+            <h4>Check Your Created Records</h4>
+            <p>You will see a <strong>new record</strong> created from your JSON payload — with all the fields correctly
+              filled in based on your mappings. Every field you dragged and dropped will have the exact value from the
+              JSON you sent via Postman.</p>
+          </div>
+        </div>
+
+        <div class="qs-step qs-step-final">
+          <div class="qs-step-badge" style="background:linear-gradient(135deg,#10b981,#059669);">22</div>
+          <div class="qs-step-body">
+            <h4>🎉 Your Webhook is Live!</h4>
+            <p>That's it. From this point on, <strong>any external system</strong> — a form tool, a mobile app, a CRM,
+              or any REST API — that sends a POST request to your webhook URL with the correct API Key will
+              automatically create Salesforce records without any manual work.</p>
+            <div class="qs-success-banner">
+              <!-- <span style="font-size:2rem;">⚡</span>-->
+              <div>
+                <strong style="font-size:1rem;">No code. No manual work. Fully automated.</strong><br />
+                <span style="font-size:0.83rem;opacity:0.85;">ConnectHooks is now live and processing incoming webhook
+                  data 24/7.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+      <!-- ══════════ KEY FEATURES ══════════ -->
+      <section class="doc-section" id="sec-features">
+        <div class="page-header">
+          <div class="breadcrumb">ConnectHooks › <span>Key Features</span></div>
+          <h1>Key Features</h1>
+          <p>Deep-dive into every capability that ConnectHooks ships with out of the box.</p>
+        </div>
+
+        <div id="feat-webhook"></div>
+        <h2 class="section-title"> Webhook Endpoint</h2>
+        <p>Each webhook gets a unique public HTTPS URL. The URL contains two security tokens embedded directly: the
+          webhook name and a 48-character secure code. Any HTTP client can POST JSON to this URL.</p>
+        <div class="alert alert-info"><span class="alert-icon">ℹ️</span>
+          <div>The endpoint runs on a Salesforce Public Site so no Salesforce login is needed from the caller. All
+            security is handled by ConnectHooks itself.</div>
+        </div>
+
+        <div id="feat-auth"></div>
+        <h2 class="section-title">Authentication — Dual-Factor</h2>
+        <p>Every request must pass <strong>two independent authentication checks</strong>:</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th>Check</th>
+                <th>How</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Secure URL Code</td>
+                <td>Embedded in URL path</td>
+                <td>48-char dash-separated random string</td>
+              </tr>
+              <tr>
+                <td>API Key</td>
+                <td><code>x-api-key</code> header OR JSON body field</td>
+                <td>48-char alphanumeric token (stored encrypted)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>The API key is stored as an SHA-256 hash in <code>CH_Webhook__c.Enc_Api_Key__c</code>. Validation rehashes
+          the incoming key and compares. The plain key is never stored.</p>
+
+        <div id="feat-mapping"></div>
+        <h2 class="section-title">Field Mapping with JSONPath</h2>
+        <p>Admins use the <strong>CH Mapping Ui LWC</strong> to visually connect JSON fields to Salesforce fields. Each
+          mapping line stores a JSONPath expression (e.g. <code>$.orders[*].id</code>) in
+          <code>CH_Mapping__c.JsonPath_Expression__c</code>.</p>
+        <p>At runtime, <code>JSONPathEvaluator</code> evaluates these expressions against the incoming JSON and extracts
+          values. The JSONPath engine supports:</p>
+        <ul style="font-size:0.875rem;color:var(--text-muted);padding-left:1.5rem;margin-bottom:1rem;">
+          <li>Root <code>$.field</code> and nested <code>$.parent.child</code> access</li>
+          <li>Array indexing <code>$.items[0]</code> and wildcard <code>$.items[*]</code></li>
+          <li>Filter expressions <code>$.items[?(@.price > 10)]</code></li>
+          <li>Recursive descent <code>$..fieldName</code></li>
+        </ul>
+
+        <div id="feat-ai-filter"></div>
+        <h2 class="section-title">AI Filter in Mapping</h2>
+        <p>A built-in feature inside the <strong>CH Mapping UI</strong> that lets you filter specific rows from a JSON
+          array using conditions. Only rows that match the filter will create Salesforce records. You can write the
+          filter manually — or describe it in plain English and let AI generate it for you.</p>
+
+        <div class="cards">
+          <div class="card">
+            <div class="card-icon">🤖</div>
+            <h3>AI-Generated Filters</h3>
+            <p>Type a plain-English condition (e.g. <em>"Get orders where amount &gt; 1000"</em>) and click <strong>Get
+                JSONPath</strong>. The AI converts it into a valid JSONPath filter expression automatically.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">✏️</div>
+            <h3>Manual Edit Anytime</h3>
+            <p>After the AI generates an expression, you can manually edit it directly in the mapping UI before saving —
+              or click the <strong>edit icon</strong> after saving to update it at any time.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">🎯</div>
+            <h3>Precision Record Creation</h3>
+            <p>Only JSON array rows that match the filter condition are processed. Non-matching rows are skipped
+              entirely — no unwanted records are created.</p>
+          </div>
+        </div>
+
+        <h3 class="sub-section-title">How to Use It — Step by Step</h3>
+        <ol class="steps">
+          <li class="step-item">
+            <div class="step-body">
+              <h4>Open Webhook → Mapping</h4>
+              <p>Navigate to your webhook in ConnectHooks and open the <strong>CH Mapping UI</strong>.</p>
+            </div>
+          </li>
+          <li class="step-item">
+            <div class="step-body">
+              <h4>Select a Salesforce Object</h4>
+              <p>Choose the target object (e.g. <code>Contact</code>) you want records created in.</p>
+            </div>
+          </li>
+          <li class="step-item">
+            <div class="step-body">
+              <h4>Pick an Array Field from your JSON Schema and click "Apply Filter"</h4>
+              <p>Select a JSON array field as the data source (e.g. <code>$.orders[*]</code>).</p>
+            </div>
+          </li>
+          <li class="step-item">
+            <div class="step-body">
+              <h4>Describe Your Filter in Plain English</h4>
+              <p>Type a natural-language condition — for example: <em>"Get orders where amount &gt; 1000"</em>.</p>
+            </div>
+          </li>
+          <li class="step-item">
+            <div class="step-body">
+              <h4>Click "Get JSONPath"</h4>
+              <p>The AI generates the matching JSONPath filter expression (e.g.
+                <code>$.orders[?(@.amount &gt; 1000)]</code>) and drops it directly into your field mapping.</p>
+            </div>
+          </li>
+          <li class="step-item">
+            <div class="step-body">
+              <h4>Review &amp; Edit (Optional)</h4>
+              <p>You can manually adjust the generated expression in the UI before saving if needed.</p>
+            </div>
+          </li>
+          <li class="step-item">
+            <div class="step-body">
+              <h4>Save</h4>
+              <p>The filter is stored on the mapping. At runtime, only matching rows from the JSON array will trigger
+                record creation.</p>
+            </div>
+          </li>
+        </ol>
+
+        <div class="alert alert-info"><span class="alert-icon">✏️</span>
+          <div><strong>Edit after saving:</strong> Click the <strong>edit icon</strong> on any saved mapping row to
+            reopen it. You can update the filter manually or re-run the AI query to regenerate the JSONPath expression —
+            no need to recreate the mapping from scratch.</div>
+        </div>
+
+        <div id="feat-validations"></div>
+        <h2 class="section-title">Mapping Validations</h2>
+        <p>The CH Mapping UI runs several real-time validations to prevent invalid configurations before they reach the
+          runtime engine. These checks fire automatically — no manual action needed.</p>
+
+        <!-- Validation 1 -->
+        <h3 class="sub-section-title">1. Data Type Compatibility</h3>
+        <div class="alert alert-warn"><span class="alert-icon">⚠️</span>
+          <div><strong>When it fires:</strong> Every time you drag a JSON field and drop it onto a Salesforce field in
+            the Mapping UI.</div>
+        </div>
+        <p>ConnectHooks checks whether the JSON data type of the source field is compatible with the target Salesforce
+          field type. Incompatible combinations are blocked immediately.</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th>JSON Type</th>
+                <th>Cannot Map To These Salesforce Field Types</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="badge badge-red">number</span></td>
+                <td>Email, Phone, URL, Multipicklist, Checkbox, Date, Time, DateTime</td>
+              </tr>
+              <tr>
+                <td><span class="badge badge-red">boolean</span></td>
+                <td>Email, Phone, URL, Multipicklist, Currency, Integer, Double, Date, Time, DateTime</td>
+              </tr>
+              <tr>
+                <td><span class="badge badge-red">string</span></td>
+                <td>Checkbox, Geolocation</td>
+              </tr>
+              <tr>
+                <td><span class="badge badge-red">null</span></td>
+                <td>Cannot be mapped to any field type</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Validation 2 -->
+        <h3 class="sub-section-title">2. Array Filter Mismatch</h3>
+        <div class="alert alert-warn"><span class="alert-icon">⚠️</span>
+          <div><strong>When it fires:</strong> On every drag &amp; drop. Checks only the last (deepest) array filter in
+            the JSONPath.</div>
+        </div>
+        <p>All fields mapped to the same Salesforce object must share the same <strong>final array-level
+            filter</strong>. Mixing different filters on the same object would cause conflicting row selection —
+          ConnectHooks blocks this with an error toast.</p>
+        <div class="kv-grid">
+          <div class="kv-row">
+            <div class="kv-key">Already mapped</div>
+            <div class="kv-val"><code>$.groups[*].orders[?(@.paid == true)].total</code> &rarr; Order.Amount</div>
+          </div>
+          <div class="kv-row">
+            <div class="kv-key">You drop next</div>
+            <div class="kv-val"><code>$.groups[*].orders[?(@.paid == false)].ref</code> &rarr; Order.Reference</div>
+          </div>
+        </div>
+        <div class="alert alert-warn" style="margin-top:0.75rem;">
+          <span class="alert-icon">🔴</span>
+          <div>
+            <strong>Error shown:</strong> &ldquo;Last Array Filter Mismatch&rdquo;<br />
+            <span style="font-size:0.82rem;color:var(--text-muted);">“All fields on the same Salesforce object must use
+              the same last array filter.<br />
+              Dropped last filter: <code>[?(@.paid == false)]</code> &nbsp;|&nbsp; Existing last filter:
+              <code>[?(@.paid == true)]</code><br />
+              Please ensure the last array filter matches for all fields on <strong>Order</strong>.”</span>
+          </div>
+        </div>
+
+        <!-- Validation 3 -->
+        <h3 class="sub-section-title">3. Unsaved Changes Warning</h3>
+        <div class="alert alert-warn"><span class="alert-icon">⚠️</span>
+          <div><strong>When it fires:</strong> When you have unsaved mapping changes and try to switch webhooks or close
+            / navigate away from the page.</div>
+        </div>
+        <p>If you have added mapping objects, dropped fields, or applied filters but have <strong>not yet clicked
+            Save</strong>, ConnectHooks shows a warning before you leave. This prevents accidental loss of mapping work.
+        </p>
+        <div class="cards">
+          <div class="card">
+            <div class="card-icon">🔄</div>
+            <h3>Webhook Switch</h3>
+            <p>Trying to select a different webhook while edits are pending triggers the warning. Confirm to discard, or
+              go back and save first.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">🛎️</div>
+            <h3>Page Close / Navigate Away</h3>
+            <p>Closing the browser tab or navigating away from the mapping page also triggers the browser’s built-in
+              &ldquo;Leave site?&rdquo; prompt to protect unsaved work.</p>
+          </div>
+        </div>
+
+        <!-- Validation 4 -->
+        <h3 class="sub-section-title">4. Schema Upload Clears All Mappings</h3>
+        <div class="alert alert-warn"><span class="alert-icon">⚠️</span>
+          <div><strong>When it fires:</strong> When you upload a new JSON schema file after mappings are already set up.
+          </div>
+        </div>
+        <p>Any new schema upload — even if it is the same JSON file — is treated as a <strong>full reset</strong> of the
+          mapping configuration. This ensures the schema tree and mapped fields always stay in sync.</p>
+        <div class="cards">
+          <div class="card">
+            <div class="card-icon">🗳️</div>
+            <h3>Left Panel Cleared</h3>
+            <p>The JSON schema tree and all applied filters are completely removed.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">🗳️</div>
+            <h3>Right Panel Cleared</h3>
+            <p>All mapped Salesforce objects and their field-level mappings are deleted.</p>
+          </div>
+        </div>
+        <div class="alert alert-info"><span class="alert-icon">ℹ️</span>
+          <div>A confirmation prompt is shown before the reset happens so you cannot accidentally clear working
+            mappings.</div>
+        </div>
+
+        <div id="feat-records"></div>
+        <h2 class="section-title">Record Creation</h2>
+        <p><code>WebhookRuntimeService</code> reads the <code>CH_Mapping_Object__c</code> tree and creates SObject
+          records dynamically using <code>Database.insert</code>. It handles:</p>
+        <div class="cards">
+          <div class="card">
+            <div class="card-icon">📄</div>
+            <h3>Single Record</h3>
+            <p>One JSON object → one SObject record with mapped field values.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">📚</div>
+            <h3>Array / Multiple Records</h3>
+            <p>A JSON array <code>[{...},{...}]</code> → multiple records in one request.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">🌳</div>
+            <h3>Parent-Child Hierarchy</h3>
+            <p>Child mapping objects reference the parent's new record ID automatically.</p>
+          </div>
+        </div>
+
+
+        <div id="feat-storage"></div>
+        <h2 class="section-title">Form Submission Storage <span
+            style="font-size:0.78em;font-weight:500;color:var(--text-muted);">(Raw JSON Storage)</span></h2>
+        <p>Optionally saves a copy of every incoming raw JSON payload into a Salesforce record, giving admins a complete
+          audit trail of all webhook requests — successful or failed.</p>
+
+        <div class="alert alert-info"><span class="alert-icon">ℹ️</span>
+          <div><strong>Toggle per webhook:</strong> Each webhook has its own <strong>Enable Storage of Form Submission
+              JSON</strong> <code>(Enable_Storage_Of_Form_Submission_JSON__c)</code> toggle. Storage can be enabled or
+            disabled independently for each integration.</div>
+        </div>
+
+        <div class="cards">
+          <div class="card">
+            <div class="card-icon">📋</div>
+            <h3>Form Submission Record</h3>
+            <p>After records are created, ConnectHooks saves a <strong>Form Submission</strong>
+              <code>(Form_Submission__c)</code> record capturing the full details of the request.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">📁</div>
+            <h3>File Storage</h3>
+            <p>The raw JSON is also saved as a <strong>Content Version</strong> <code>(ContentVersion)</code> file
+              inside a dedicated Salesforce Files library — <strong>ConnectForm Library</strong> — created automatically
+              during setup.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">🔍</div>
+            <h3>Full Auditability</h3>
+            <p>Every request leaves a trace. Use the Form Submission records to diagnose mapping issues, replay failed
+              requests, or review payload history.</p>
+          </div>
+        </div>
+
+        <h3 class="sub-section-title">What Each Form Submission Record Stores</h3>
+        <div class="kv-grid">
+          <div class="kv-row">
+            <div class="kv-key">Raw JSON <code>(Raw_JSON__c)</code></div>
+            <div class="kv-val">The complete incoming JSON body exactly as received — useful for debugging payload
+              issues.</div>
+          </div>
+          <div class="kv-row">
+            <div class="kv-key">Webhook <code>(Webhook__c)</code></div>
+            <div class="kv-val">Lookup to the <strong>CH Webhook</strong> <code>(CH_Webhook__c)</code> record that
+              received this request.</div>
+          </div>
+          <div class="kv-row">
+            <div class="kv-key">Status <code>(Status__c)</code></div>
+            <div class="kv-val"><span class="badge badge-green">success</span> or <span
+                class="badge badge-red">error</span> — outcome of the full processing pipeline.</div>
+          </div>
+          <div class="kv-row">
+            <div class="kv-key">Error Message <code>(Error_Message__c)</code></div>
+            <div class="kv-val">If processing failed, this field holds the exact error details — which gate failed,
+              which field was missing, etc.</div>
+          </div>
+        </div>
+
+        <div id="feat-handler"></div>
+        <h2 class="section-title"> Custom Handler API</h2>
+        <p>Developers can bypass the standard mapping engine by implementing the <code>ICHCustomHandler</code> interface
+          and registering their Apex class name in the <code>Custom_Handler_Class__c</code> field on the corresponding
+          webhook record. <code>CH_Webhook__c</code> is a <strong>Custom Object</strong> — each row represents one
+          webhook integration. The <code>Custom_Handler_Class__c</code> field is a plain text field where you enter the
+          fully-qualified Apex class name (e.g. <code>MyHandler</code>). When ConnectHooks receives a request for that
+          webhook, it dynamically instantiates your class and calls <code>execute(jsonPayload)</code> instead of the
+          built-in field mapping engine.</p>
+        <pre><code>// Implement this interface in your Apex class
 public class MyHandler implements xccch.ICHCustomHandler {
     public void execute(String jsonPayload) {
         // Parse the payload and do custom logic here
@@ -291,401 +1731,532 @@ public class MyHandler implements xccch.ICHCustomHandler {
         // Create/update records as needed
     }
 }</code></pre>
-  <div class="alert alert-warn"><span class="alert-icon">⚠️</span><div>Authentication and rate limiting still run even when a custom handler is used. Only the mapping step is replaced.</div></div>
-</section>
+      </section>
 
-<!-- ══════════ SETUP ══════════ -->
-<section class="doc-section" id="sec-setup">
-  <div class="page-header">
-    <div class="breadcrumb">ConnectHooks › <span>Installation &amp; Setup</span></div>
-    <h1>Installation &amp; Setup</h1>
-    <p>Everything that happens when the package is installed and how the admin completes first-time configuration.</p>
-  </div>
+      <!-- ══════════ DATA MODEL ══════════ -->
+      <section class="doc-section" id="sec-datamodel">
+        <div class="page-header">
+          <div class="breadcrumb">ConnectHooks › <span>Core Data Model</span></div>
+          <h1>Core Data Model</h1>
+          <p>All custom objects, custom settings, and custom metadata used by ConnectHooks.</p>
+        </div>
 
-  <div id="setup-postinstall"></div>
-  <h2 class="section-title">📦 Post-Install Script</h2>
-  <p>Salesforce automatically calls <code>ConnectHooksPackagePostInstallClass.onInstall(context)</code> when the package is installed or upgraded. Two things happen:</p>
-  <ol class="steps">
-    <li class="step-item"><div class="step-body"><h4>assignPermissionSet(installingUserId)</h4><p>Queries the <code>ConnectHooks_Admin</code> permission set and creates a <code>PermissionSetAssignment</code> record so the installing user has full access immediately.</p></div></li>
-    <li class="step-item"><div class="step-body"><h4>createDefaultConfigSettings()</h4><p>Creates the org-level <code>ConnectHooks_Config_Settings__c</code> custom setting and sets the default AI backend URL (<code>https://apps.getxccelerance.com/connecthooks</code>) if the field is blank.</p></div></li>
-  </ol>
-  <div class="alert alert-success"><span class="alert-icon">✅</span><div>Both operations run with <code>SYSTEM_MODE</code>. Errors are caught and logged — they do not block the install.</div></div>
+        <div id="dm-objects"></div>
+        <h2 class="section-title"> Custom Objects</h2>
 
-  <div id="setup-wizard"></div>
-  <h2 class="section-title">🧙 7-Step Setup Wizard</h2>
-  <p>The admin opens the <strong>connectHooksConfiguration LWC</strong> tab. Steps must be completed in order:</p>
-  <div class="table-wrap"><table class="doc-table">
-    <thead><tr><th>#</th><th>Step Title</th><th>LWC</th><th>What Happens</th></tr></thead>
-    <tbody>
-      <tr><td>1</td><td>Create Public Site</td><td><code>stepCreatePublicSite</code></td><td>MANUAL — admin creates a Salesforce public site in Setup, then marks done. Updates <code>Step_Create_Public_Site__c = true</code>.</td></tr>
-      <tr><td>2</td><td>Select Public Site</td><td><code>stepSetPublicSiteUsedInApp</code></td><td>Dropdown of available sites. Saves chosen site to <code>Public_Site_Used__c</code>. Field is locked after selection.</td></tr>
-      <tr><td>3</td><td>Assign Site User Permissions</td><td><code>stepAssignPsToSiteUser</code></td><td>Button calls <code>ConnectHooksConfigUtil.assignSitePSToPublicSiteUser()</code> → assigns <code>ConnectHooks_Public_Site_User_Permissions</code> to the guest user.</td></tr>
-      <tr><td>4</td><td>Create Files Library</td><td><code>stepCreateFilesLibrary</code></td><td>Creates <code>ContentWorkspace</code> named "ConnectForm Library". Adds guest user as Author member.</td></tr>
-      <tr><td>5</td><td>Enable JSON Storage</td><td><code>stepEnableJsonFilesStorage</code></td><td>Toggle. When ON, saves raw JSON as <code>Form_Submission__c</code> and ContentVersion. Saved to <code>Disable_Storage_Of_Form_Submission_JSON__c</code> (inverted flag).</td></tr>
-      <tr><td>6</td><td>Generate JSONPath API Key</td><td><code>stepJsonPathGenerateApiKey</code></td><td>HTTP callout to <code>https://apps.getxccelerance.com/connecthooks</code> — gets an API key for the JSONPath Generator feature. Saves to <code>JSONPath_Gen_Sys_API_Key__c</code>.</td></tr>
-      <tr><td>7</td><td>Create Webhook</td><td><code>webhookModal / webhookEntry</code></td><td>Admin creates first webhook. Repeatable for every new integration.</td></tr>
-    </tbody>
-  </table></div>
-  <div class="alert alert-info"><span class="alert-icon">ℹ️</span><div>Steps 1–6 are one-time per org. Step 7 is repeated every time a new webhook integration is needed.</div></div>
+        <h3 class="sub-section-title">CH Webhook <span
+            style="font-weight:400;color:var(--text-muted);">(CH_Webhook__c)</span> — Webhook Registry</h3>
+        <table class="doc-table">
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Type</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Webhook Name <code>(Webook_Name__c)</code></td>
+              <td>Text(80)</td>
+              <td>Unique name. No spaces. Used in the endpoint URL.</td>
+            </tr>
+            <tr>
+              <td>Secure URL Code <code>(Secure_URL_Code__c)</code></td>
+              <td>Text(255)</td>
+              <td>48-char dash-separated code embedded in endpoint URL.</td>
+            </tr>
+            <tr>
+              <td>Encrypted API Key <code>(Enc_Api_Key__c)</code></td>
+              <td>Text(255)</td>
+              <td>SHA-256 hash of the API key. Plain key is never stored.</td>
+            </tr>
+            <tr>
+              <td>Active Status <code>(is_Active__c)</code></td>
+              <td>Checkbox</td>
+              <td>If false, all requests rejected with 404.</td>
+            </tr>
+            <tr>
+              <td>Request Count <code>(RequestCount__c)</code></td>
+              <td>Number</td>
+              <td>Rolling request counter for rate limiting.</td>
+            </tr>
+            <tr>
+              <td>Request Count Reset Time <code>(RequestCountResetTime__c)</code></td>
+              <td>DateTime</td>
+              <td>When the current rate limit window started.</td>
+            </tr>
+            <tr>
+              <td>Custom Handler Class <code>(Custom_Handler_Class__c)</code></td>
+              <td>Text(255)</td>
+              <td>Apex class name implementing ICHCustomHandler (optional).</td>
+            </tr>
+          </tbody>
+        </table>
 
-  <div id="setup-webhook"></div>
-  <h2 class="section-title">🔗 Creating a Webhook</h2>
-  <p>When admin clicks <strong>New Webhook</strong>, <code>ConnectHooksConfigurationController.createWebhook(webhookData)</code> runs these steps:</p>
-  <ol class="steps">
-    <li class="step-item"><div class="step-body"><h4>Name Validation</h4><p>If blank or contains spaces → error (<code>ErrorMsg.webhookNameNoSpaces</code>).</p></div></li>
-    <li class="step-item"><div class="step-body"><h4>Duplicate Check</h4><p>Queries <code>CH_Webhook__c</code> by name. If found → error.</p></div></li>
-    <li class="step-item"><div class="step-body"><h4>Generate Secure URL Code</h4><p>Calls <code>FormResponseUtil.createSecureURLCode()</code> — 48-char random lowercase/number string with dashes.</p></div></li>
-    <li class="step-item"><div class="step-body"><h4>Generate API Key</h4><p>Calls <code>FormResponseUtil.createAPIKeyTokenString()</code> — 48-char random alphanumeric (upper + lower + digits).</p></div></li>
-    <li class="step-item"><div class="step-body"><h4>Insert Record</h4><p>Inserts <code>CH_Webhook__c</code> with <code>Webook_Name__c</code>, <code>Secure_URL_Code__c</code>, <code>Enc_Api_Key__c</code>, <code>is_Active__c = true</code>.</p></div></li>
-    <li class="step-item"><div class="step-body"><h4>Trigger Fires</h4><p><code>WebhookLimitTrigger</code> → checks if user exceeded <code>CH_Config_Meta_Store__mdt.Free_Edition.Webhook_Creation_Limit__c</code>. If exceeded → <code>addError()</code> blocks insert.</p></div></li>
-  </ol>
+        <h3 class="sub-section-title">CH Mapping Object <span
+            style="font-weight:400;color:var(--text-muted);">(CH_Mapping_Object__c)</span> — Target Object Config</h3>
+        <table class="doc-table">
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Type</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Target Object <code>(Custom_Object__c)</code></td>
+              <td>Text(255)</td>
+              <td>API name of target Salesforce object (e.g. Lead, Contact__c).</td>
+            </tr>
+            <tr>
+              <td>Webhook <code>(Webhook__c)</code></td>
+              <td>Lookup(CH_Webhook__c)</td>
+              <td>Parent webhook this mapping belongs to.</td>
+            </tr>
+            <tr>
+              <td>Parent Mapping Object <code>(Parent_Mapping_Object__c)</code></td>
+              <td>Lookup(self)</td>
+              <td>Points to parent object for hierarchical record creation.</td>
+            </tr>
+            <tr>
+              <td>Parent Lookup Field <code>(Parent_Lookup_Field__c)</code></td>
+              <td>Text(255)</td>
+              <td>API name of the lookup field that links child to parent.</td>
+            </tr>
+          </tbody>
+        </table>
 
-  <div id="setup-mapping"></div>
-  <h2 class="section-title">🗺️ Setting Up Field Mappings</h2>
-  <p>Admin opens the <strong>mappingUi LWC</strong>. When Save is clicked, <code>MappingController.saveMappingData()</code> runs:</p>
-  <ol class="steps">
-    <li class="step-item"><div class="step-body"><h4>Schema Save</h4><p>If JSON schema uploaded → upserts <code>JSON_Schema__c</code> linked to the webhook.</p></div></li>
-    <li class="step-item"><div class="step-body"><h4>Hierarchy Flatten</h4><p><code>flattenHierarchyWithIds()</code> walks the object tree and builds parent→child maps.</p></div></li>
-    <li class="step-item"><div class="step-body"><h4>Upsert Mapping Objects</h4><p>Creates/updates <code>CH_Mapping_Object__c</code> records with target Salesforce object API name and parent references.</p></div></li>
-    <li class="step-item"><div class="step-body"><h4>Delete Orphans</h4><p>Old <code>CH_Mapping_Object__c</code> records not in the new save are deleted along with their <code>CH_Mapping__c</code> children.</p></div></li>
-    <li class="step-item"><div class="step-body"><h4>Insert Field Mappings</h4><p>Inserts <code>CH_Mapping__c</code> records with <code>Fields__c</code> (SF field API name) and <code>JsonPath_Expression__c</code>.</p></div></li>
-  </ol>
-</section>
+        <h3 class="sub-section-title">CH Mapping <span
+            style="font-weight:400;color:var(--text-muted);">(CH_Mapping__c)</span> — Field-Level Mappings</h3>
+        <table class="doc-table">
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Type</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Mapping Object <code>(Mapping_Object__c)</code></td>
+              <td>Lookup(CH_Mapping_Object__c)</td>
+              <td>Which object config this field mapping belongs to.</td>
+            </tr>
+            <tr>
+              <td>Salesforce Field <code>(Fields__c)</code></td>
+              <td>Text(255)</td>
+              <td>Salesforce field API name (e.g. LastName, Email).</td>
+            </tr>
+            <tr>
+              <td>JSONPath Expression <code>(JsonPath_Expression__c)</code></td>
+              <td>Text(500)</td>
+              <td>JSONPath expression to extract value (e.g. $.contact.email).</td>
+            </tr>
+          </tbody>
+        </table>
 
-<!-- ══════════ RUNTIME FLOW ══════════ -->
-<section class="doc-section" id="sec-runtime">
-  <div class="page-header">
-    <div class="breadcrumb">ConnectHooks › <span>Runtime Flow</span></div>
-    <h1>Runtime Flow</h1>
-    <p>The 9-step pipeline that runs inside <code>ConnectHooksSubmissionWebService.handleWebhookRequest()</code> on every incoming webhook call.</p>
-  </div>
+        <h3 class="sub-section-title">Form Submission <span
+            style="font-weight:400;color:var(--text-muted);">(Form_Submission__c)</span> — Raw Payload Log</h3>
+        <table class="doc-table">
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Type</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Webhook <code>(Webhook__c)</code></td>
+              <td>Lookup(CH_Webhook__c)</td>
+              <td>Which webhook received this request.</td>
+            </tr>
+            <tr>
+              <td>Raw JSON <code>(Raw_JSON__c)</code></td>
+              <td>Long Text Area</td>
+              <td>The complete incoming JSON payload.</td>
+            </tr>
+            <tr>
+              <td>Status <code>(Status__c)</code></td>
+              <td>Text</td>
+              <td>success / error</td>
+            </tr>
+            <tr>
+              <td>Error Message <code>(Error_Message__c)</code></td>
+              <td>Long Text Area</td>
+              <td>Error details if processing failed.</td>
+            </tr>
+          </tbody>
+        </table>
 
-  <div class="alert alert-info"><span class="alert-icon">ℹ️</span><div>The class is declared <code>@RestResource(urlMapping="/ConnectHooksSubmissionService/*")</code> — runs as the public site guest user.</div></div>
+        <h3 class="sub-section-title">JSON Schema <span
+            style="font-weight:400;color:var(--text-muted);">(JSON_Schema__c)</span> — Validation Schema</h3>
+        <p>Stores a JSON schema string linked to a webhook. Used by the runtime to validate required fields in incoming
+          payloads before processing begins.</p>
 
-  <div id="rt-step1"></div>
-  <h2 class="section-title">Step 1 — Extract Webhook Identity</h2>
-  <p>Parses the request URI to extract <code>webhookName</code> and <code>secureCode</code>:</p>
-  <pre><code>String urlPath = req.requestURI.substringAfter('/ConnectHooksSubmissionService/');
-List&lt;String&gt; pathParts = urlPath.split('/');
-String webhookName = pathParts[0];   // e.g. MyForm
-String secureCode  = pathParts[1];   // e.g. a1b2c3d4-e5f6-...</code></pre>
+        <div id="dm-settings"></div>
+        <h2 class="section-title"> Custom Settings</h2>
+        <h3 class="sub-section-title">ConnectHooks Config Settings <span
+            style="font-weight:400;color:var(--text-muted);">(ConnectHooks_Config_Settings__c)</span> — Hierarchy Custom
+          Setting</h3>
+        <table class="doc-table">
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Public Site Used <code>(Public_Site_Used__c)</code></td>
+              <td>Name of the selected public Salesforce Site.</td>
+            </tr>
+            <tr>
+              <td>Secure URL Code <code>(Secure_URL_Code__c)</code></td>
+              <td>Site-level secure code (deprecated; per-webhook now).</td>
+            </tr>
+            <tr>
+              <td>Site URL <code>(Site_URL__c)</code></td>
+              <td>Base URL of the public site.</td>
+            </tr>
+            <tr>
+              <td>Create Public Site Step <code>(Step_Create_Public_Site__c)</code></td>
+              <td>Checkbox — Step 1 of wizard done.</td>
+            </tr>
+            <tr>
+              <td>Disable JSON Storage <code>(Disable_Storage_Of_Form_Submission_JSON__c)</code></td>
+              <td>When true, raw JSON is NOT saved (inverted flag).</td>
+            </tr>
+            <tr>
+              <td>JSONPath Generator API Key <code>(JSONPath_Gen_Sys_API_Key__c)</code></td>
+              <td>API key for the external JSONPath Generator service.</td>
+            </tr>
+            <tr>
+              <td>AI Backend Endpoint URL <code>(AI_BackEnd_EndPoint_Url__c)</code></td>
+              <td>Backend URL (default: https://apps.getxccelerance.com/connecthooks).</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
 
-  <div id="rt-step2"></div>
-  <h2 class="section-title">Step 2 — Validate Secure URL Code &amp; Load Webhook</h2>
-  <p>Calls <code>ConnectHooksSOQL.getWebhookByName(webhookName)</code>. If not found or <code>is_Active__c = false</code> → returns 404. Compares URL's secureCode with <code>CH_Webhook__c.Secure_URL_Code__c</code>. Mismatch → 401.</p>
+      <!-- ══════════ SECURITY ══════════ -->
+      <section class="doc-section" id="sec-security">
+        <div class="page-header">
+          <div class="breadcrumb">ConnectHooks › <span>API &amp; Security</span></div>
+          <h1>API &amp; Security</h1>
+          <p>Security model, permission sets, Apex classes overview, and LWC components.</p>
+        </div>
 
-  <div id="rt-step3"></div>
-  <h2 class="section-title">Step 3 — Rate Limit Check</h2>
-  <p>Reads <code>RequestCount__c</code> and <code>RequestCountResetTime__c</code> from the webhook record. If current count ≥ limit AND within the rolling 24-hour window → returns 429 Too Many Requests and increments the counter.</p>
+        <div id="sec-model"></div>
+        <h2 class="section-title"> Security Model</h2>
+        <div class="alert alert-success"><span class="alert-icon"></span>
+          <div><strong>Layered Security:</strong> Every request must independently pass 4 gates. Bypassing one does not
+            grant access via another.</div>
+        </div>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th>Gate</th>
+                <th>Check</th>
+                <th>Fail Response</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1 — Secure URL Code</td>
+                <td>URL path token matches CH Webhook &rsaquo; Secure URL Code
+                  <code>(CH_Webhook__c.Secure_URL_Code__c)</code></td>
+                <td>401 Unauthorized</td>
+              </tr>
+              <tr>
+                <td>2 — Webhook Active</td>
+                <td>CH Webhook &rsaquo; Active Status <code>(is_Active__c)</code> = true</td>
+                <td>404 Not Found</td>
+              </tr>
+              <tr>
+                <td>3 — API Key</td>
+                <td>SHA-256(incoming) = CH Webhook &rsaquo; Encrypted API Key <code>(Enc_Api_Key__c)</code></td>
+                <td>401 Unauthorized</td>
+              </tr>
+              <tr>
+                <td>4 — Rate Limit</td>
+                <td>Request count &le; limit within 24h window</td>
+                <td>429 Too Many Requests</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Additionally, the <code>WebhookLimitTrigger</code> enforces the creation limit at the database level — it
+          cannot be bypassed via any interface, including Data Loader or direct API calls.</p>
 
-  <div id="rt-step4"></div>
-  <h2 class="section-title">Step 4 — API Key Authentication</h2>
-  <p>Reads the API key from the <code>x-api-key</code> header. If absent, checks the JSON body for an <code>api_key</code> field. Calls <code>FormResponseUtil.validateAPIKey(storedHash, incomingKey)</code> which SHA-256 hashes the incoming key and compares. Mismatch → 401.</p>
+        <div id="sec-perm"></div>
+        <h2 class="section-title"> Permission Sets</h2>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th>Permission Set</th>
+                <th>Who Gets It</th>
+                <th>Access Granted</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>ConnectHooks_Admin</td>
+                <td>Installing user (auto) + other admins (manual)</td>
+                <td>Full CRUD on all ConnectHooks objects. Access to all Apex classes and LWC. Required to use Config
+                  tab and Mapping UI.</td>
+              </tr>
+              <tr>
+                <td>ConnectHooks_Public_Site_User_Permissions</td>
+                <td>Site guest user (Step 3 of wizard)</td>
+                <td>Read access to CH_Webhook__c, CH_Mapping_Object__c, CH_Mapping__c. Access to
+                  ConnectHooksSubmissionWebService. Minimum needed to process webhook requests.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
 
-  <div id="rt-step5"></div>
-  <h2 class="section-title">Step 5 — JSON Schema Validation</h2>
-  <p>If a <code>JSON_Schema__c</code> record is linked to the webhook, validates that all required fields listed in the schema are present in the incoming JSON. Missing fields → 400 with field list.</p>
+      <!-- ══════════ TROUBLESHOOTING ══════════ -->
+      <section class="doc-section" id="sec-troubleshoot">
+        <div class="page-header">
+          <div class="breadcrumb">ConnectHooks › <span>Troubleshooting &amp; Logs</span></div>
+          <h1>Troubleshooting &amp; Logs</h1>
+          <p>Common issues and how to diagnose them using ConnectHooks' built-in logging.</p>
+        </div>
 
-  <div id="rt-step6"></div>
-  <h2 class="section-title">Step 6 — Field Mapping &amp; Record Creation</h2>
-  <p>If <code>CH_Webhook__c.Custom_Handler_Class__c</code> is set → instantiates and calls the custom handler. Otherwise calls <code>WebhookRuntimeService.processWebhookData()</code>:</p>
-  <ol class="steps">
-    <li class="step-item"><div class="step-body"><h4>Load Mapping Tree</h4><p>Queries <code>CH_Mapping_Object__c</code> with child <code>CH_Mapping__c</code> records for this webhook.</p></div></li>
-    <li class="step-item"><div class="step-body"><h4>Evaluate JSONPath</h4><p><code>JSONPathEvaluator.evaluate(jsonPayload, expression)</code> extracts values for every mapped field.</p></div></li>
-    <li class="step-item"><div class="step-body"><h4>Type Conversion</h4><p><code>FormResponseUtil.convertFieldValue()</code> casts String values to the target field's Schema type (Date, Decimal, Boolean, etc).</p></div></li>
-    <li class="step-item"><div class="step-body"><h4>DML Insert</h4><p>Calls <code>Database.insert(records, AccessLevel.USER_MODE)</code> — respects FLS and sharing.</p></div></li>
-    <li class="step-item"><div class="step-body"><h4>Wire Child Records</h4><p>Child mapping objects get their lookup field set to the parent record's new ID.</p></div></li>
-  </ol>
+        <h2 class="section-title">Reading Form Submission <span
+            style="font-size:0.82em;font-weight:500;color:var(--text-muted);">(Form_Submission__c)</span> Logs</h2>
+        <p>Every webhook request (successful or failed) creates a <code>Form_Submission__c</code> record (if JSON
+          storage is enabled). Check these fields:</p>
+        <div class="kv-grid">
+          <div class="kv-row">
+            <div class="kv-key">Status</div>
+            <div class="kv-val"><span class="badge badge-green">success</span> or <span
+                class="badge badge-red">error</span></div>
+          </div>
+          <div class="kv-row">
+            <div class="kv-key">Raw JSON</div>
+            <div class="kv-val">The exact JSON payload received — use this to verify the payload structure.</div>
+          </div>
+          <div class="kv-row">
+            <div class="kv-key">Error Message</div>
+            <div class="kv-val">Detailed error if Status = error. Includes which field or check failed.</div>
+          </div>
+          <div class="kv-row">
+            <div class="kv-key">Webhook</div>
+            <div class="kv-val">Which webhook received this request.</div>
+          </div>
+        </div>
 
-  <div id="rt-step7"></div>
-  <h2 class="section-title">Steps 7–9 — Storage &amp; Attachments</h2>
-  <p><strong>Step 7 (JSON Storage):</strong> If <code>Disable_Storage_Of_Form_Submission_JSON__c = false</code>, creates a <code>Form_Submission__c</code> record with the raw JSON payload and a <code>ContentVersion</code> file in the ConnectForm Library.</p>
-  <p><strong>Step 8 (File Queue):</strong> If file URLs found in payload, enqueues <code>FormAttachmentFilesHandlerQueueable</code> to download files asynchronously.</p>
-  <p><strong>Step 9 (Response):</strong> Returns JSON <code>{ "success": true, "recordId": "...", "message": "..." }</code>.</p>
-</section>
+        <h2 class="section-title">❗ Common Errors &amp; Fixes</h2>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th>HTTP Status</th>
+                <th>Error</th>
+                <th>Fix</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="badge badge-red">401</span></td>
+                <td>Invalid Secure URL Code</td>
+                <td>Copy the full endpoint URL from the webhook card. The secure code segment must match exactly.</td>
+              </tr>
+              <tr>
+                <td><span class="badge badge-red">401</span></td>
+                <td>Invalid API Key</td>
+                <td>Send the API key in the <code>x-api-key</code> header. Check for trailing spaces or encoding issues.
+                </td>
+              </tr>
+              <tr>
+                <td><span class="badge badge-orange">404</span></td>
+                <td>Webhook not found / inactive</td>
+                <td>Verify the webhook name in the URL. Check <code>is_Active__c = true</code> on CH_Webhook__c.</td>
+              </tr>
+              <tr>
+                <td><span class="badge badge-orange">429</span></td>
+                <td>Rate limit exceeded</td>
+                <td>Wait for the 24-hour window to reset, or contact admin to raise the limit in
+                  <code>CH_Config_Meta_Store__mdt</code>.</td>
+              </tr>
+              <tr>
+                <td><span class="badge badge-red">400</span></td>
+                <td>JSON schema validation failed</td>
+                <td>Check <code>Error_Message__c</code> for the missing required fields. Update the payload or
+                  remove/update the JSON schema.</td>
+              </tr>
+              <tr>
+                <td><span class="badge badge-red">400</span></td>
+                <td>Field mapping / DML error</td>
+                <td>Verify JSONPath expressions in <code>CH_Mapping__c.JsonPath_Expression__c</code> match the payload
+                  structure. Check field-level permissions.</td>
+              </tr>
+              <tr>
+                <td>—</td>
+                <td>Webhook creation blocked</td>
+                <td>Free edition limit (2 webhooks) reached. Delete an existing webhook first.</td>
+              </tr>
+              <tr>
+                <td>—</td>
+                <td>Site guest user can't process</td>
+                <td>Run Step 3 of the setup wizard again to re-assign the
+                  <code>ConnectHooks_Public_Site_User_Permissions</code> permission set.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-<!-- ══════════ DATA MODEL ══════════ -->
-<section class="doc-section" id="sec-datamodel">
-  <div class="page-header">
-    <div class="breadcrumb">ConnectHooks › <span>Core Data Model</span></div>
-    <h1>Core Data Model</h1>
-    <p>All custom objects, custom settings, and custom metadata used by ConnectHooks.</p>
-  </div>
-
-  <div id="dm-objects"></div>
-  <h2 class="section-title">📦 Custom Objects</h2>
-
-  <h3 class="sub-section-title">CH_Webhook__c — Webhook Registry</h3>
-  <table class="doc-table">
-    <thead><tr><th>Field</th><th>Type</th><th>Purpose</th></tr></thead>
-    <tbody>
-      <tr><td>Webook_Name__c</td><td>Text(80)</td><td>Unique name. No spaces. Used in the endpoint URL.</td></tr>
-      <tr><td>Secure_URL_Code__c</td><td>Text(255)</td><td>48-char dash-separated code embedded in endpoint URL.</td></tr>
-      <tr><td>Enc_Api_Key__c</td><td>Text(255)</td><td>SHA-256 hash of the API key. Plain key is never stored.</td></tr>
-      <tr><td>is_Active__c</td><td>Checkbox</td><td>If false, all requests rejected with 404.</td></tr>
-      <tr><td>RequestCount__c</td><td>Number</td><td>Rolling request counter for rate limiting.</td></tr>
-      <tr><td>RequestCountResetTime__c</td><td>DateTime</td><td>When the current rate limit window started.</td></tr>
-      <tr><td>Custom_Handler_Class__c</td><td>Text(255)</td><td>Apex class name implementing ICHCustomHandler (optional).</td></tr>
-    </tbody>
-  </table>
-
-  <h3 class="sub-section-title">CH_Mapping_Object__c — Target Object Config</h3>
-  <table class="doc-table">
-    <thead><tr><th>Field</th><th>Type</th><th>Purpose</th></tr></thead>
-    <tbody>
-      <tr><td>Custom_Object__c</td><td>Text(255)</td><td>API name of target Salesforce object (e.g. Lead, Contact__c).</td></tr>
-      <tr><td>Webhook__c</td><td>Lookup(CH_Webhook__c)</td><td>Parent webhook this mapping belongs to.</td></tr>
-      <tr><td>Parent_Mapping_Object__c</td><td>Lookup(self)</td><td>Points to parent object for hierarchical record creation.</td></tr>
-      <tr><td>Parent_Lookup_Field__c</td><td>Text(255)</td><td>API name of the lookup field that links child to parent.</td></tr>
-    </tbody>
-  </table>
-
-  <h3 class="sub-section-title">CH_Mapping__c — Field-Level Mappings</h3>
-  <table class="doc-table">
-    <thead><tr><th>Field</th><th>Type</th><th>Purpose</th></tr></thead>
-    <tbody>
-      <tr><td>Mapping_Object__c</td><td>Lookup(CH_Mapping_Object__c)</td><td>Which object config this field mapping belongs to.</td></tr>
-      <tr><td>Fields__c</td><td>Text(255)</td><td>Salesforce field API name (e.g. LastName, Email).</td></tr>
-      <tr><td>JsonPath_Expression__c</td><td>Text(500)</td><td>JSONPath expression to extract value (e.g. $.contact.email).</td></tr>
-    </tbody>
-  </table>
-
-  <h3 class="sub-section-title">Form_Submission__c — Raw Payload Log</h3>
-  <table class="doc-table">
-    <thead><tr><th>Field</th><th>Type</th><th>Purpose</th></tr></thead>
-    <tbody>
-      <tr><td>Webhook__c</td><td>Lookup(CH_Webhook__c)</td><td>Which webhook received this request.</td></tr>
-      <tr><td>Raw_JSON__c</td><td>Long Text Area</td><td>The complete incoming JSON payload.</td></tr>
-      <tr><td>Status__c</td><td>Text</td><td>success / error</td></tr>
-      <tr><td>Error_Message__c</td><td>Long Text Area</td><td>Error details if processing failed.</td></tr>
-    </tbody>
-  </table>
-
-  <h3 class="sub-section-title">JSON_Schema__c — Validation Schema</h3>
-  <p>Stores a JSON schema string linked to a webhook. Used by the runtime to validate required fields in incoming payloads before processing begins.</p>
-
-  <div id="dm-settings"></div>
-  <h2 class="section-title">⚙️ Custom Settings</h2>
-  <h3 class="sub-section-title">ConnectHooks_Config_Settings__c (Hierarchy)</h3>
-  <table class="doc-table">
-    <thead><tr><th>Field</th><th>Purpose</th></tr></thead>
-    <tbody>
-      <tr><td>Public_Site_Used__c</td><td>Name of the selected public Salesforce Site.</td></tr>
-      <tr><td>Secure_URL_Code__c</td><td>Site-level secure code (deprecated; per-webhook now).</td></tr>
-      <tr><td>Site_URL__c</td><td>Base URL of the public site.</td></tr>
-      <tr><td>Step_Create_Public_Site__c</td><td>Checkbox — Step 1 of wizard done.</td></tr>
-      <tr><td>Disable_Storage_Of_Form_Submission_JSON__c</td><td>When true, raw JSON is NOT saved (inverted flag).</td></tr>
-      <tr><td>JSONPath_Gen_Sys_API_Key__c</td><td>API key for the external JSONPath Generator service.</td></tr>
-      <tr><td>AI_BackEnd_EndPoint_Url__c</td><td>Backend URL (default: https://apps.getxccelerance.com/connecthooks).</td></tr>
-    </tbody>
-  </table>
-
-  <div id="dm-metadata"></div>
-  <h2 class="section-title">🏷️ Custom Metadata</h2>
-  <h3 class="sub-section-title">CH_Config_Meta_Store__mdt</h3>
-  <p>Stores edition-specific limits. The <code>Free_Edition</code> record defines:</p>
-  <div class="kv-grid">
-    <div class="kv-row"><div class="kv-key">Webhook_Creation_Limit__c</div><div class="kv-val">Maximum webhooks allowed (Free: 2)</div></div>
-    <div class="kv-row"><div class="kv-key">Request_Rate_Limit__c</div><div class="kv-val">Max requests per 24 hours per webhook (default: 300)</div></div>
-  </div>
-</section>
-
-<!-- ══════════ SECURITY ══════════ -->
-<section class="doc-section" id="sec-security">
-  <div class="page-header">
-    <div class="breadcrumb">ConnectHooks › <span>API &amp; Security</span></div>
-    <h1>API &amp; Security</h1>
-    <p>Security model, permission sets, Apex classes overview, and LWC components.</p>
-  </div>
-
-  <div id="sec-model"></div>
-  <h2 class="section-title">🛡️ Security Model</h2>
-  <div class="alert alert-success"><span class="alert-icon">🔒</span><div><strong>Layered Security:</strong> Every request must independently pass 4 gates. Bypassing one does not grant access via another.</div></div>
-  <div class="table-wrap"><table class="doc-table">
-    <thead><tr><th>Gate</th><th>Check</th><th>Fail Response</th></tr></thead>
-    <tbody>
-      <tr><td>1 — Secure URL Code</td><td>URL path token matches <code>CH_Webhook__c.Secure_URL_Code__c</code></td><td>401 Unauthorized</td></tr>
-      <tr><td>2 — Webhook Active</td><td><code>is_Active__c = true</code></td><td>404 Not Found</td></tr>
-      <tr><td>3 — API Key</td><td>SHA-256(incoming) = <code>Enc_Api_Key__c</code></td><td>401 Unauthorized</td></tr>
-      <tr><td>4 — Rate Limit</td><td>Request count ≤ limit within 24h window</td><td>429 Too Many Requests</td></tr>
-    </tbody>
-  </table></div>
-  <p>Additionally, the <code>WebhookLimitTrigger</code> enforces the creation limit at the database level — it cannot be bypassed via any interface, including Data Loader or direct API calls.</p>
-
-  <div id="sec-perm"></div>
-  <h2 class="section-title">👥 Permission Sets</h2>
-  <div class="table-wrap"><table class="doc-table">
-    <thead><tr><th>Permission Set</th><th>Who Gets It</th><th>Access Granted</th></tr></thead>
-    <tbody>
-      <tr><td>ConnectHooks_Admin</td><td>Installing user (auto) + other admins (manual)</td><td>Full CRUD on all ConnectHooks objects. Access to all Apex classes and LWC. Required to use Config tab and Mapping UI.</td></tr>
-      <tr><td>ConnectHooks_Public_Site_User_Permissions</td><td>Site guest user (Step 3 of wizard)</td><td>Read access to CH_Webhook__c, CH_Mapping_Object__c, CH_Mapping__c. Access to ConnectHooksSubmissionWebService. Minimum needed to process webhook requests.</td></tr>
-    </tbody>
-  </table></div>
-
-  <div id="sec-api"></div>
-  <h2 class="section-title">💻 Apex Classes</h2>
-  <div class="table-wrap"><table class="doc-table">
-    <thead><tr><th>Class</th><th>Sharing</th><th>Key Method(s)</th><th>Role</th></tr></thead>
-    <tbody>
-      <tr><td>ConnectHooksSubmissionWebService</td><td>with sharing</td><td>handleWebhookRequest()</td><td>Main REST entry point — processes all webhook requests</td></tr>
-      <tr><td>WebhookRuntimeService</td><td>with sharing</td><td>processWebhookData()</td><td>Field mapping, type conversion, record DML</td></tr>
-      <tr><td>ConnectHooksConfigurationController</td><td>with sharing</td><td>createWebhook(), generateAndSaveJsonPathApiKey()</td><td>Admin LWC controller for webhook management</td></tr>
-      <tr><td>ConnectHooksConfigUtil</td><td>with sharing</td><td>assignSitePSToPublicSiteUser(), createContentWorkspaceLibrary()</td><td>Setup wizard backend</td></tr>
-      <tr><td>MappingController</td><td>with sharing</td><td>saveMappingData(), getMappingData()</td><td>Saves/loads field mappings from the Mapping UI</td></tr>
-      <tr><td>ConnectHooksSOQL</td><td>without sharing</td><td>getWebhookByName(), getMappingsForWebhook()</td><td>Centralised SOQL — guest user can query via this class</td></tr>
-      <tr><td>FormResponseUtil</td><td>with sharing</td><td>createSecureURLCode(), validateAPIKey(), convertFieldValue()</td><td>Utility — key gen, config reading, type conversion</td></tr>
-      <tr><td>JSONPathEvaluator</td><td>with sharing</td><td>evaluate(json, path)</td><td>Evaluates JSONPath expressions against payload</td></tr>
-      <tr><td>JsonParserWithJsonPath</td><td>with sharing</td><td>parse(), traverse()</td><td>Low-level JSON parser powering the JSONPath engine</td></tr>
-      <tr><td>ObjectFieldController</td><td>with sharing</td><td>getSObjects(), getObjectFields()</td><td>Provides object/field metadata to Mapping UI</td></tr>
-      <tr><td>JSONPathAPIController</td><td>with sharing</td><td>evaluateJSONPath()</td><td>Live JSONPath preview in the Mapping UI</td></tr>
-      <tr><td>ConnectHooksPackagePostInstallClass</td><td>with sharing</td><td>onInstall(context)</td><td>Post-install script — permission set + config setup</td></tr>
-      <tr><td>WebhookLimitTriggerHandler</td><td>with sharing</td><td>handleBeforeInsert()</td><td>Enforces max webhook creation limit</td></tr>
-      <tr><td>FormAttachmentFilesHandlerQueueable</td><td>with sharing</td><td>execute(QueueableContext)</td><td>Async file download and ContentVersion creation</td></tr>
-      <tr><td>ICHCustomHandler</td><td>interface</td><td>execute(String jsonPayload)</td><td>Interface for custom handler classes</td></tr>
-      <tr><td>ErrorMsg / ErrorMessageConfig</td><td>with sharing</td><td>—</td><td>Centralised error message constants</td></tr>
-    </tbody>
-  </table></div>
-
-  <div id="sec-lwc"></div>
-  <h2 class="section-title">🖥️ LWC Components</h2>
-  <div class="table-wrap"><table class="doc-table">
-    <thead><tr><th>Component</th><th>Tab / Location</th><th>Purpose</th></tr></thead>
-    <tbody>
-      <tr><td>connectHooksConfiguration</td><td>ConnectHooks Config Tab</td><td>Main config tab — hosts the 7-step wizard and webhook list</td></tr>
-      <tr><td>stepCreatePublicSite</td><td>Wizard Step 1</td><td>Instructions for creating a Salesforce public site</td></tr>
-      <tr><td>stepSetPublicSiteUsedInApp</td><td>Wizard Step 2</td><td>Dropdown to select which site to use</td></tr>
-      <tr><td>stepAssignPsToSiteUser</td><td>Wizard Step 3</td><td>Button to assign guest user permission set</td></tr>
-      <tr><td>stepCreateFilesLibrary</td><td>Wizard Step 4</td><td>Button to create the ConnectForm Library</td></tr>
-      <tr><td>stepEnableJsonFilesStorage</td><td>Wizard Step 5</td><td>Toggle for raw JSON storage</td></tr>
-      <tr><td>stepJsonPathGenerateApiKey</td><td>Wizard Step 6</td><td>Button to register org and get JSONPath API key</td></tr>
-      <tr><td>webhookModal / webhookEntry</td><td>Wizard Step 7</td><td>Create webhook form</td></tr>
-      <tr><td>mappingUi</td><td>Mapping tab</td><td>Visual drag-and-drop JSON → Salesforce field mapper</td></tr>
-    </tbody>
-  </table></div>
-  <div class="doc-nav-footer"><div class="pn-container"></div></div>
-</section>
-
-<!-- ══════════ TROUBLESHOOTING ══════════ -->
-<section class="doc-section" id="sec-troubleshoot">
-  <div class="page-header">
-    <div class="breadcrumb">ConnectHooks › <span>Troubleshooting &amp; Logs</span></div>
-    <h1>Troubleshooting &amp; Logs</h1>
-    <p>Common issues and how to diagnose them using ConnectHooks' built-in logging.</p>
-  </div>
-
-  <h2 class="section-title">📋 Reading Form_Submission__c Logs</h2>
-  <p>Every webhook request (successful or failed) creates a <code>Form_Submission__c</code> record (if JSON storage is enabled). Check these fields:</p>
-  <div class="kv-grid">
-    <div class="kv-row"><div class="kv-key">Status__c</div><div class="kv-val"><span class="badge badge-green">success</span> or <span class="badge badge-red">error</span></div></div>
-    <div class="kv-row"><div class="kv-key">Raw_JSON__c</div><div class="kv-val">The exact JSON payload received — use this to verify the payload structure.</div></div>
-    <div class="kv-row"><div class="kv-key">Error_Message__c</div><div class="kv-val">Detailed error if Status = error. Includes which field or check failed.</div></div>
-    <div class="kv-row"><div class="kv-key">Webhook__c</div><div class="kv-val">Which webhook received this request.</div></div>
-  </div>
-
-  <h2 class="section-title">❗ Common Errors &amp; Fixes</h2>
-  <div class="table-wrap"><table class="doc-table">
-    <thead><tr><th>HTTP Status</th><th>Error</th><th>Fix</th></tr></thead>
-    <tbody>
-      <tr><td><span class="badge badge-red">401</span></td><td>Invalid Secure URL Code</td><td>Copy the full endpoint URL from the webhook card. The secure code segment must match exactly.</td></tr>
-      <tr><td><span class="badge badge-red">401</span></td><td>Invalid API Key</td><td>Send the API key in the <code>x-api-key</code> header. Check for trailing spaces or encoding issues.</td></tr>
-      <tr><td><span class="badge badge-orange">404</span></td><td>Webhook not found / inactive</td><td>Verify the webhook name in the URL. Check <code>is_Active__c = true</code> on CH_Webhook__c.</td></tr>
-      <tr><td><span class="badge badge-orange">429</span></td><td>Rate limit exceeded</td><td>Wait for the 24-hour window to reset, or contact admin to raise the limit in <code>CH_Config_Meta_Store__mdt</code>.</td></tr>
-      <tr><td><span class="badge badge-red">400</span></td><td>JSON schema validation failed</td><td>Check <code>Error_Message__c</code> for the missing required fields. Update the payload or remove/update the JSON schema.</td></tr>
-      <tr><td><span class="badge badge-red">400</span></td><td>Field mapping / DML error</td><td>Verify JSONPath expressions in <code>CH_Mapping__c.JsonPath_Expression__c</code> match the payload structure. Check field-level permissions.</td></tr>
-      <tr><td>—</td><td>Webhook creation blocked</td><td>Free edition limit (2 webhooks) reached. Delete an existing webhook first.</td></tr>
-      <tr><td>—</td><td>Site guest user can't process</td><td>Run Step 3 of the setup wizard again to re-assign the <code>ConnectHooks_Public_Site_User_Permissions</code> permission set.</td></tr>
-    </tbody>
-  </table></div>
-
-  <h2 class="section-title">🔍 Debugging JSONPath Expressions</h2>
-  <p>Use the live preview in the <strong>mappingUi LWC</strong> — paste a sample JSON payload and click <strong>Test</strong> next to any mapping row. The <code>JSONPathAPIController.evaluateJSONPath()</code> method runs the expression and shows the extracted value.</p>
-  <p>You can also test manually using the developer console. Example:</p>
-  <pre><code>// In Salesforce Developer Console (Anonymous Apex)
+        <h2 class="section-title">Debugging JSONPath Expressions</h2>
+        <p>Use the live preview in the <strong>CH Mapping Ui LWC</strong> — paste a sample JSON payload and click
+          <strong>Test</strong> next to any mapping row. The <code>JSONPathAPIController.evaluateJSONPath()</code>
+          method runs the expression and shows the extracted value.</p>
+        <p>You can also test manually using the developer console. Example:</p>
+        <pre><code>// In Salesforce Developer Console (Anonymous Apex)
 String json = '{"name":"John","email":"john@example.com"}';
 String path = '$.email';
 Object result = xccch.JSONPathEvaluator.evaluate(json, path);
 System.debug(result); // → john@example.com</code></pre>
 
-  <h2 class="section-title">💡 Design Principles</h2>
-  <div class="cards">
-    <div class="card"><div class="card-icon">1️⃣</div><h3>Single Entry Point</h3><p><code>ConnectHooksSubmissionWebService</code> is the only way in. All auth, validation, mapping, and DML happen in sequence in one <code>handleWebhookRequest()</code> call — easy to debug and audit.</p></div>
-    <div class="card"><div class="card-icon">2️⃣</div><h3>Mapping As Data</h3><p>Field mapping rules live in <code>CH_Mapping__c</code> records. Changing a mapping never requires a code deployment — the admin edits records in the UI.</p></div>
-    <div class="card"><div class="card-icon">3️⃣</div><h3>JSONPath In Apex</h3><p>The full JSONPath engine is built in Apex — no npm packages. Required because managed packages cannot include external JS. Supports RFC 9535 including wildcards, filters, and recursive descent.</p></div>
-    <div class="card"><div class="card-icon">4️⃣</div><h3>Layered Security</h3><p>Every request must pass 4 independent security checks. No single bypass grants access. Plus a database trigger enforces creation limits at the lowest possible level.</p></div>
+      </section>
+
+    </main>
   </div>
-</section>
 
-</main>
-</div>
+  <!-- FOOTER -->
+  <footer class="doc-footer">
+    <span>ConnectHooks · Version 1.0 · Feb 2026</span>
+    <span>Salesforce Application · ConnectHooks Documentation</span>
+  </footer>
 
-<!-- FOOTER -->
-<footer class="doc-footer">
-  <span>ConnectHooks · Namespace: <code>xccch</code> · Version 1.0 · Feb 2026</span>
-  <span>Salesforce Managed Package · AppExchange Documentation</span>
-</footer>
+  <script>
+    const SECTIONS = ['introduction', 'quickstart', 'features', 'datamodel', 'security', 'troubleshoot'];
+    const LABELS = ['Introduction', 'Quick Start Guide', 'Key Features', 'Core Data Model', 'API & Security', 'Troubleshooting & Logs'];
+    let current = 'introduction';
 
-<script>
-const SECTIONS = ['introduction','architecture','features','setup','runtime','datamodel','security','troubleshoot'];
-const LABELS   = ['Introduction','System Architecture','Key Features','Installation & Setup','Runtime Flow','Core Data Model','API & Security','Troubleshooting & Logs'];
-let current = 'introduction';
+    // ScrollSpy Implementation
+    document.addEventListener('DOMContentLoaded', () => {
+      const observerOptions = {
+        root: null,
+        rootMargin: '-10% 0px -80% 0px',
+        threshold: 0
+      };
 
-function showSection(id){
-  // hide all sections
-  document.querySelectorAll('.doc-section').forEach(s => s.classList.remove('active'));
-  // show target
-  const sec = document.getElementById('sec-' + id);
-  if(sec) sec.classList.add('active');
-  // clear all nav-link active states
-  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-  // activate the right nav item
-  const ni = document.getElementById('ni-' + id);
-  if(ni){
-    const btn = ni.querySelector('.nav-link');
-    if(btn) btn.classList.add('active');
-    ni.classList.add('open');
-  }
-  current = id;
-  renderPrevNext();
-  window.scrollTo({top: 0, behavior: 'smooth'});
-}
+      const spyTargets = [];
+      // Main sections
+      SECTIONS.forEach(id => spyTargets.push({ id: 'sec-' + id, type: 'main' }));
+      // Quick Start sub-sections
+      ['qs-install', 'qs-configure', 'qs-webhook', 'qs-mappings', 'qs-test', 'qs-verify'].forEach(id => spyTargets.push({ id, type: 'sub' }));
+      // Key Features sub-sections
+      ['feat-webhook', 'feat-auth', 'feat-mapping', 'feat-ai-filter', 'feat-validations', 'feat-records', 'feat-storage', 'feat-handler'].forEach(id => spyTargets.push({ id, type: 'sub' }));
+      // Data Model sub-sections
+      ['dm-objects', 'dm-settings'].forEach(id => spyTargets.push({ id, type: 'sub' }));
+      // Security sub-sections
+      ['sec-model', 'sec-perm'].forEach(id => spyTargets.push({ id, type: 'sub' }));
 
-function toggleNav(id){
-  const ni = document.getElementById('ni-' + id);
-  if(!ni) return;
-  const isOpen = ni.classList.contains('open');
-  // close all
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('open'));
-  if(!isOpen){
-    ni.classList.add('open');
-    showSection(id);
-  } else {
-    showSection(id);
-  }
-}
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            highlightNav(entry.target.id);
+          }
+        });
+      }, observerOptions);
 
-function jumpTo(anchorId){
-  setTimeout(() => {
-    const el = document.getElementById(anchorId);
-    if(el){
-      const top = el.getBoundingClientRect().top + window.scrollY - 72;
-      window.scrollTo({top, behavior:'smooth'});
+      spyTargets.forEach(target => {
+        const el = document.getElementById(target.id);
+        if (el) observer.observe(el);
+      });
+    });
+
+    function highlightNav(id) {
+      // 1. Clear all active states
+      document.querySelectorAll('.nav-link, .sub-link').forEach(el => el.classList.remove('active'));
+
+      // 2. Find the target link
+      let linkElement = null;
+      
+      // Check for sub-links first (they contain jumpTo('id'))
+      document.querySelectorAll('.sub-link').forEach(link => {
+        if (link.getAttribute('onclick') && link.getAttribute('onclick').includes(`jumpTo('${id}')`)) {
+          linkElement = link;
+        }
+      });
+
+      // If not a sub-link, check for main section links
+      if (!linkElement && id.startsWith('sec-')) {
+        const sectionId = id.replace('sec-', '');
+        const navItem = document.getElementById('ni-' + sectionId);
+        if (navItem) {
+          linkElement = navItem.querySelector('.nav-link');
+          // auto-open parent and close others
+          if (sectionId !== current) {
+             document.querySelectorAll('.nav-item').forEach(ni => ni.classList.remove('open'));
+             navItem.classList.add('open');
+          }
+        }
+      }
+
+      // If sub-link was found, also highlight and open its parent
+      if (linkElement && linkElement.classList.contains('sub-link')) {
+        linkElement.classList.add('active');
+        const parentNavItem = linkElement.closest('.nav-item');
+        if (parentNavItem) {
+          document.querySelectorAll('.nav-item').forEach(ni => ni.classList.remove('open'));
+          parentNavItem.classList.add('open');
+          const mainNavLink = parentNavItem.querySelector('.nav-link');
+          if (mainNavLink) mainNavLink.classList.add('active');
+        }
+      } else if (linkElement) {
+        // Main link found
+        linkElement.classList.add('active');
+      }
     }
-  }, 80);
-}
 
-function renderPrevNext(){
-  const idx = SECTIONS.indexOf(current);
-  document.querySelectorAll('.pn-container').forEach(c => {
-    let html = '';
-    if(idx > 0) html += `<button class="pn-btn" onclick="showSection('${SECTIONS[idx-1]}')">&#8592; ${LABELS[idx-1]}</button>`;
-    if(idx < SECTIONS.length-1) html += `<button class="pn-btn" onclick="showSection('${SECTIONS[idx+1]}')">${LABELS[idx+1]} &#8594;</button>`;
-    c.innerHTML = html;
-  });
-}
+    function showSection(id) {
+      const sec = document.getElementById('sec-' + id);
+      if (sec) {
+        const top = sec.getBoundingClientRect().top + window.scrollY - 72;
+        window.scrollTo({ top, behavior: 'smooth' });
+        
+        // Update current
+        current = id;
+        renderPrevNext();
+      }
+    }
 
-// Init: open the introduction section
-document.getElementById('ni-introduction').querySelector('.nav-link').classList.add('active');
-renderPrevNext();
-</script>
+    function toggleNav(id) {
+      const ni = document.getElementById('ni-' + id);
+      if (!ni) return;
+      const isOpen = ni.classList.contains('open');
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('open'));
+      if (!isOpen) {
+        ni.classList.add('open');
+        showSection(id);
+      }
+    }
+
+    function jumpTo(anchorId) {
+      const el = document.getElementById(anchorId);
+      if (el) {
+        const top = el.getBoundingClientRect().top + window.scrollY - 72;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    }
+
+    function renderPrevNext() {
+      const idx = SECTIONS.indexOf(current);
+      // Logic for prev/next banners if they exist (usually at bottom of docs)
+    }
+
+    // Init: open the introduction section highlight
+    highlightNav('sec-introduction');
+
+  </script>
 </body>
+
 </html>
